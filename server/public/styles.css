@@ -7,9 +7,8 @@ body {
 }
 
 .main-pic {
-  height: 100vh;
+  height: 95.5vh;
   width: 100%;
-  opacity: 1;
 }
 
 .header {
@@ -22,6 +21,15 @@ nav {
 
 h6 {
   font-weight: bolder;
+}
+
+.hotel-display-div img {
+  width: 200px;
+  padding-bottom: 1.5rem;
+}
+
+nav > img:hover {
+  cursor: pointer;
 }
 
 header {
@@ -60,7 +68,7 @@ div > h1 {
   font-size: 1rem;
   font-weight: bolder;
   border-top: 2rem;
-  overflow-x: auto;
+  overflow: auto;
 }
 
 .hotel-name:hover {
@@ -99,9 +107,13 @@ div > h1 {
   padding-left: 1rem;
 }
 
-.hotel-display-div img {
-  width: 200px;
-  padding-bottom: 1.5rem;
+.search-btn:hover {
+  background-color: royalblue;
+  transform: scale(1.15);
+}
+
+.search-btn:active {
+  transform: scale(1);
 }
 
 .hotel-display-div {
@@ -131,6 +143,13 @@ div > h1 {
   align-items: center;
   height: 100vh;
   padding: 1.5rem;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  border-radius: 0;
+  background-image: linear-gradient(#f8a170, #ffcd61);
 }
 
 @keyframes enlarge {
