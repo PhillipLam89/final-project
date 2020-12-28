@@ -1,6 +1,6 @@
 import React from 'react';
 import Loader from './loader';
-
+import NavBar from './navBar';
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -9,12 +9,19 @@ class Search extends React.Component {
       hotelList: [],
       searchButtonClicked: '',
       hotelThumbnails: [],
+      ratingFilter: '',
       isLoading: false,
       userInputError: false
     };
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
     this.handleBackClick = this.handleBackClick.bind(this);
+    this.ratingFilter = this.ratingFilter.bind(this);
+  }
+
+  ratingFilter(event) {
+    this.setState({ ratingFilter: event.target.value });
+
   }
 
   handleUserInput(event) {
@@ -26,16 +33,22 @@ class Search extends React.Component {
   }
 
   handleSearchClick(event) {
+
     event.preventDefault();
     const arr = this.state.userInput.split(' ');
-    const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    for (let i = 0; i < numbers.length; i++) {
-      if (arr[0] === '' || arr[0].includes(numbers[i])) {
-        this.setState({ userInputError: true });
-        return;
+    const notAllowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '!', '#', '$', '%', '^', '&', '-', '_',
+      '*', '(', ')', '+', '=', '<', '>', ',', '.', '?', ':', ';', '@', '{', '}', '[', ']', '~', '/'];
+
+    for (let i = 0; i < notAllowed.length; i++) {
+      if (arr[0] === '' || arr[0].includes(notAllowed[i])) {
+        return this.setState({ userInputError: true });
+      }
+      if (arr[1] === undefined) arr[1] = '';
+      else if (arr[1] && arr[1].includes(notAllowed[i])) {
+        return this.setState({ userInputError: true });
       }
     }
-    if (arr[1] === undefined) arr[1] = '';
+
     this.setState({ isLoading: true });
     fetch(`https://hotels4.p.rapidapi.com/locations/search?query=${arr[0]}%20${arr[1]}&locale=en_US`, {
       method: 'GET',
@@ -49,7 +62,7 @@ class Search extends React.Component {
       })
       .then(data => {
         const cityId = data.suggestions[0].entities[0].destinationId;
-        fetch(`https://hotels4.p.rapidapi.com/properties/list?destinationId=${cityId}&pageNumber=1&checkIn=2020-02-08&checkOut=2020-02-15&pageSize=25&adults1=1&currency=USD&starRatings=5&locale=en_US&sortOrder=PRICE&guestRatingMin=8`, {
+        fetch(`https://hotels4.p.rapidapi.com/properties/list?destinationId=${cityId}&pageNumber=1&checkIn=2020-02-08&checkOut=2020-02-15&pageSize=25&adults1=1&currency=USD&starRatings=${this.state.ratingFilter}&locale=en_US&sortOrder=PRICE&guestRatingMin=8`, {
           method: 'GET',
           headers: {
             'x-rapidapi-key': 'aee2d76ddemshdce25e084382256p16705fjsncaa046304cdd',
@@ -57,7 +70,6 @@ class Search extends React.Component {
           }
         })
           .then(response => {
-
             return response.json();
           })
           .then(data => {
@@ -66,10 +78,9 @@ class Search extends React.Component {
               this.state.hotelList.push(hotel.name);
               this.state.hotelThumbnails.push(hotel.thumbnailUrl);
             }
-            this.setState({ userInput: this.state.userInput, hotelList: this.state.hotelList, searchButtonClicked: 'hidden', hotelThumbnails: this.state.hotelThumbnails, isLoading: false, userInputError: false });
+            this.setState({ userInput: this.state.userInput, hotelList: this.state.hotelList, searchButtonClicked: 'hidden', hotelThumbnails: this.state.hotelThumbnails, isLoading: false, ratingFilter: this.state.ratingFilter });
           })
           .catch(err => console.error(err));
-
       })
       .catch(err => {
         console.error(err);
@@ -94,27 +105,36 @@ class Search extends React.Component {
           <p className="search-txt"> Back to Search Screen</p>
         </div>
         <main className={searchButtonClicked === '' ? 'hidden' : ''}>
-          <div className="header"><h1>{userInput.toUpperCase() + ' 5 STAR HOTELS:'}</h1></div>
+          <div className="header"><h3>{userInput.toUpperCase() + ` ${this.state.ratingFilter}-STAR HOTELS:`}</h3></div>
           <div className="hotel-list">{displayedList}</div>
         </main>
         <div className={searchButtonClicked}>
-            <img className="main-pic" src="https://www.buro247.sg/thumb/950x700/local/images/buro/galleries/2018/07/ritz-carlton-langkawi-horizon-infinity-pool-buro247.sg-A8.jpg"></img>
+          <img className="main-pic" src="https://cdn.cnn.com/cnnnext/dam/assets/190903131748-greek-luxury-seaside-hotels---grecotel-mykonos-blu---infinity-pool-1.jpg"></img>
           <header className={searchButtonClicked}>
-            <h6>{userInputError ? <p style={{ color: 'red' }}>INVALID CITY</p> : 'Only the top 5-Star Resorts will be displayed'}</h6>
-            <nav className="navbar navbar-light bg-light">
+            <nav className={userInputError ? 'navbar navbar-light bg-light input-container error-border' : 'navbar navbar-light bg-light input-container'}>
               <form onSubmit={this.handleSearchClick} className="form-inline">
                 <input value={userInput} onChange={this.handleUserInput} className="form-control mr-sm-2" type="search" placeholder="city (worldwide)" aria-label="Search"></input>
+                <div className="form-row align-items-center preference-div">
+                  <div className="col-auto my-1">
+                    <select value={this.state.ratingFilter} onChange={this.ratingFilter} className="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <option value="default" defaultValue>Filter By Rating</option>
+                      <option value="5">5-Star</option>
+                      <option value="4">4-Star</option>
+                      <option value="3">3-Star</option>
+                      <option value="2">2-Star</option>
+                      <option value="1">1-Star</option>
+                    </select>
+                  </div>
+                  <div className="col-auto my-1">
+                  </div>
+                </div>
                 <button className="search-btn btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <h6>{userInputError ? <p className="user-error">INVALID CITY</p> : ''}</h6>
               </form>
             </nav>
           </header>
         </div>
-        <nav className="navbar navbar-light bottom-nav">
-          <img src="https://www.flaticon.com/svg/static/icons/svg/25/25694.svg" width="30" height="30" className="d-inline-block align-top" alt=""></img>
-          <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/searching-glass-2262729-1885655.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
-          <img src="https://img2.pngio.com/settings-icon-of-flat-style-available-in-svg-png-eps-ai-settings-icon-png-256_256.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
-        </nav>
+        <NavBar />
       </div>
     );
   }
