@@ -21,7 +21,6 @@ class Search extends React.Component {
 
   ratingFilter(event) {
     this.setState({ ratingFilter: event.target.value });
-
   }
 
   handleUserInput(event) {
@@ -35,6 +34,9 @@ class Search extends React.Component {
   handleSearchClick(event) {
 
     event.preventDefault();
+    if (!this.state.ratingFilter) {
+      return this.setState({ userInputError: true });
+    }
     const arr = this.state.userInput.split(' ');
     const notAllowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '!', '#', '$', '%', '^', '&', '-', '_',
       '*', '(', ')', '+', '=', '<', '>', ',', '.', '?', ':', ';', '@', '{', '}', '[', ']', '~', '/'];
@@ -89,7 +91,7 @@ class Search extends React.Component {
 
   render() {
     if (this.state.isLoading) return <Loader />;
-    const { hotelList, userInput, hotelThumbnails, searchButtonClicked, userInputError } = this.state;
+    const { hotelList, userInput, hotelThumbnails, searchButtonClicked, userInputError, ratingFilter } = this.state;
     const displayedList = hotelList.map((hotelName, idx) => {
       return (
         <div key={idx + 1} className="hotel-display-div">
@@ -111,13 +113,13 @@ class Search extends React.Component {
         <div className={searchButtonClicked}>
           <img className="main-pic" src="https://cdn.cnn.com/cnnnext/dam/assets/190903131748-greek-luxury-seaside-hotels---grecotel-mykonos-blu---infinity-pool-1.jpg"></img>
           <header className={searchButtonClicked}>
-            <nav className={userInputError ? 'navbar navbar-light bg-light input-container error-border' : 'navbar navbar-light bg-light input-container'}>
-              <form onSubmit={this.handleSearchClick} className="form-inline">
+            <nav className={userInputError ? 'navbar navbar-light bg-light input-container error-border tilt' : 'navbar navbar-light bg-light input-container'}>
+              <form onSubmit={this.handleSearchClick} className={'form-inline'}>
                 <input value={userInput} onChange={this.handleUserInput} className="form-control mr-sm-2" type="search" placeholder="city (worldwide)" aria-label="Search"></input>
                 <div className="form-row align-items-center preference-div">
                   <div className="col-auto my-1">
-                    <select value={this.state.ratingFilter} onChange={this.ratingFilter} className="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                      <option value="default" defaultValue>Filter By Rating</option>
+                    <select value={ratingFilter} onChange={this.ratingFilter} className="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <option value="" defaultValue>Filter By Rating</option>
                       <option value="5">5-Star</option>
                       <option value="4">4-Star</option>
                       <option value="3">3-Star</option>
@@ -129,7 +131,8 @@ class Search extends React.Component {
                   </div>
                 </div>
                 <button className="search-btn btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                <h6>{userInputError ? <p className="user-error">INVALID CITY</p> : ''}</h6>
+                <h6 className="user-error">{userInputError && !ratingFilter ? 'CHOOSE A RATING & VALID CITY' : ''}</h6>
+                <h6>{userInputError && ratingFilter ? <p className="user-error">INVALID CITY</p> : ''}</h6>
               </form>
             </nav>
           </header>
