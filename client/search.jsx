@@ -57,11 +57,9 @@ class Search extends React.Component {
         const cityId = data.suggestions[0].entities[0].destinationId;
         fetch(`/api/search/list/${cityId}/${this.state.ratingFilter}`).then(response => response.json()).then(data => {
           const hotelList = data.data.body.searchResults.results;
-          for (const hotel of hotelList) {
-            this.state.hotelList.push(hotel.name);
-            this.state.hotelThumbnails.push(hotel.thumbnailUrl);
-          }
-          this.setState({ userInput: this.state.userInput, hotelList: this.state.hotelList, searchButtonClicked: 'hidden', hotelThumbnails: this.state.hotelThumbnails, isLoading: false, ratingFilter: this.state.ratingFilter });
+          const hotelNames = hotelList.map(hotelInfo => hotelInfo.name);
+          const hotelThumbnails = hotelList.map((hotelInfo, idx) => hotelInfo.thumbnailUrl);
+          this.setState({ userInput: this.state.userInput, hotelList: hotelNames, searchButtonClicked: 'hidden', hotelThumbnails: hotelThumbnails, isLoading: false, ratingFilter: this.state.ratingFilter });
         })
           .catch(err => console.error(err));
       })
@@ -75,10 +73,10 @@ class Search extends React.Component {
     const { hotelList, userInput, hotelThumbnails, searchButtonClicked, userInputError, ratingFilter } = this.state;
     const displayedList = hotelList.map((hotelName, idx) => {
       return (
-        <div key={idx + 1} className="hotel-display-div">
-          <p key={idx} className="hotel-name">{hotelName}</p>
-          <img key={idx + hotelName} src={hotelThumbnails[idx]} className="hotel-img"></img>
-        </div>
+        <>
+          <p key={hotelList.id} className="hotel-name">{hotelName}</p>
+          <img src={hotelThumbnails[idx]} className="hotel-img"></img>
+        </>
       );
     });
     return (
