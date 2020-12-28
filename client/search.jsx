@@ -1,3 +1,5 @@
+
+import fetch from 'node-fetch';
 import React from 'react';
 import Loader from './loader';
 import NavBar from './navBar';
@@ -37,51 +39,30 @@ class Search extends React.Component {
     if (!this.state.ratingFilter) {
       return this.setState({ userInputError: true });
     }
-    const arr = this.state.userInput.split(' ');
+    const arr = this.state.userInput;
     const notAllowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '!', '#', '$', '%', '^', '&', '-', '_',
       '*', '(', ')', '+', '=', '<', '>', ',', '.', '?', ':', ';', '@', '{', '}', '[', ']', '~', '/'];
 
     for (let i = 0; i < notAllowed.length; i++) {
-      if (arr[0] === '' || arr[0].includes(notAllowed[i])) {
-        return this.setState({ userInputError: true });
-      }
-      if (arr[1] === undefined) arr[1] = '';
-      else if (arr[1] && arr[1].includes(notAllowed[i])) {
+      if (arr === '' || arr.includes(notAllowed[i])) {
         return this.setState({ userInputError: true });
       }
     }
-
     this.setState({ isLoading: true });
-    fetch(`https://hotels4.p.rapidapi.com/locations/search?query=${arr[0]}%20${arr[1]}&locale=en_US`, {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-key': 'aee2d76ddemshdce25e084382256p16705fjsncaa046304cdd',
-        'x-rapidapi-host': 'hotels4.p.rapidapi.com'
-      }
-    })
+    fetch(`/api/search/${arr}`)
       .then(response => {
         return response.json();
       })
       .then(data => {
         const cityId = data.suggestions[0].entities[0].destinationId;
-        fetch(`https://hotels4.p.rapidapi.com/properties/list?destinationId=${cityId}&pageNumber=1&checkIn=2020-02-08&checkOut=2020-02-15&pageSize=25&adults1=1&currency=USD&starRatings=${this.state.ratingFilter}&locale=en_US&sortOrder=PRICE&guestRatingMin=8`, {
-          method: 'GET',
-          headers: {
-            'x-rapidapi-key': 'aee2d76ddemshdce25e084382256p16705fjsncaa046304cdd',
-            'x-rapidapi-host': 'hotels4.p.rapidapi.com'
+        fetch(`/api/search/list/${cityId}/${this.state.ratingFilter}`).then(response => response.json()).then(data => {
+          const hotelList = data.data.body.searchResults.results;
+          for (const hotel of hotelList) {
+            this.state.hotelList.push(hotel.name);
+            this.state.hotelThumbnails.push(hotel.thumbnailUrl);
           }
+          this.setState({ userInput: this.state.userInput, hotelList: this.state.hotelList, searchButtonClicked: 'hidden', hotelThumbnails: this.state.hotelThumbnails, isLoading: false, ratingFilter: this.state.ratingFilter });
         })
-          .then(response => {
-            return response.json();
-          })
-          .then(data => {
-            const hotelList = data.data.body.searchResults.results;
-            for (const hotel of hotelList) {
-              this.state.hotelList.push(hotel.name);
-              this.state.hotelThumbnails.push(hotel.thumbnailUrl);
-            }
-            this.setState({ userInput: this.state.userInput, hotelList: this.state.hotelList, searchButtonClicked: 'hidden', hotelThumbnails: this.state.hotelThumbnails, isLoading: false, ratingFilter: this.state.ratingFilter });
-          })
           .catch(err => console.error(err));
       })
       .catch(err => {
@@ -113,7 +94,7 @@ class Search extends React.Component {
         <div className={searchButtonClicked}>
           <img className="main-pic" src="https://cdn.cnn.com/cnnnext/dam/assets/190903131748-greek-luxury-seaside-hotels---grecotel-mykonos-blu---infinity-pool-1.jpg"></img>
           <header className={searchButtonClicked}>
-            <nav className={userInputError ? 'navbar navbar-light bg-light input-container error-border tilt' : 'navbar navbar-light bg-light input-container'}>
+            <nav className={userInputError ? 'navbar navbar-light bg-light input-container error-border' : 'navbar navbar-light bg-light input-container'}>
               <form onSubmit={this.handleSearchClick} className={'form-inline'}>
                 <input value={userInput} onChange={this.handleUserInput} className="form-control mr-sm-2" type="search" placeholder="city (worldwide)" aria-label="Search"></input>
                 <div className="form-row align-items-center preference-div">
