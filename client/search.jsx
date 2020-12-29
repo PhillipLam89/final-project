@@ -1,9 +1,9 @@
-import parseRoute from '../client/lib/parse-route'
+
 import fetch from 'node-fetch';
 import React from 'react';
 import Loader from './loader';
-import HotelDetails from './hotelDetails'
-import Home from './pages/home';
+import HotelDetails from './hotelDetails';
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -22,22 +22,7 @@ class Search extends React.Component {
     this.handleBackClick = this.handleBackClick.bind(this);
     this.ratingFilter = this.ratingFilter.bind(this);
   }
-  // componentDidMount() {
-  //   window.addEventListener('hashchange', event => {
-  //     this.setState({
-  //       route: parseRoute(window.location.hash)
-  //     });
-  //   });
-  // }
 
-  // renderPage() {
-  //   const { route } = this.state;
-  //   if (route.path === '') {
-  //     return <Home />;
-  //   } else if (route.path === '#hotel-details') {
-  //     return <Home />;
-  //   }
-  // }
   ratingFilter(event) {
     this.setState({ ratingFilter: event.target.value });
   }
@@ -74,7 +59,7 @@ class Search extends React.Component {
         const cityId = data.suggestions[0].entities[0].destinationId;
         fetch(`/api/search/list/${cityId}/${this.state.ratingFilter}`).then(response => response.json()).then(data => {
           const hotelList = data.data.body.searchResults.results;
-          location.hash = '#hotel-details'
+          location.hash = '#hotel-details';
           this.setState({ userInput: this.state.userInput, json: data.data.body, hotelList: hotelList, searchButtonClicked: 'hidden', isLoading: false, ratingFilter: this.state.ratingFilter });
         })
           .catch(err => console.error(err));
@@ -83,16 +68,17 @@ class Search extends React.Component {
         console.error(err);
       });
   }
+
   render() {
 
     if (this.state.isLoading) return <Loader />;
-    else if (this.state.selectedHotel) return <HotelDetails data={this.state} />
+    else if (this.state.selectedHotel) return <HotelDetails data={this.state} />;
 
     const { hotelList, userInput, searchButtonClicked, userInputError, ratingFilter } = this.state;
     const displayedList = hotelList.map((hotel, idx) => {
       return (
         <div className="hotel-display-div text-center d-flex flex-column justify-content-center align-items-center" key={hotel.supplierHotelId}>
-          <p key={hotelList.id} onClick={(e) => this.setState({selectedHotel: e.target.textContent, hotelList: hotelList})} className="hotel-name">{hotel.name}</p>
+          <p key={hotelList.id} onClick={e => this.setState({ selectedHotel: e.target.textContent, hotelList: hotelList })} className="hotel-name">{hotel.name}</p>
           <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
         </div>
       );
