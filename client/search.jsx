@@ -10,7 +10,6 @@ class Search extends React.Component {
       userInput: '',
       hotelList: [],
       searchButtonClicked: '',
-      hotelThumbnails: [],
       ratingFilter: '',
       isLoading: false,
       userInputError: false
@@ -30,7 +29,7 @@ class Search extends React.Component {
   }
 
   handleBackClick() {
-    this.setState({ userInput: '', hotelList: [], searchButtonClicked: '', hotelThumbnails: [], isLoading: false, userInputError: false });
+    this.setState({ userInput: '', hotelList: [], searchButtonClicked: '', isLoading: false, userInputError: false });
   }
 
   handleSearchClick(event) {
@@ -54,12 +53,12 @@ class Search extends React.Component {
         return response.json();
       })
       .then(data => {
+
         const cityId = data.suggestions[0].entities[0].destinationId;
+
         fetch(`/api/search/list/${cityId}/${this.state.ratingFilter}`).then(response => response.json()).then(data => {
           const hotelList = data.data.body.searchResults.results;
-          const hotelNames = hotelList.map(hotelInfo => hotelInfo.name);
-          const hotelThumbnails = hotelList.map((hotelInfo, idx) => hotelInfo.thumbnailUrl);
-          this.setState({ userInput: this.state.userInput, hotelList: hotelNames, searchButtonClicked: 'hidden', hotelThumbnails: hotelThumbnails, isLoading: false, ratingFilter: this.state.ratingFilter });
+          this.setState({ userInput: this.state.userInput, hotelList: hotelList, searchButtonClicked: 'hidden', isLoading: false, ratingFilter: this.state.ratingFilter });
         })
           .catch(err => console.error(err));
       })
@@ -70,13 +69,13 @@ class Search extends React.Component {
 
   render() {
     if (this.state.isLoading) return <Loader />;
-    const { hotelList, userInput, hotelThumbnails, searchButtonClicked, userInputError, ratingFilter } = this.state;
-    const displayedList = hotelList.map((hotelName, idx) => {
+    const { hotelList, userInput, searchButtonClicked, userInputError, ratingFilter } = this.state;
+    const displayedList = hotelList.map((hotel, idx) => {
       return (
-        <>
-          <p key={hotelList.id} className="hotel-name">{hotelName}</p>
-          <img src={hotelThumbnails[idx]} className="hotel-img"></img>
-        </>
+        <div className="hotel-display-div" key={hotel.supplierHotelId}>
+          <p key={hotelList.id} className="hotel-name">{hotel.name}</p>
+          <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img"></img>
+        </div>
       );
     });
     return (
