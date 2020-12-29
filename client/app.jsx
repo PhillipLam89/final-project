@@ -1,8 +1,9 @@
 import React from 'react';
-import Home from './pages/home';
+import Search from './search';
 
 export default class App extends React.Component {
+
   render() {
-    return <Home />;
+    return <Search />;
   }
 }
