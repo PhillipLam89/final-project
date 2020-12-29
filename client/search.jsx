@@ -1,8 +1,9 @@
-
+import parseRoute from '../client/lib/parse-route'
 import fetch from 'node-fetch';
 import React from 'react';
 import Loader from './loader';
-import NavBar from './navBar';
+import HotelDetails from './hotelDetails'
+import Home from './pages/home';
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -12,14 +13,31 @@ class Search extends React.Component {
       searchButtonClicked: '',
       ratingFilter: '',
       isLoading: false,
-      userInputError: false
+      userInputError: false,
+      selectedHotel: ''
+
     };
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
     this.handleBackClick = this.handleBackClick.bind(this);
     this.ratingFilter = this.ratingFilter.bind(this);
   }
+  // componentDidMount() {
+  //   window.addEventListener('hashchange', event => {
+  //     this.setState({
+  //       route: parseRoute(window.location.hash)
+  //     });
+  //   });
+  // }
 
+  // renderPage() {
+  //   const { route } = this.state;
+  //   if (route.path === '') {
+  //     return <Home />;
+  //   } else if (route.path === '#hotel-details') {
+  //     return <Home />;
+  //   }
+  // }
   ratingFilter(event) {
     this.setState({ ratingFilter: event.target.value });
   }
@@ -56,7 +74,8 @@ class Search extends React.Component {
         const cityId = data.suggestions[0].entities[0].destinationId;
         fetch(`/api/search/list/${cityId}/${this.state.ratingFilter}`).then(response => response.json()).then(data => {
           const hotelList = data.data.body.searchResults.results;
-          this.setState({ userInput: this.state.userInput, hotelList: hotelList, searchButtonClicked: 'hidden', isLoading: false, ratingFilter: this.state.ratingFilter });
+          location.hash = '#hotel-details'
+          this.setState({ userInput: this.state.userInput, json: data.data.body, hotelList: hotelList, searchButtonClicked: 'hidden', isLoading: false, ratingFilter: this.state.ratingFilter });
         })
           .catch(err => console.error(err));
       })
@@ -64,20 +83,23 @@ class Search extends React.Component {
         console.error(err);
       });
   }
-
   render() {
+
     if (this.state.isLoading) return <Loader />;
+    else if (this.state.selectedHotel) return <HotelDetails data={this.state} />
+
     const { hotelList, userInput, searchButtonClicked, userInputError, ratingFilter } = this.state;
     const displayedList = hotelList.map((hotel, idx) => {
       return (
         <div className="hotel-display-div text-center d-flex flex-column justify-content-center align-items-center" key={hotel.supplierHotelId}>
-          <p key={hotelList.id} className="hotel-name">{hotel.name}</p>
+          <p key={hotelList.id} onClick={(e) => this.setState({selectedHotel: e.target.textContent, hotelList: hotelList})} className="hotel-name">{hotel.name}</p>
           <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
         </div>
       );
     });
     return (
-      <div>
+
+      <div className="search-container">
         <div className={searchButtonClicked === '' ? 'd-none' : '' + ' arrow-div align-items-center pt-2 d-flex justify-content-start'}>
           <img onClick={this.handleBackClick} className="back-arrow " width="50rem" src="https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeftCircle-512.png"></img>
           <p className="search-txt text-center pt-0.5 pl-1"> Back to Search Screen</p>
@@ -113,7 +135,13 @@ class Search extends React.Component {
             </nav>
           </header>
         </div>
-        <NavBar />
+        <nav className="navbar navbar-light bottom-nav mb-0 pb-0 d-flex justify-content-space-around">
+          <img src="./images/home.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
+          <img src="./images/search.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
+          <img src="./images/settings.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
+          <img src="./images/red-heart.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
+          <img src="./images/user.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
+        </nav>
       </div>
     );
   }
