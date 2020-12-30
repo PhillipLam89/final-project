@@ -1,9 +1,10 @@
 
-import fetch from 'node-fetch';
 import React from 'react';
 import Loader from './loader';
+import NavBar from './navBar';
 import HotelDetails from './hotelDetails';
-
+import SearchResults from './searchResults';
+import Home from '../client/pages/home';
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -14,12 +15,11 @@ class Search extends React.Component {
       ratingFilter: '',
       isLoading: false,
       userInputError: false,
-      selectedHotel: ''
-
+      homeButtonClicked: ''
     };
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
-    this.handleBackClick = this.handleBackClick.bind(this);
+    this.handleHomeClick = this.handleHomeClick.bind(this);
     this.ratingFilter = this.ratingFilter.bind(this);
   }
 
@@ -31,12 +31,11 @@ class Search extends React.Component {
     this.setState({ userInput: event.target.value });
   }
 
-  handleBackClick() {
-    this.setState({ userInput: '', hotelList: [], searchButtonClicked: '', isLoading: false, userInputError: false });
+  handleHomeClick() {
+    this.setState({ userInput: '', hotelList: [], searchButtonClicked: '', isLoading: false, userInputError: false, homeButtonClicked: true });
   }
 
   handleSearchClick(event) {
-
     event.preventDefault();
     if (!this.state.ratingFilter) {
       return this.setState({ userInputError: true });
@@ -50,55 +49,29 @@ class Search extends React.Component {
         return this.setState({ userInputError: true });
       }
     }
-    this.setState({ isLoading: true });
-    fetch(`/api/search/${arr}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        const cityId = data.suggestions[0].entities[0].destinationId;
-        fetch(`/api/search/list/${cityId}/${this.state.ratingFilter}`).then(response => response.json()).then(data => {
-          const hotelList = data.data.body.searchResults.results;
-          location.hash = '#hotel-details';
-          this.setState({ userInput: this.state.userInput, json: data.data.body, hotelList: hotelList, searchButtonClicked: 'hidden', isLoading: false, ratingFilter: this.state.ratingFilter });
-        })
-          .catch(err => console.error(err));
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    const params = new URLSearchParams();
+    params.append('cityName', this.state.userInput);
+    params.append('ratingFilter', this.state.ratingFilter);
+    location.hash = 'search-results?' + params;
+  }
+
+  componentDidMount() {
+    location.hash = 'search';
   }
 
   render() {
-
     if (this.state.isLoading) return <Loader />;
     else if (this.state.selectedHotel) return <HotelDetails data={this.state} />;
-
-    const { hotelList, userInput, searchButtonClicked, userInputError, ratingFilter } = this.state;
-    const displayedList = hotelList.map((hotel, idx) => {
-      return (
-        <div className="hotel-display-div text-center d-flex flex-column justify-content-center align-items-center" key={hotel.supplierHotelId}>
-          <p key={hotelList.id} onClick={e => this.setState({ selectedHotel: e.target.textContent, hotelList: hotelList })} className="hotel-name">{hotel.name}</p>
-          <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
-        </div>
-      );
-    });
+    else if (this.state.searchButtonClicked) return <SearchResults data={this.state} />;
+    else if (this.state.homeButtonClicked) return <Home data={this.state}/>;
+    const { userInput, userInputError, ratingFilter } = this.state;
     return (
-
       <div className="search-container">
-        <div className={searchButtonClicked === '' ? 'd-none' : '' + ' arrow-div align-items-center pt-2 d-flex justify-content-start'}>
-          <img onClick={this.handleBackClick} className="back-arrow " width="50rem" src="https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeftCircle-512.png"></img>
-          <p className="search-txt text-center pt-0.5 pl-1"> Back to Search Screen</p>
-        </div>
-        <main className={searchButtonClicked === '' ? 'd-none' : ''}>
-          <div className="header text-center"><h3>{userInput.toUpperCase() + ` ${this.state.ratingFilter}-STAR HOTELS:`}</h3></div>
-          <div className="hotel-list d-flex flex-column p-1.5">{displayedList}</div>
-        </main>
-        <div className={searchButtonClicked}>
+        <div>
           <img className="main-pic" src="https://cdn.cnn.com/cnnnext/dam/assets/190903131748-greek-luxury-seaside-hotels---grecotel-mykonos-blu---infinity-pool-1.jpg"></img>
-          <header className={`${searchButtonClicked} text-center`}>
-            <nav className={userInputError ? 'navbar navbar-light bg-light input-container error-border d-flex' : 'navbar navbar-light bg-light input-container'}>
-              <form onSubmit={this.handleSearchClick} className={'form-inline'}>
+          <header>
+            <div>
+              <form onSubmit={this.handleSearchClick} className={'form-inline bg-dark'}>
                 <input value={userInput} onChange={this.handleUserInput} className="form-control mr-sm-2" type="search" placeholder="city (worldwide)" aria-label="Search"></input>
                 <div className="form-row align-items-center preference-div pl-0.5">
                   <div className="col-auto my-1">
@@ -118,16 +91,10 @@ class Search extends React.Component {
                 <h6 className="user-error pl-0.5">{userInputError && !ratingFilter ? 'CHOOSE A RATING & VALID CITY' : ''}</h6>
                 <h6>{userInputError && ratingFilter ? <p className="user-error">INVALID CITY</p> : ''}</h6>
               </form>
-            </nav>
+            </div>
           </header>
         </div>
-        <nav className="navbar navbar-light bottom-nav mb-0 pb-0 d-flex justify-content-space-around">
-          <img src="./images/home.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
-          <img src="./images/search.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
-          <img src="./images/settings.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
-          <img src="./images/red-heart.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
-          <img src="./images/user.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
-        </nav>
+        <NavBar />
       </div>
     );
   }

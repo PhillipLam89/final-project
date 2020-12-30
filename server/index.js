@@ -37,6 +37,22 @@ app.get('/api/search/list/:cityId/:ratingFilter', (req, res, next) => {
     });
 });
 
+app.get('/api/hotels/:hotelId', (req, res, next) => {
+  const hotelId = req.params.hotelId;
+  fetch(`https://hotels4.p.rapidapi.com/properties/get-details?id=${hotelId}&locale=en_US&currency=USD&checkOut=2020-01-15&adults1=1&checkIn=2020-01-08`, {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-key': `${process.env.API_KEY}`,
+      'x-rapidapi-host': 'hotels4.p.rapidapi.com'
+    }
+  })
+    .then(response => response.json())
+    .then(data => res.json(data))
+    .catch(err => {
+      next(err);
+    });
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

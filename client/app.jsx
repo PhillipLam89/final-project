@@ -1,8 +1,10 @@
 import React from 'react';
-import Search from './search';
 import Home from './pages/home';
 
-import NavBar from './navBar';
+import Search from './search';
+import parseRoute from './lib/parse-route';
+import HotelDetails from './hotelDetails';
+import SearchResults from './searchResults';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -23,16 +25,19 @@ export default class App extends React.Component {
     const { route } = this.state;
     if (route.path === '') {
       return <Home />;
-    } else if (route.path === '#hotel-details') {
+    } if (route.path === 'search') {
       return <Search />;
+    } if (route.path === 'hotel-details') {
+      return <HotelDetails hotelId={route.params.get('hotelId')} thumbnailUrl={route.params.get('thumbnailUrl')} />;
+    } if (route.path === 'search-results') {
+      return <SearchResults cityName={route.params.get('cityName')} ratingFilter={route.params.get('ratingFilter')}/>;
     }
   }
 
   render() {
     return (
       <div className="">
-        { this.renderPage}
-        <NavBar />
+          { this.renderPage()}
       </div>
     );
   }
