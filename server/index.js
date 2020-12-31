@@ -14,7 +14,7 @@ app.get('/api/search/:userInput', (req, res, next) => {
     }
   })
     .then(response => response.json())
-    .then(data => res.json(data))
+    .then(data => res.json(data.suggestions[0].entities[0].destinationId))
     .catch(err => {
       next(err);
     });
@@ -31,7 +31,7 @@ app.get('/api/search/list/:cityId/:ratingFilter', (req, res, next) => {
     }
   })
     .then(response => response.json())
-    .then(data => res.json(data))
+    .then(data => res.json(data.data.body.searchResults.results))
     .catch(err => {
       next(err);
     });

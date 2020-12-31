@@ -7,21 +7,21 @@ export default class HotelDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hotelId: this.props.hotelId,
       hotelData: '',
-      isLoading: '',
-      thumbnailUrl: this.props.thumbnailUrl
+      isLoading: true
+
     };
   }
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    fetch(`/api/hotels/${this.state.hotelId}`)
+    fetch(`/api/hotels/${this.props.hotelId}`)
       .then(response => {
         return response.json();
       })
       .then(data => {
         this.setState({ hotelData: data.data.body, isLoading: false });
+
       })
       .catch(err => {
         console.error(err);
@@ -29,24 +29,18 @@ export default class HotelDetails extends React.Component {
   }
 
   render() {
-
     if (this.state.isLoading) return <Loader/>;
-    let hotelName = null;
-    let badge = null;
-    let rating = null;
-    if (this.state.isLoading === false) {
-      hotelName = this.state.hotelData.propertyDescription.name;
-      badge = this.state.hotelData.guestReviews.brands.badgeText;
-      rating = this.state.hotelData.guestReviews.brands.rating;
+    const hotelName = this.state.hotelData.propertyDescription.name;
+    const badge = this.state.hotelData.guestReviews.brands.badgeText;
+    const rating = this.state.hotelData.guestReviews.brands.rating;
 
-    }
     return (
       <div className="vh-75 text-center">
-            HOTEL DETAILS PAGE
+          HOTEL DETAILS PAGE
         <div className="">
           <div className="big-container text-center vh-20 d-flex flex-column align-items-center">
             <p>{hotelName}</p>
-            <img src="https://exp.cdn-hotels.com/hotels/2000000/1580000/1573800/1573788/ebb8666f_l.jpg"></img>
+          <img src="./images/room.jpg"></img>
             <p>{`Average User Rating:${badge} ${rating}/10`}</p>
           </div>
           <div className="accordion vh-85" id="accordionExample">

@@ -28,7 +28,7 @@ export default class App extends React.Component {
     } if (route.path === 'search') {
       return <Search />;
     } if (route.path === 'hotel-details') {
-      return <HotelDetails hotelId={route.params.get('hotelId')} thumbnailUrl={route.params.get('thumbnailUrl')} />;
+      return <HotelDetails hotelId={route.params.get('hotelId')} thumbnailUrl={route.params.get('thumbnailUrl')}/>;
     } if (route.path === 'search-results') {
       return <SearchResults cityName={route.params.get('cityName')} ratingFilter={route.params.get('ratingFilter')}/>;
     }

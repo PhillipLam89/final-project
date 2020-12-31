@@ -2,9 +2,7 @@
 import React from 'react';
 import Loader from './loader';
 import NavBar from './navBar';
-import HotelDetails from './hotelDetails';
-import SearchResults from './searchResults';
-import Home from '../client/pages/home';
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -14,12 +12,10 @@ class Search extends React.Component {
       searchButtonClicked: '',
       ratingFilter: '',
       isLoading: false,
-      userInputError: false,
-      homeButtonClicked: ''
+      userInputError: false
     };
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
-    this.handleHomeClick = this.handleHomeClick.bind(this);
     this.ratingFilter = this.ratingFilter.bind(this);
   }
 
@@ -29,10 +25,6 @@ class Search extends React.Component {
 
   handleUserInput(event) {
     this.setState({ userInput: event.target.value });
-  }
-
-  handleHomeClick() {
-    this.setState({ userInput: '', hotelList: [], searchButtonClicked: '', isLoading: false, userInputError: false, homeButtonClicked: true });
   }
 
   handleSearchClick(event) {
@@ -55,15 +47,8 @@ class Search extends React.Component {
     location.hash = 'search-results?' + params;
   }
 
-  componentDidMount() {
-    location.hash = 'search';
-  }
-
   render() {
     if (this.state.isLoading) return <Loader />;
-    else if (this.state.selectedHotel) return <HotelDetails data={this.state} />;
-    else if (this.state.searchButtonClicked) return <SearchResults data={this.state} />;
-    else if (this.state.homeButtonClicked) return <Home data={this.state}/>;
     const { userInput, userInputError, ratingFilter } = this.state;
     return (
       <div className="search-container">
