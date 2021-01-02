@@ -41,10 +41,12 @@ class Search extends React.Component {
         return this.setState({ userInputError: true });
       }
     }
+
     const params = new URLSearchParams();
     params.append('cityName', this.state.userInput);
     params.append('ratingFilter', this.state.ratingFilter);
     location.hash = 'search-results?' + params;
+
   }
 
   render() {
@@ -56,7 +58,7 @@ class Search extends React.Component {
           <img className="main-pic" src="https://cdn.cnn.com/cnnnext/dam/assets/190903131748-greek-luxury-seaside-hotels---grecotel-mykonos-blu---infinity-pool-1.jpg"></img>
           <header>
             <div>
-              <form onSubmit={this.handleSearchClick} className={'form-inline bg-dark'}>
+              <form onSubmit={this.handleSearchClick} className={`${this.state.userInputError === true ? 'form-inline bg-light form-div tilt' : 'form-inline bg-light form-div '}`}>
                 <input value={userInput} onChange={this.handleUserInput} className="form-control mr-sm-2" type="search" placeholder="city (worldwide)" aria-label="Search"></input>
                 <div className="form-row align-items-center preference-div pl-0.5">
                   <div className="col-auto my-1">

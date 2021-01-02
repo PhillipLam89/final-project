@@ -16,12 +16,8 @@ export default class SearchResults extends React.Component {
         return response.json();
       })
       .then(data => {
-        const cityId = data;
-        fetch(`/api/search/list/${cityId}/${this.state.ratingFilter}`).then(response => response.json()).then(data => {
-          const hotelList = data;
-          this.setState({ hotelList: hotelList, searchButtonClicked: 'hidden', isLoading: false, ratingFilter: this.state.ratingFilter });
-        })
-          .catch(err => console.error(err));
+        const hotelList = data;
+        this.setState({ hotelList: hotelList, searchButtonClicked: 'hidden', isLoading: false, ratingFilter: this.state.ratingFilter });
       })
       .catch(err => {
         console.error(err);
@@ -30,15 +26,14 @@ export default class SearchResults extends React.Component {
 
   render() {
     if (this.state.isLoading) return <Loader />;
-    let displayedList = null;
     const hotelList = this.state.hotelList;
 
-    displayedList = hotelList.map((hotel, idx) => {
+    const displayedList = hotelList.map((hotel, idx) => {
       return (
-          <div className="hotel-display-div text-center d-flex flex-column justify-content-center align-items-center" key={hotel.supplierHotelId}>
-            <a href={`#hotel-details?hotelId=${hotelList[idx].id}?thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
-            <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
-          </div>
+        <div className="hotel-display-div text-center d-flex flex-column justify-content-center align-items-center" key={hotel.supplierHotelId}>
+          <a href={`#hotel-details?hotelId=${hotelList[idx].id}?thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
+          <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
+        </div>
       );
     });
 
@@ -50,7 +45,7 @@ export default class SearchResults extends React.Component {
             <div className="hotel-list d-flex flex-column p-1.5">{displayedList}</div>
           </main>
         </div>
-        <NavBar/>
+        <NavBar />
       </div>
     );
   }

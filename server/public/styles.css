@@ -4,8 +4,10 @@
 }
 
 .main-pic {
-  height: 90vh;
+  display: block;
   width: 100%;
+  height: 625px;
+  object-fit: fill;
 }
 
 nav {
@@ -21,7 +23,14 @@ nav > img {
 }
 
 .hotel-display-div img {
-  width: 200px;
+  width: 10rem;
+}
+
+.form-div {
+  opacity: 0.75;
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 2px solid lightcyan;
 }
 
 nav > img:hover {
@@ -47,7 +56,7 @@ nav > img:active {
 
 header {
   border-radius: 5px;
-  height: 10vh;
+  height: 100px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -62,17 +71,25 @@ div > h3 {
   border-bottom: 10px solid goldenrod;
 }
 
+.hotel-img {
+  size: 2px;
+}
+
 .hotel-list {
   width: 100%;
-  height: 75vh;
+  height: 500px;
   background-color: lightcyan;
   overflow: auto;
   align-items: center;
 }
 
+.display-list-div {
+  height: 400px;
+}
+
 .hotel-name {
   max-width: 400px;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: bolder;
   overflow: auto;
 }
@@ -134,19 +151,10 @@ div > h3 {
   color: red;
 }
 
-.bottom-navs {
-  position: fixed;
-  width: 100%;
-  height: 10vh;
-  border-radius: 0;
-  background-image: linear-gradient(#f8a170, #ffcd61);
-  z-index: 999;
-}
-
 .loader-container {
   background-image: linear-gradient(#f8a170, #ffcd61);
   display: flex;
-  height: 100vh;
+  height: 900px;
   justify-content: center;
   align-items: center;
 }
@@ -181,18 +189,9 @@ div > h3 {
 }
 
 .bottom-nav-abs {
-  position: fixed;
-  bottom: 0 !important;
-  width: 100%;
-  height: 15vh;
-  border-radius: 0;
+  height: 100px;
   background-image: linear-gradient(#f8a170, #ffcd61);
-  z-index: 999;
-}
-
-.filler {
-  height: 30vh;
-  background-color: lightcyan;
+  z-index: 1;
 }
 
 @keyframes tilt {
