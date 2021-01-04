@@ -1,8 +1,16 @@
 import React from 'react';
+import NavBar from '../navBar';
+export default class Home extends React.Component {
 
-export default function Home(props) {
-  return (
-    <>
-    </>
-  );
+  render() {
+    return (
+      <>
+        <main className="home vh-100 text-center">
+          HOME PAGE
+            <img className="main-pic" src="./images/homeImg.jpg"></img>
+        </main>
+        <NavBar />
+      </>
+    );
+  }
 }

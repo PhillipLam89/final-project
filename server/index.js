@@ -1,3 +1,4 @@
+
 require('dotenv/config');
 const express = require('express');
 const fetch = require('node-fetch');
@@ -14,16 +15,26 @@ app.get('/api/search/:userInput', (req, res, next) => {
     }
   })
     .then(response => response.json())
-    .then(data => res.json(data))
+    .then(data => {
+      const cityId = data.suggestions[0].entities[0].destinationId;
+      return fetch(`https://hotels4.p.rapidapi.com/properties/list?destinationId=${cityId}&pageNumber=1&checkIn=2020-01-08&checkOut=2020-01-15&pageSize=25&adults1=1&currency=USD&starRatings=5&locale=en_US&sortOrder=PRICE`, {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-key': `${process.env.API_KEY}`,
+          'x-rapidapi-host': 'hotels4.p.rapidapi.com'
+        }
+      })
+        .then(response => response.json())
+        .then(data => res.json(data.data.body.searchResults.results));
+    })
     .catch(err => {
       next(err);
     });
 });
 
-app.get('/api/search/list/:cityId/:ratingFilter', (req, res, next) => {
-  const cityId = req.params.cityId;
-  const ratingFilter = req.params.ratingFilter;
-  fetch(`https://hotels4.p.rapidapi.com/properties/list?destinationId=${cityId}&pageNumber=1&checkIn=2020-01-08&checkOut=2020-01-15&pageSize=25&adults1=1&currency=USD&starRatings=${ratingFilter}&locale=en_US&sortOrder=PRICE`, {
+app.get('/api/hotels/:hotelId', (req, res, next) => {
+  const hotelId = req.params.hotelId;
+  fetch(`https://hotels4.p.rapidapi.com/properties/get-details?id=${hotelId}&locale=en_US&currency=USD&checkOut=2020-01-15&adults1=1&checkIn=2020-01-08`, {
     method: 'GET',
     headers: {
       'x-rapidapi-key': `${process.env.API_KEY}`,
