@@ -17,7 +17,7 @@ app.get('/api/search/:userInput', (req, res, next) => {
     .then(response => response.json())
     .then(data => {
       const cityId = data.suggestions[0].entities[0].destinationId;
-      return fetch(`https://hotels4.p.rapidapi.com/properties/list?destinationId=${cityId}&pageNumber=1&checkIn=2020-01-08&checkOut=2020-01-15&pageSize=25&adults1=1&currency=USD&starRatings=$5&locale=en_US&sortOrder=PRICE`, {
+      return fetch(`https://hotels4.p.rapidapi.com/properties/list?destinationId=${cityId}&pageNumber=1&checkIn=2020-01-08&checkOut=2020-01-15&pageSize=25&adults1=1&currency=USD&starRatings=5&locale=en_US&sortOrder=PRICE`, {
         method: 'GET',
         headers: {
           'x-rapidapi-key': `${process.env.API_KEY}`,

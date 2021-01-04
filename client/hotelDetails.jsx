@@ -8,8 +8,8 @@ export default class HotelDetails extends React.Component {
     super(props);
     this.state = {
       hotelData: '',
-      isLoading: true
-
+      isLoading: true,
+      favorited: false
     };
   }
 
@@ -29,18 +29,20 @@ export default class HotelDetails extends React.Component {
   }
 
   render() {
-    if (this.state.isLoading) return <Loader/>;
+    if (this.state.isLoading) return <Loader />;
     const hotelName = this.state.hotelData.propertyDescription.name;
     const badge = this.state.hotelData.guestReviews.brands.badgeText;
     const rating = this.state.hotelData.guestReviews.brands.rating;
-
+    console.log('hotel id: ', this.props.hotelId)
     return (
       <div className="vh-75 text-center">
-          HOTEL DETAILS PAGE
+        HOTEL DETAILS PAGE
         <div className="">
           <div className="big-container text-center vh-20 d-flex flex-column align-items-center">
             <p>{hotelName}</p>
-          <img src="./images/room.jpg"></img>
+            <button onClick={() => this.setState({ favorited: !this.state.favorited })} className="fav-button"><p className="pt-2 pr-2 fav-img">{this.state.favorited ? `✓` : 'fav'}</p></button>
+            <p className={this.state.favorited ? "text-muted" : "d-none"}>added to favorites</p>
+            <img className="property-img" src="./images/room.jpg"></img>
             <p>{`Average User Rating:${badge} ${rating}/10`}</p>
           </div>
           <div className="accordion vh-85" id="accordionExample">
