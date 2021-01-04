@@ -11,6 +11,12 @@ export default class HotelDetails extends React.Component {
       isLoading: true,
       favorited: false
     };
+    this.handleFavorites = this.handleFavorites.bind(this);
+  }
+
+  handleFavorites(e) {
+    e.preventDefault();
+    this.setState({ favorited: !this.state.favorited });
   }
 
   componentDidMount() {
@@ -20,8 +26,8 @@ export default class HotelDetails extends React.Component {
         return response.json();
       })
       .then(data => {
-        this.setState({ hotelData: data.data.body, isLoading: false });
 
+        this.setState({ hotelData: data.data.body, isLoading: false });
       })
       .catch(err => {
         console.error(err);
@@ -33,30 +39,78 @@ export default class HotelDetails extends React.Component {
     const hotelName = this.state.hotelData.propertyDescription.name;
     const badge = this.state.hotelData.guestReviews.brands.badgeText;
     const rating = this.state.hotelData.guestReviews.brands.rating;
-    console.log('hotel id: ', this.props.hotelId)
+
+    const aboutList = this.state.hotelData.atAGlance.keyFacts.arrivingLeaving.map((hotelFact, idx) => {
+      return (
+          <p key={idx} className="policies">{hotelFact}</p>
+      );
+    });
+
+    const hotelSize = this.state.hotelData.atAGlance.keyFacts.hotelSize.map((hotelSizeFact, idx) => {
+      return (
+          <p key={idx} className="policies">{hotelSizeFact}</p>
+      );
+    });
+
+    const hotelRoomTypes = this.state.hotelData.propertyDescription.roomTypeNames.map((roomName, idx) => {
+      return (
+        <p key={idx} className="">{`${roomName}`}</p>
+      );
+    });
+
+    const hotelDiningInfo = this.state.hotelData.amenities[0].listItems[1].listItems;
+    const hotelDiningServices = hotelDiningInfo.map((diningService, idx) => {
+      return (
+        <p key={idx} className="">{`${diningService}`}</p>
+      );
+    });
+
+    const averagePrice = this.state.hotelData.propertyDescription.featuredPrice.oldPrice;
+    const address = this.state.hotelData.propertyDescription.address.addressLine1 + ', ' + this.state.hotelData.propertyDescription.address.cityName + ', ' + this.state.hotelData.propertyDescription.address.countryName;
+
+    const hotelAmenities = this.state.hotelData.amenities[0].listItems;
+    const amenityListHotel = hotelAmenities.map((amenity, idx) => {
+      return (
+        <p key={idx} className="">{`${amenity.listItems}`}</p>
+      );
+    });
+
+    const roomAmenities = this.state.hotelData.amenities[1].listItems;
+    const amenityList = roomAmenities.map((amenity, idx) => {
+
+      return (
+        <p key={idx} className="">{`${amenity.listItems} `}</p>
+      );
+    });
+
     return (
       <div className="vh-75 text-center">
         HOTEL DETAILS PAGE
         <div className="">
           <div className="big-container text-center vh-20 d-flex flex-column align-items-center">
             <p>{hotelName}</p>
-            <button onClick={() => this.setState({ favorited: !this.state.favorited })} className="fav-button"><p className="pt-2 pr-2 fav-img">{this.state.favorited ? `✓` : 'fav'}</p></button>
-            <p className={this.state.favorited ? "text-muted" : "d-none"}>added to favorites</p>
-            <img className="property-img" src="./images/room.jpg"></img>
+            <button onClick={this.handleFavorites} className="fav-button"><p className="pt-2 pr-2 fav-img">{this.state.favorited ? '✓' : 'fav'}</p></button>
+            <p className={this.state.favorited ? 'text-muted' : 'd-none'}>added to favorites</p>
+
             <p>{`Average User Rating:${badge} ${rating}/10`}</p>
+            <p>Average Price: {averagePrice}</p>
+            <p style={{ color: 'red' }}>{address}</p>
           </div>
-          <div className="accordion vh-85" id="accordionExample">
+          <div className="accordion" id="accordionExample">
             <div className="card">
               <div className="card-header" id="headingOne">
                 <h2 className="mb-0">
                   <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    About
+                    Hotel Fact Sheet
                   </button>
                 </h2>
               </div>
               <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div className="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.
+                  {aboutList}
+                  {hotelSize}
+                  <span style={{ color: 'red' }}>Room Types Available: </span>
+                  <span>{hotelRoomTypes}</span>
                </div>
               </div>
             </div>
@@ -70,7 +124,7 @@ export default class HotelDetails extends React.Component {
               </div>
               <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div className="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.
+                  {hotelDiningServices}
                 </div>
               </div>
             </div>
@@ -84,7 +138,10 @@ export default class HotelDetails extends React.Component {
               </div>
               <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                 <div className="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.
+                  <span style={{ color: 'red' }}>In the Hotel: </span>
+                  {amenityListHotel}
+                  <span style={{ color: 'red' }}>In the Room: </span>
+                  {amenityList}
                </div>
               </div>
             </div>

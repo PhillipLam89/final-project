@@ -5,6 +5,7 @@ import Search from './search';
 import parseRoute from './lib/parse-route';
 import HotelDetails from './hotelDetails';
 import SearchResults from './searchResults';
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
