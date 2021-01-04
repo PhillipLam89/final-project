@@ -36,6 +36,7 @@ export default class HotelDetails extends React.Component {
 
   render() {
     if (this.state.isLoading) return <Loader />;
+
     const hotelName = this.state.hotelData.propertyDescription.name;
     const badge = this.state.hotelData.guestReviews.brands.badgeText;
     const rating = this.state.hotelData.guestReviews.brands.rating;
@@ -65,7 +66,7 @@ export default class HotelDetails extends React.Component {
       );
     });
 
-    const averagePrice = this.state.hotelData.propertyDescription.featuredPrice.oldPrice;
+    const averagePrice = this.state.hotelData.propertyDescription.featuredPrice.currentPrice.formatted;
     const address = this.state.hotelData.propertyDescription.address.addressLine1 + ', ' + this.state.hotelData.propertyDescription.address.cityName + ', ' + this.state.hotelData.propertyDescription.address.countryName;
 
     const hotelAmenities = this.state.hotelData.amenities[0].listItems;
