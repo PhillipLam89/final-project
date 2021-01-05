@@ -33,7 +33,7 @@ export default class App extends React.Component {
     } if (route.path === 'search-results') {
       return <SearchResults cityName={route.params.get('cityName')} ratingFilter={route.params.get('ratingFilter')}/>;
     } if (route.path === 'favorites') {
-      return <Favorites hotelId={route.params.get('hotelId')} />;
+      return <Favorites />;
     }
   }
 

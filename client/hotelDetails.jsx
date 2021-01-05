@@ -26,6 +26,7 @@ export default class HotelDetails extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ favorited: !this.state.favorited });
+
       })
       .catch(error => {
         console.error('Error:', error);

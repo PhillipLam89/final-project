@@ -53,19 +53,52 @@ app.use(errorMiddleware);
 app.post('/api/favorites/:userId/:hotelId', (req, res, next) => {
   const hotelId = req.params.hotelId;
   const userId = req.params.userId;
+  let hotelName = ''
+        //gets name of hotel from ID
+  fetch(`https://hotels4.p.rapidapi.com/properties/get-details?id=${hotelId}&locale=en_US&currency=USD&checkOut=2020-01-15&adults1=1&checkIn=2020-01-08`, {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-key': `${process.env.API_KEY}`,
+      'x-rapidapi-host': 'hotels4.p.rapidapi.com'
+     }
+   })
+    .then(response => response.json())
+    .then(data => {
+      hotelName = data.data.body.propertyDescription.name
+      const sql = `
+        insert into "favorites" ("hotelId","userId","hotelName")
+        values ($1, $2, $3)
+        returning *
+      `;
+      const params = [hotelId, userId, hotelName];
+      return db.query(sql, params)
+        .then(result => {
+          const [fav] = result.rows;
+          res.status(201).json(fav);
+        })
+        .catch(err => next(err));
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.get('/api/:userId/favorites', (req, res, next) => {
+  const userId = req.params.userId;
+
   const sql = `
-    insert into "favorites" ("hotelId","userId")
-    values ($1, $2)
-    returning *
-  `;
-  const params = [hotelId, userId];
-  db.query(sql, params)
+        select "hotelName" from "favorites"
+      `;
+  return db.query(sql)
     .then(result => {
-      const [fav] = result.rows;
-      res.status(201).json(fav);
+      res.status(201).json(result.rows);
     })
     .catch(err => next(err));
+
+
 });
+
+
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console

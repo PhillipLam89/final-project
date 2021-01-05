@@ -28,7 +28,8 @@ CREATE TABLE "reviews" (
 
 CREATE TABLE "favorites" (
 	"hotelId" integer NOT NULL UNIQUE,
-	"userId" integer NOT NULL
+	"userId" integer NOT NULL,
+	"hotelName" text NOT NULL
 ) WITH (
   OIDS=FALSE
 );
