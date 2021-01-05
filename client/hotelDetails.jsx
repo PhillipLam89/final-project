@@ -2,6 +2,7 @@
 import React from 'react';
 import NavBar from './navBar';
 import Loader from './loader';
+import fetch from 'node-fetch';
 
 export default class HotelDetails extends React.Component {
   constructor(props) {
@@ -16,7 +17,20 @@ export default class HotelDetails extends React.Component {
 
   handleFavorites(e) {
     e.preventDefault();
-    this.setState({ favorited: !this.state.favorited });
+    fetch(`/api/favorites/1/${this.props.hotelId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ favorited: !this.state.favorited });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
   }
 
   componentDidMount() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Home from './pages/home';
-
+import Favorites from './favorites';
 import Search from './search';
 import parseRoute from './lib/parse-route';
 import HotelDetails from './hotelDetails';
@@ -29,9 +29,11 @@ export default class App extends React.Component {
     } if (route.path === 'search') {
       return <Search />;
     } if (route.path === 'hotel-details') {
-      return <HotelDetails hotelId={route.params.get('hotelId')} thumbnailUrl={route.params.get('thumbnailUrl')}/>;
+      return <HotelDetails hotelId={route.params.get('hotelId')}/>;
     } if (route.path === 'search-results') {
       return <SearchResults cityName={route.params.get('cityName')} ratingFilter={route.params.get('ratingFilter')}/>;
+    } if (route.path === 'favorites') {
+      return <Favorites hotelId={route.params.get('hotelId')} />;
     }
   }
 
