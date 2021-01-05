@@ -1,7 +1,4 @@
-set client_min_messages to warning;
 
--- DANGER: this is NOT how to do it in the real world.
--- `drop schema` INSTANTLY ERASES EVERYTHING.
 drop schema "public" cascade;
 
 create schema "public";
@@ -20,7 +17,7 @@ CREATE TABLE "UserInfo" (
 CREATE TABLE "reviews" (
 	"reviewId" serial NOT NULL,
 	"hotelName" TEXT NOT NULL,
-	"userID" TEXT NOT NULL,
+	"userId" integer NOT NULL,
 	"reviewContent" TEXT NOT NULL,
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("reviewId")
 ) WITH (
@@ -30,8 +27,8 @@ CREATE TABLE "reviews" (
 
 
 CREATE TABLE "favorites" (
-	"hotelName" TEXT NOT NULL UNIQUE,
-	"userID" TEXT NOT NULL
+	"hotelId" integer NOT NULL UNIQUE,
+	"userId" integer NOT NULL
 ) WITH (
   OIDS=FALSE
 );
@@ -40,7 +37,7 @@ CREATE TABLE "favorites" (
 
 CREATE TABLE "comment Replies" (
 	"commentId" serial NOT NULL,
-	"userID" serial NOT NULL,
+	"userId" serial NOT NULL,
 	"commentContent" TEXT NOT NULL,
 	CONSTRAINT "comment Replies_pk" PRIMARY KEY ("commentId")
 ) WITH (
@@ -50,8 +47,8 @@ CREATE TABLE "comment Replies" (
 
 
 
-ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("userID") REFERENCES "UserInfo"("userId");
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("userId") REFERENCES "UserInfo"("userId");
 
-ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk0" FOREIGN KEY ("userID") REFERENCES "UserInfo"("userId");
+ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk0" FOREIGN KEY ("userId") REFERENCES "UserInfo"("userId");
 
-ALTER TABLE "comment Replies" ADD CONSTRAINT "comment Replies_fk0" FOREIGN KEY ("userID") REFERENCES "UserInfo"("userId");
+ALTER TABLE "comment Replies" ADD CONSTRAINT "comment Replies_fk0" FOREIGN KEY ("userId") REFERENCES "UserInfo"("userId");

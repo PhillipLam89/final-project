@@ -3,7 +3,7 @@ require('dotenv/config');
 const express = require('express');
 const fetch = require('node-fetch');
 const errorMiddleware = require('./error-middleware');
-
+const db = require('./db');
 const app = express();
 app.get('/api/search/:userInput', (req, res, next) => {
   const userInput = req.params.userInput;
@@ -49,6 +49,23 @@ app.get('/api/hotels/:hotelId', (req, res, next) => {
 });
 
 app.use(errorMiddleware);
+
+app.post('/api/favorites/:userId/:hotelId', (req, res, next) => {
+  const hotelId = req.params.hotelId;
+  const userId = req.params.userId;
+  const sql = `
+    insert into "favorites" ("hotelId","userId")
+    values ($1, $2)
+    returning *
+  `;
+  const params = [hotelId, userId];
+  db.query(sql, params)
+    .then(result => {
+      const [fav] = result.rows;
+      res.status(201).json(fav);
+    })
+    .catch(err => next(err));
+});
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
