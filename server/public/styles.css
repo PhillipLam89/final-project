@@ -242,9 +242,12 @@ div > h3 {
 .fav-hotel-div {
   overflow: auto;
 }
+
+
+
 @keyframes fade1 {
   from { opacity: 1 }
-  to { opacity: 0} }
+  to { opacity: 0}
 }
 
 @keyframes tilt {

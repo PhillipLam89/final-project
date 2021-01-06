@@ -11,7 +11,7 @@ export default class SearchResults extends React.Component {
 
   componentDidMount() {
 
-    fetch(`/api/search/${this.props.cityName}`)
+    fetch(`/api/search/${this.props.cityName}/${this.props.ratingFilter}`)
       .then(response => {
         return response.json();
       })

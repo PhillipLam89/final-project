@@ -9,29 +9,21 @@ export default class Favorites extends React.Component {
     super(props);
     this.state = {
       favoritesData: '',
-      isLoading: true
+      isLoading: true,
+      removalId: ''
+
     };
     this.handleRemove = this.handleRemove.bind(this)
   }
 
   handleRemove(e) {
     e.preventDefault()
-    e.target.parentElement.className = 'fade1'
     let removalId = null
-    let removalName = null
     const data = this.state.favoritesData
-
-
     for (let i = 0; i < data.length; i ++) {
-      if (data[i].hotelName === e.target.parentElement.innerText) {
-        removalName = e.target.parentElement.innerText
-        break
-      }
-    }
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].hotelName === removalName) {
+      if (data[i].hotelId === Number(e.target.dataset.hotelId)) {
         removalId = data[i].hotelId
-        break
+        break;
       }
     }
 
@@ -43,7 +35,10 @@ export default class Favorites extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false, removalId: removalId, favoritesData : this.state.favoritesData});
+        setTimeout(function() {
+          location.reload()
+        } ,2000)
       })
       .catch(error => {
         console.error('Error:', error);
@@ -71,10 +66,9 @@ export default class Favorites extends React.Component {
     if (this.state.favoritesData) {
       const favoriteHotels = this.state.favoritesData.map((info, idx) => {
         return (
-          <div key={idx} className={`policies text-center ${idx}`}>{info.hotelName}<img onClick={this.handleRemove} className={`pl-3 mb-1 trash-icon`} width="35rem" src="./images/trash.png"></img></div>
+          <div key={idx}  className={this.state.removalId === this.state.favoritesData[idx].hotelId ? 'fade1': ''}>{info.hotelName}<img data-hotel-id={this.state.favoritesData[idx].hotelId} onClick={this.handleRemove} className={`pl-3 mb-1 trash-icon`} width="35rem" src="./images/trash.png"></img></div>
         );
       });
-
       return (
         <div className="result-container vh-100  pt-3 d-block d-flex flex-column text-center">
           <h2 className="mb-2 fav">Favorites <img src="./images/red-heart.png" className="fav-button"></img></h2>

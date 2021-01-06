@@ -41,7 +41,6 @@ export default class HotelDetails extends React.Component {
         return response.json();
       })
       .then(data => {
-
         this.setState({ hotelData: data.data.body, isLoading: false });
       })
       .catch(err => {
