@@ -84,10 +84,10 @@ app.post('/api/favorites/:userId/:hotelId', (req, res, next) => {
 });
 
 app.get('/api/:userId/favorites', (req, res, next) => {
-  const userId = req.params.userId;
+  const {userId} = req.params
 
   const sql = `
-        select "hotelName" from "favorites"
+        select "hotelName", "hotelId" from "favorites"
       `;
   return db.query(sql)
     .then(result => {
@@ -97,7 +97,19 @@ app.get('/api/:userId/favorites', (req, res, next) => {
 
 
 });
+app.delete('/api/:userId/:hotelId', (req, res, next) => {
+  const {userInput, hotelId} = req.params
+  const sql = `
+        delete from "favorites"
+        where "hotelId" = ${hotelId}
+      `;
+  return db.query(sql)
+    .then(result => {
+      res.status(201).json(result.rows);
+    })
+    .catch(err => next(err));
 
+});
 
 
 app.listen(process.env.PORT, () => {
