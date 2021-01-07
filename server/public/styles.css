@@ -243,7 +243,9 @@ div > h3 {
   overflow: auto;
 }
 
-
+.registration-container {
+  background-color: lightcyan;
+}
 
 @keyframes fade1 {
   from { opacity: 1 }

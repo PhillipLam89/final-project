@@ -5,7 +5,8 @@ create schema "public";
 
 CREATE TABLE "UserInfo" (
 	"userId" serial NOT NULL,
-	"email" TEXT NOT NULL,
+	"fullName" TEXT NOT NULL,
+	"userName" TEXT NOT NULL UNIQUE,
 	"password" TEXT NOT NULL,
 	CONSTRAINT "UserInfo_pk" PRIMARY KEY ("userId")
 ) WITH (

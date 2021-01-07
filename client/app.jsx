@@ -5,6 +5,8 @@ import Search from './search';
 import parseRoute from './lib/parse-route';
 import HotelDetails from './hotelDetails';
 import SearchResults from './searchResults';
+import Registration from './registration'
+import LogIn from './logIn';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -34,9 +36,12 @@ export default class App extends React.Component {
       return <SearchResults cityName={route.params.get('cityName')} ratingFilter={route.params.get('ratingFilter')}/>;
     } if (route.path === 'favorites') {
       return <Favorites />;
+    } if (route.path === 'register') {
+      return <Registration />;
+    } if (route.path === 'login') {
+      return <LogIn />
     }
   }
-
   render() {
     return (
       <div className="">

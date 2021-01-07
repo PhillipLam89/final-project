@@ -6,13 +6,46 @@ const errorMiddleware = require('./error-middleware');
 const db = require('./db');
 const app = express();
 const bodyParser = require('body-parser')
-
+const ClientError = require('./client-error');
+const argon2 = require('argon2')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
+
+
+app.post('/api/sign-up', (req, res, next) => {
+  const { username, password, fullName } = req.body;
+  if (username.length < 5 || password.length <5 ) {
+    throw new ClientError(400, 'user name and password MUST be 5 or more characters long');
+  }
+  argon2
+    .hash(password)
+    .then(hashedPassword => {
+      const sql = `
+        insert into "UserInfo" ("fullName", "userName", "password")
+        values ($1, $2, $3)
+        returning "userId"
+      `;
+      const params = [fullName, username, hashedPassword];
+      return db.query(sql, params)
+        .then(result => {
+          const [userId] = result.rows;
+          res.status(201).json(userId);
+        });
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+
+
+
+
+
 app.get('/api/search/:userInput/:ratingFilter', (req, res, next) => {
-  const {userInput, ratingFilter} = req.params
+  const { userInput, ratingFilter } = req.params
   fetch(`https://hotels4.p.rapidapi.com/locations/search?query=${userInput}&locale=en_US`, {
     method: 'GET',
     headers: {
@@ -55,7 +88,7 @@ app.get('/api/hotels/:hotelId', (req, res, next) => {
 });
 
 app.get('/api/:userId/favorites', (req, res, next) => {
-  const {userId} = req.params
+  const { userId } = req.params
 
   const sql = `
         select "hotelName", "hotelId" from "favorites"
@@ -72,13 +105,13 @@ app.get('/api/:userId/favorites', (req, res, next) => {
 app.use(errorMiddleware);
 
 app.delete('/api/:userId/:hotelId', (req, res, next) => {
-  const {hotelId} = req.params
+  const { hotelId } = req.params
   const sql = `
         delete from "favorites"
         where "hotelId" = $1
       `;
-    const params = [hotelId]
-  return db.query(sql,params)
+  const params = [hotelId]
+  return db.query(sql, params)
     .then(result => {
       const [deleted] = result.rows
       res.json(deleted)
@@ -91,20 +124,20 @@ app.delete('/api/:userId/:hotelId', (req, res, next) => {
 });
 
 
-app.post('/api/favorites/:userId/:hotelId', (req, res, next) => {
-  const { userId, hotelId } = req.params
-  const hotelName = req.body.hotelName
-      const sql = `
+app.post('/api/favorites/:userId/', (req, res, next) => {
+  const { userId } = req.params
+  const { hotelId, hotelName } = req.body
+  const sql = `
         insert into "favorites" ("hotelId","userId","hotelName")
         values ($1, $2, $3)
         returning *
       `;
-      const params = [hotelId, userId, hotelName];
-      return db.query(sql, params)
-        .then(result => {
-          const [fav] = result.rows;
-          res.json(fav);
-        })
+  const params = [hotelId, userId, hotelName];
+  return db.query(sql, params)
+    .then(result => {
+      const [fav] = result.rows;
+      res.json(fav);
+    })
     .catch(err => {
       next(err);
     });

@@ -17,15 +17,15 @@ export default class HotelDetails extends React.Component {
 
   handleFavorites(e) {
     e.preventDefault();
-    fetch(`/api/favorites/1/${this.props.hotelId}`, {
+    fetch(`/api/favorites/1/`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body : JSON.stringify({
+      body: JSON.stringify({
         "hotelName": this.state.hotelData.propertyDescription.name,
-        "hotelId" : this.props.hotelId
+        "hotelId": this.props.hotelId
       })
     })
       .then(response => response.json())
@@ -61,13 +61,13 @@ export default class HotelDetails extends React.Component {
 
     const aboutList = this.state.hotelData.atAGlance.keyFacts.arrivingLeaving.map((hotelFact, idx) => {
       return (
-          <p key={idx} className="policies">{hotelFact}</p>
+        <p key={idx} className="policies">{hotelFact}</p>
       );
     });
 
     const hotelSize = this.state.hotelData.atAGlance.keyFacts.hotelSize.map((hotelSizeFact, idx) => {
       return (
-          <p key={idx} className="policies">{hotelSizeFact}</p>
+        <p key={idx} className="policies">{hotelSizeFact}</p>
       );
     });
 
@@ -130,7 +130,7 @@ export default class HotelDetails extends React.Component {
                   {hotelSize}
                   <span style={{ color: 'red' }}>Room Types Available: </span>
                   <span>{hotelRoomTypes}</span>
-               </div>
+                </div>
               </div>
             </div>
             <div className="card">
@@ -161,7 +161,7 @@ export default class HotelDetails extends React.Component {
                   {amenityListHotel}
                   <span style={{ color: 'red' }}>In the Room: </span>
                   {amenityList}
-               </div>
+                </div>
               </div>
             </div>
           </div>
