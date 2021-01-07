@@ -5,6 +5,12 @@ const fetch = require('node-fetch');
 const errorMiddleware = require('./error-middleware');
 const db = require('./db');
 const app = express();
+const bodyParser = require('body-parser')
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.get('/api/search/:userInput/:ratingFilter', (req, res, next) => {
   const {userInput, ratingFilter} = req.params
   fetch(`https://hotels4.p.rapidapi.com/locations/search?query=${userInput}&locale=en_US`, {
@@ -48,40 +54,6 @@ app.get('/api/hotels/:hotelId', (req, res, next) => {
     });
 });
 
-app.use(errorMiddleware);
-
-app.post('/api/favorites/:userId/:hotelId', (req, res, next) => {
-  const {userId, hotelId} = req.params
-
-  let hotelName = ''
-        //gets name of hotel from ID
-  fetch(`https://hotels4.p.rapidapi.com/properties/get-details?id=${hotelId}&locale=en_US&currency=USD&checkOut=2020-01-15&adults1=1&checkIn=2020-01-08`, {
-    method: 'GET',
-    headers: {
-      'x-rapidapi-key': `${process.env.API_KEY}`,
-      'x-rapidapi-host': 'hotels4.p.rapidapi.com'
-     }
-   })
-    .then(response => response.json())
-    .then(data => {
-      hotelName = data.data.body.propertyDescription.name
-      const sql = `
-        insert into "favorites" ("hotelId","userId","hotelName")
-        values ($1, $2, $3)
-        returning *
-      `;
-      const params = [hotelId, userId, hotelName];
-      return db.query(sql, params)
-        .then(result => {
-          const [fav] = result.rows;
-          res.json(fav);
-        })
-    })
-    .catch(err => {
-      next(err);
-    });
-});
-
 app.get('/api/:userId/favorites', (req, res, next) => {
   const {userId} = req.params
 
@@ -97,16 +69,20 @@ app.get('/api/:userId/favorites', (req, res, next) => {
     });
 
 });
+app.use(errorMiddleware);
+
 app.delete('/api/:userId/:hotelId', (req, res, next) => {
-  const {userInput, hotelId} = req.params
+  const {hotelId} = req.params
   const sql = `
         delete from "favorites"
-        where "hotelId" = ${hotelId}
+        where "hotelId" = $1
       `;
-  return db.query(sql)
+    const params = [hotelId]
+  return db.query(sql,params)
     .then(result => {
-      res.json(result.rows)
-      res.status(200)
+      const [deleted] = result.rows
+      res.json(deleted)
+      res.status(204)
     })
     .catch(err => {
       next(err);
@@ -115,6 +91,24 @@ app.delete('/api/:userId/:hotelId', (req, res, next) => {
 });
 
 
+app.post('/api/favorites/:userId/:hotelId', (req, res, next) => {
+  const { userId, hotelId } = req.params
+  const hotelName = req.body.hotelName
+      const sql = `
+        insert into "favorites" ("hotelId","userId","hotelName")
+        values ($1, $2, $3)
+        returning *
+      `;
+      const params = [hotelId, userId, hotelName];
+      return db.query(sql, params)
+        .then(result => {
+          const [fav] = result.rows;
+          res.json(fav);
+        })
+    .catch(err => {
+      next(err);
+    });
+});
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);

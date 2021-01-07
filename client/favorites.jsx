@@ -10,7 +10,7 @@ export default class Favorites extends React.Component {
     this.state = {
       favoritesData: '',
       isLoading: true,
-      removalId: []
+      filteredFavorites: []
 
     };
     this.handleRemove = this.handleRemove.bind(this)
@@ -19,26 +19,18 @@ export default class Favorites extends React.Component {
   handleRemove(e) {
     e.preventDefault()
     let removalId = ''
-    let copy = ''
-    const data = this.state.favoritesData
-    for (let i = 0; i < data.length; i ++) {
-      if (data[i].hotelId === Number(e.target.dataset.hotelId)) {
-        removalId = data[i].hotelId
-        copy = [...this.state.removalId]
-        copy.push(removalId)
-        break;
-      }
-    }
-
+    const filteredFavorites = this.state.favoritesData.filter(favorite => {
+      if (favorite.hotelId === Number(e.target.dataset.hotelId)) removalId = favorite.hotelId
+      return favorite.hotelId !== Number(e.target.dataset.hotelId)
+    });
     fetch(`/api/1/${removalId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json())
       .then(data => {
-        this.setState({ isLoading: false, removalId: copy, favoritesData : this.state.favoritesData});
+        this.setState({ isLoading: false,  favoritesData : filteredFavorites});
       })
       .catch(error => {
         console.error('Error:', error);
@@ -66,7 +58,7 @@ export default class Favorites extends React.Component {
     if (this.state.favoritesData) {
       const favoriteHotels = this.state.favoritesData.map((info, idx) => {
         return (
-          <div key={idx} className={this.state.removalId.includes(info.hotelId) ? 'fade1' : ''}>{info.hotelName}<img data-hotel-id={info.hotelId} onClick={this.handleRemove} className={`pl-3 mb-1 trash-icon`} width="35rem" src="./images/trash.png"></img></div>
+          <div key={idx} className="">{info.hotelName}<img data-hotel-id={info.hotelId} onClick={this.handleRemove} className={`pl-3 mb-1 trash-icon`} width="35rem" src="./images/trash.png"></img></div>
         );
       });
       return (

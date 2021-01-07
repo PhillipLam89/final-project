@@ -10,7 +10,6 @@ export default class SearchResults extends React.Component {
   }
 
   componentDidMount() {
-
     fetch(`/api/search/${this.props.cityName}/${this.props.ratingFilter}`)
       .then(response => {
         return response.json();
@@ -27,7 +26,6 @@ export default class SearchResults extends React.Component {
   render() {
     if (this.state.isLoading) return <Loader />;
     const hotelList = this.state.hotelList;
-
     const displayedList = hotelList.map((hotel, idx) => {
       return (
         <div className="hotel-display-div text-center d-flex flex-column justify-content-center align-items-center" key={hotel.supplierHotelId}>
@@ -36,7 +34,6 @@ export default class SearchResults extends React.Component {
         </div>
       );
     });
-
     return (
       <div className="result-container d-flex justify-content-center ">
         <div className="arrow-div align-items-center pt-2 d-flex justify-content-center w-100">
