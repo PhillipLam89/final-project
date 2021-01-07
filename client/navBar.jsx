@@ -9,7 +9,7 @@ export default class NavBar extends React.Component {
         <a href="#search"><img src="./images/search.png" width="30" height="30" className="d-inline-block align-top" alt=""></img></a>
         <img src="./images/settings.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
         <a href="#favorites"><img src="./images/red-heart.png" width="30" height="30" className="d-inline-block align-top" alt=""></img></a>
-        <img src="./images/user.png" width="30" height="30" className="d-inline-block align-top" alt=""></img>
+        <a href="#register"><img src="./images/user.png" width="30" height="30" className="d-inline-block align-top" alt=""></img></a>
       </nav>
     );
   }
