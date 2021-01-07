@@ -10,7 +10,7 @@ export default class Favorites extends React.Component {
     this.state = {
       favoritesData: '',
       isLoading: true,
-      removalId: ''
+      removalId: []
 
     };
     this.handleRemove = this.handleRemove.bind(this)
@@ -18,11 +18,14 @@ export default class Favorites extends React.Component {
 
   handleRemove(e) {
     e.preventDefault()
-    let removalId = null
+    let removalId = ''
+    let copy = ''
     const data = this.state.favoritesData
     for (let i = 0; i < data.length; i ++) {
       if (data[i].hotelId === Number(e.target.dataset.hotelId)) {
         removalId = data[i].hotelId
+        copy = [...this.state.removalId]
+        copy.push(removalId)
         break;
       }
     }
@@ -35,10 +38,7 @@ export default class Favorites extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ isLoading: false, removalId: removalId, favoritesData : this.state.favoritesData});
-        setTimeout(function() {
-          location.reload()
-        } ,2000)
+        this.setState({ isLoading: false, removalId: copy, favoritesData : this.state.favoritesData});
       })
       .catch(error => {
         console.error('Error:', error);
@@ -66,7 +66,7 @@ export default class Favorites extends React.Component {
     if (this.state.favoritesData) {
       const favoriteHotels = this.state.favoritesData.map((info, idx) => {
         return (
-          <div key={idx}  className={this.state.removalId === this.state.favoritesData[idx].hotelId ? 'fade1': ''}>{info.hotelName}<img data-hotel-id={this.state.favoritesData[idx].hotelId} onClick={this.handleRemove} className={`pl-3 mb-1 trash-icon`} width="35rem" src="./images/trash.png"></img></div>
+          <div key={idx} className={this.state.removalId.includes(info.hotelId) ? 'fade1' : ''}>{info.hotelName}<img data-hotel-id={info.hotelId} onClick={this.handleRemove} className={`pl-3 mb-1 trash-icon`} width="35rem" src="./images/trash.png"></img></div>
         );
       });
       return (

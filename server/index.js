@@ -78,10 +78,6 @@ app.post('/api/favorites/:userId/:hotelId', (req, res, next) => {
         })
     })
     .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      })
       next(err);
     });
 });
@@ -97,10 +93,6 @@ app.get('/api/:userId/favorites', (req, res, next) => {
       res.json(result.rows);
     })
     .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      })
       next(err);
     });
 
@@ -114,14 +106,9 @@ app.delete('/api/:userId/:hotelId', (req, res, next) => {
   return db.query(sql)
     .then(result => {
       res.json(result.rows)
-      res.status(204)
-
+      res.status(200)
     })
     .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      })
       next(err);
     });
 
