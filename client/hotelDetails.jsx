@@ -20,8 +20,13 @@ export default class HotelDetails extends React.Component {
     fetch(`/api/favorites/1/${this.props.hotelId}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body : JSON.stringify({
+        "hotelName": this.state.hotelData.propertyDescription.name,
+        "hotelId" : this.props.hotelId
+      })
     })
       .then(response => response.json())
       .then(data => {
@@ -40,7 +45,6 @@ export default class HotelDetails extends React.Component {
         return response.json();
       })
       .then(data => {
-
         this.setState({ hotelData: data.data.body, isLoading: false });
       })
       .catch(err => {

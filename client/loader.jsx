@@ -7,7 +7,7 @@ export default class Loader extends React.Component {
       <div className="loader-container">
 
         <div className="loader"></div>
-        <h2>Searching Hotels...</h2>
+        <h2>Loading...</h2>
       </div>
     );
   }

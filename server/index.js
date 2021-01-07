@@ -5,8 +5,14 @@ const fetch = require('node-fetch');
 const errorMiddleware = require('./error-middleware');
 const db = require('./db');
 const app = express();
-app.get('/api/search/:userInput', (req, res, next) => {
-  const userInput = req.params.userInput;
+const bodyParser = require('body-parser')
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.get('/api/search/:userInput/:ratingFilter', (req, res, next) => {
+  const {userInput, ratingFilter} = req.params
   fetch(`https://hotels4.p.rapidapi.com/locations/search?query=${userInput}&locale=en_US`, {
     method: 'GET',
     headers: {
@@ -17,7 +23,7 @@ app.get('/api/search/:userInput', (req, res, next) => {
     .then(response => response.json())
     .then(data => {
       const cityId = data.suggestions[0].entities[0].destinationId;
-      return fetch(`https://hotels4.p.rapidapi.com/properties/list?destinationId=${cityId}&pageNumber=1&checkIn=2020-01-08&checkOut=2020-01-15&pageSize=25&adults1=1&currency=USD&starRatings=5&locale=en_US&sortOrder=PRICE`, {
+      return fetch(`https://hotels4.p.rapidapi.com/properties/list?destinationId=${cityId}&pageNumber=1&checkIn=2020-01-08&checkOut=2020-01-15&pageSize=25&adults1=1&currency=USD&starRatings=${ratingFilter}&locale=en_US&sortOrder=PRICE`, {
         method: 'GET',
         headers: {
           'x-rapidapi-key': `${process.env.API_KEY}`,
@@ -48,25 +54,61 @@ app.get('/api/hotels/:hotelId', (req, res, next) => {
     });
 });
 
+app.get('/api/:userId/favorites', (req, res, next) => {
+  const {userId} = req.params
+
+  const sql = `
+        select "hotelName", "hotelId" from "favorites"
+      `;
+  return db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+
+});
 app.use(errorMiddleware);
 
-app.post('/api/favorites/:userId/:hotelId', (req, res, next) => {
-  const hotelId = req.params.hotelId;
-  const userId = req.params.userId;
+app.delete('/api/:userId/:hotelId', (req, res, next) => {
+  const {hotelId} = req.params
   const sql = `
-    insert into "favorites" ("hotelId","userId")
-    values ($1, $2)
-    returning *
-  `;
-  const params = [hotelId, userId];
-  db.query(sql, params)
+        delete from "favorites"
+        where "hotelId" = $1
+      `;
+    const params = [hotelId]
+  return db.query(sql,params)
     .then(result => {
-      const [fav] = result.rows;
-      res.status(201).json(fav);
+      const [deleted] = result.rows
+      res.json(deleted)
+      res.status(204)
     })
-    .catch(err => next(err));
+    .catch(err => {
+      next(err);
+    });
+
 });
 
+
+app.post('/api/favorites/:userId/:hotelId', (req, res, next) => {
+  const { userId, hotelId } = req.params
+  const hotelName = req.body.hotelName
+      const sql = `
+        insert into "favorites" ("hotelId","userId","hotelName")
+        values ($1, $2, $3)
+        returning *
+      `;
+      const params = [hotelId, userId, hotelName];
+      return db.query(sql, params)
+        .then(result => {
+          const [fav] = result.rows;
+          res.json(fav);
+        })
+    .catch(err => {
+      next(err);
+    });
+});
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);

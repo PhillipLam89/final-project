@@ -64,7 +64,9 @@ header {
   color: black;
   font-family: sans-serif, 'Times New Roman', Times, serif;
 }
-
+.fav {
+  border-bottom: 5px solid goldenrod
+}
 div > h3 {
   background-color: lightcyan;
   margin-bottom: 0;
@@ -174,7 +176,8 @@ div > h3 {
 }
 
 .big-container,
-.home {
+.home,
+.result-container {
   font-weight: bolder;
   font-family: sans-serif;
   background-color: lightcyan;
@@ -208,6 +211,7 @@ div > h3 {
   outline: none;
   font-size: 1.5rem;
   color: white;
+  min-width: 50px;
 
 }
 .fav-button:active {
@@ -219,6 +223,31 @@ div > h3 {
 .fav-button:focus {
   border: none;
   outline: none;
+}
+
+.trash-icon {
+  transform: scale(1);
+
+}
+
+.trash-icon:hover {
+  cursor: pointer;
+  transform: scale(1.4);
+}
+
+.fade1 {
+  opacity: 0;
+  animation: fade1 2s linear;
+}
+.fav-hotel-div {
+  overflow: auto;
+}
+
+
+
+@keyframes fade1 {
+  from { opacity: 1 }
+  to { opacity: 0}
 }
 
 @keyframes tilt {
