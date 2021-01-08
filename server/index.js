@@ -10,6 +10,7 @@ const ClientError = require('./client-error');
 const argon2 = require('argon2')
 const jwt = require('jsonwebtoken'); // eslint-disable-line
 
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -76,8 +77,23 @@ app.post('/api/auth/login', (req, res, next) => {
     .catch(err => next(err));
 })
 
-
-
+app.get('/api/reviews/:hotelId', (req, res, next) => {
+  const { hotelId } = req.params
+  fetch(`https://hotels-com-free.p.rapidapi.com/mobile_service/property-content/v1/hotels.com/property/${hotelId}/reviews?loc=en_US&page=1`, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-key": `${process.env.API_KEY}`,
+      "x-rapidapi-host": "hotels-com-free.p.rapidapi.com"
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      res.json(data.reviewData.guestReviewGroups.guestReviews[0].reviews)
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});
 
 app.get('/api/search/:userInput/:ratingFilter', (req, res, next) => {
   const { userInput, ratingFilter } = req.params

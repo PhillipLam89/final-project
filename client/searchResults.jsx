@@ -29,7 +29,7 @@ export default class SearchResults extends React.Component {
     const displayedList = hotelList.map((hotel, idx) => {
       return (
         <div className="hotel-display-div text-center d-flex flex-column justify-content-center align-items-center" key={hotel.supplierHotelId}>
-          <a href={`#hotel-details?hotelId=${hotelList[idx].id}?thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
+          <a href={`#hotel-details?hotelId=${hotelList[idx].id}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
           <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
         </div>
       );

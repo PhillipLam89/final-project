@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from './navBar'
 
 export default class LogIn extends React.Component {
   constructor(props) {
@@ -64,6 +65,7 @@ export default class LogIn extends React.Component {
             </div>
           </form>
         </div>
+        <NavBar />
       </main>
     );
   }

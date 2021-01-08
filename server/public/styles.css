@@ -70,7 +70,7 @@ header {
 div > h3 {
   background-color: lightcyan;
   margin-bottom: 0;
-  border-bottom: 10px solid goldenrod;
+  border-bottom: 5px solid goldenrod;
 }
 
 .hotel-img {
@@ -183,6 +183,7 @@ div > h3 {
   background-color: lightcyan;
    border: none;
   outline: none;
+  overflow-y: auto;
 }
 
 .selected-hotel {
