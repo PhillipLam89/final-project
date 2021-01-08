@@ -17,7 +17,6 @@ export default class Registration extends React.Component {
   handleChange(e) {
     const name = e.target.name
     const value = e.target.value
-
     // [name] evaluates to to string
     this.setState({ [name]: value });
 

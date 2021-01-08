@@ -24,10 +24,17 @@ export default class App extends React.Component {
     });
   }
 
+  updateUser(token) {
+    window.localStorage.setItem('jwt', token);
+    this.setState({
+      token
+    });
+  }
+
   renderPage() {
     const { route } = this.state;
-    if (route.path === '') {
-      return <Home />;
+    if (route.path === '' || route.path === 'logged' ) {
+      return <Home currentUser={route.params.get('currentUser')}/>;
     } if (route.path === 'search') {
       return <Search />;
     } if (route.path === 'hotel-details') {
