@@ -1,5 +1,5 @@
 import React from 'react';
-import Loader from './loader'
+import Loader from './loader';
 export default class Registration extends React.Component {
   constructor(props) {
     super(props);
@@ -15,8 +15,8 @@ export default class Registration extends React.Component {
   }
 
   handleChange(e) {
-    const name = e.target.name
-    const value = e.target.value
+    const name = e.target.name;
+    const value = e.target.value;
     // [name] evaluates to to string
     this.setState({ [name]: value });
 
@@ -24,7 +24,7 @@ export default class Registration extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({ isLoading: true })
+    this.setState({ isLoading: true });
     fetch('/api/sign-up', {
       method: 'POST',
       headers: {
@@ -33,10 +33,10 @@ export default class Registration extends React.Component {
       body: JSON.stringify(this.state)
     }).then(data => {
       if (data.status === 201) {
-        this.setState({ isLoading: false, accountMade: true })
-        setTimeout(function(){
-            location.hash = 'login'   //renders home page after successfully creation
-        },2000)
+        this.setState({ isLoading: false, accountMade: true });
+        setTimeout(function () {
+          location.hash = 'login'; // renders home page after successfully creation
+        }, 2000);
       }
     })
       .catch(error => {
@@ -45,15 +45,15 @@ export default class Registration extends React.Component {
   }
 
   render() {
-    if (this.state.isLoading) return <Loader />
+    if (this.state.isLoading) return <Loader />;
     return (
 
       <main className="registration-container  text-center vh-100">
-        <h2  className={this.state.accountMade ? 'd-none' : ''}>Create an Account</h2>
+        <h2 className={this.state.accountMade ? 'd-none' : ''}>Create an Account</h2>
         <h2 style={{ color: 'green' }} className={this.state.accountMade ? 'fade1' : 'd-none'}>Account Created Successfully!</h2>
         <div className={this.state.accountMade ? 'd-none' : 'd-flex flex-column align-items-center pt-3'}>
-          <form className="d-flex flex-column align-items-center pt-3" onSubmit={this.handleSubmit}>
-            <div className="mb-3">
+          <form className="d-flex flex-column align-items-center pt-3 text-left" onSubmit={this.handleSubmit}>
+            <div className="mb-3 ">
               <label htmlFor="name" className="form-label">Full Name</label>
               <input required id="name" type="text" name="fullName" onChange={this.handleChange} className="form-control" />
             </div>
