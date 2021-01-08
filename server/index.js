@@ -9,8 +9,9 @@ const bodyParser = require('body-parser')
 const ClientError = require('./client-error');
 const argon2 = require('argon2')
 const jwt = require('jsonwebtoken'); // eslint-disable-line
+const staticMiddleware = require('./static-middleware');
 
-
+app.use(staticMiddleware);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
