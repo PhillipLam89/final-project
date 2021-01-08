@@ -5,7 +5,7 @@ import Search from './search';
 import parseRoute from './lib/parse-route';
 import HotelDetails from './hotelDetails';
 import SearchResults from './searchResults';
-import Registration from './registration'
+import Registration from './registration';
 import LogIn from './logIn';
 
 export default class App extends React.Component {
@@ -26,26 +26,27 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === '') {
-      return <Home />;
+    if (route.path === '' || route.path === 'logged') {
+      return <Home currentUser={route.params.get('currentUser')} />;
     } if (route.path === 'search') {
       return <Search />;
     } if (route.path === 'hotel-details') {
-      return <HotelDetails hotelId={route.params.get('hotelId')}/>;
+      return <HotelDetails hotelId={route.params.get('hotelId')} />;
     } if (route.path === 'search-results') {
-      return <SearchResults cityName={route.params.get('cityName')} ratingFilter={route.params.get('ratingFilter')}/>;
+      return <SearchResults cityName={route.params.get('cityName')} ratingFilter={route.params.get('ratingFilter')} />;
     } if (route.path === 'favorites') {
       return <Favorites />;
     } if (route.path === 'register') {
       return <Registration />;
     } if (route.path === 'login') {
-      return <LogIn />
+      return <LogIn />;
     }
   }
+
   render() {
     return (
       <div className="">
-          { this.renderPage()}
+        { this.renderPage()}
       </div>
     );
   }

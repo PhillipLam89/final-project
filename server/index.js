@@ -8,11 +8,10 @@ const app = express();
 const bodyParser = require('body-parser')
 const ClientError = require('./client-error');
 const argon2 = require('argon2')
+const jwt = require('jsonwebtoken'); // eslint-disable-line
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-
-
 
 app.post('/api/sign-up', (req, res, next) => {
   const { username, password, fullName } = req.body;
@@ -39,7 +38,43 @@ app.post('/api/sign-up', (req, res, next) => {
     });
 });
 
+app.post('/api/auth/login', (req, res, next) => {
+  const { userName, password } = req.body;
+  if (!userName || !password) {
+    throw new ClientError(401, 'invalid login');
+  }
 
+  const sql = `
+    select "userId",
+           "password"
+      from "UserInfo"
+     where "userName" = $1
+  `
+  const params = [userName];
+  return db.query(sql, params)
+    .then(result => {
+      if (!result.rows[0]) {
+        throw new ClientError(401, 'invalid login');
+      }
+      const hashedPw = result.rows[0].password;
+      argon2.verify(hashedPw, password)
+        .then(passwordMatched => {
+          if (!passwordMatched) {
+            throw new ClientError(401, 'invalid login');
+          }
+          const payload = {
+            userId: result.rows[0].userId,
+            userName: userName
+          };
+          res.status(200).json({
+            token: jwt.sign(payload, process.env.TOKEN_SECRET),
+            userName: payload
+          });
+        })
+        .catch(err => next(err));
+    })
+    .catch(err => next(err));
+})
 
 
 
