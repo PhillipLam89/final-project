@@ -52,7 +52,7 @@ export default class Registration extends React.Component {
         <h2 className={this.state.accountMade ? 'd-none' : ''}>Create an Account</h2>
         <h2 style={{ color: 'green' }} className={this.state.accountMade ? 'fade1' : 'd-none'}>Account Created Successfully!</h2>
         <div className={this.state.accountMade ? 'd-none' : 'd-flex flex-column align-items-center pt-3'}>
-          <form className="d-flex flex-column align-items-center pt-3 text-left" onSubmit={this.handleSubmit}>
+          <form className="d-flex flex-column align-items-center pt-3 text-left " onSubmit={this.handleSubmit}>
             <div className="mb-3 ">
               <label htmlFor="name" className="form-label">Full Name</label>
               <input required id="name" type="text" name="fullName" onChange={this.handleChange} className="form-control" />
