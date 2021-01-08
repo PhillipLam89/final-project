@@ -7,6 +7,7 @@ import HotelDetails from './hotelDetails';
 import SearchResults from './searchResults';
 import Registration from './registration';
 import LogIn from './logIn';
+import Reviews from './reviews'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -40,6 +41,8 @@ export default class App extends React.Component {
       return <Registration />;
     } if (route.path === 'login') {
       return <LogIn />;
+    } if (route.path === 'reviews') {
+      return <Reviews hotelId={route.params.get('hotelId')} hotelName={route.params.get('hotelName')}/>
     }
   }
 

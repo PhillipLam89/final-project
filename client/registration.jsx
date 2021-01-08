@@ -1,5 +1,7 @@
 import React from 'react';
 import Loader from './loader';
+import NavBar from './navBar'
+
 export default class Registration extends React.Component {
   constructor(props) {
     super(props);
@@ -66,12 +68,13 @@ export default class Registration extends React.Component {
               <input required id="password" type="password" name="password" onChange={this.handleChange} className="form-control" />
             </div>
             <div>
-              <button className="btn dark-blue bg-light border border-primary" type="submit">
+              <button className="btn dark-blue  bg-light border border-primary" type="submit">
                 Register
               </button>
             </div>
           </form>
         </div>
+        <NavBar />
       </main>
     );
   }
