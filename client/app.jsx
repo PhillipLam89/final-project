@@ -24,13 +24,6 @@ export default class App extends React.Component {
     });
   }
 
-  updateUser(token) {
-    window.localStorage.setItem('jwt', token);
-    this.setState({
-      token
-    });
-  }
-
   renderPage() {
     const { route } = this.state;
     if (route.path === '' || route.path === 'logged' ) {
