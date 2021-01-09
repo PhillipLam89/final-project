@@ -40,7 +40,7 @@ export default class HotelDetails extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    fetch(`https://search-hotel-reviews.herokuapp.com/api/hotels/${this.props.hotelId}`)
+    fetch(`/api/hotels/${this.props.hotelId}`)
       .then(response => {
         return response.json();
       })
