@@ -17,7 +17,7 @@ export default class HotelDetails extends React.Component {
 
   handleFavorites(e) {
     e.preventDefault();
-    fetch(`/api/favorites/12/`, {
+    fetch(`/api/favorites/1/`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
