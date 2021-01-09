@@ -154,7 +154,7 @@ app.get('/api/:userId/favorites', (req, res, next) => {
     });
 
 });
-app.use(errorMiddleware);
+
 
 app.delete('/api/:userId/:hotelId', (req, res, next) => {
   const { hotelId } = req.params
@@ -194,6 +194,7 @@ app.post('/api/favorites/:userId/', (req, res, next) => {
       next(err);
     });
 });
+app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);
