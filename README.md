@@ -1,25 +1,31 @@
 
 # Hotel Reviews App
-A full stack JavaScript solo projec
-A dynamic HTML, CSS, and JavaScript project that allows user to browse the world's most popular cocktails, their recipes, and historical background.
+A full stack JavaScript solo projecy
+A dynamic HTML, CSS, and JavaScript project that allows user to browse the world's hotel's, ratings, reviews, and much more!
 
 ## Application Demo
-Click the following link to try it out live https://philliplam89.github.io/ajax-project/
+Click the following link to try it out live https://philliplam89.github.io/final-project/
 
 ## Application Features
 
-* User can see the current top 20 cocktails worldwide (automatically updated weekly), displaying as a carousel
-* User can click on any cocktail images currently on display to see the recipe
-* User can browse all cocktails by letter alphabetically
-* User can click the random icon to be given a random cocktail recipe (over 1,200 cocktails available)
-* User can learn historical backgrounds about the most popular liquors used in cocktails 
+* User can create an account and login (not required)
+* User can search for hotels world-wide by city name
+* User can filter their search further by choosing star-ratings
+* User can see real-time hotel reviews posted by fellow travelers
+* User can see a list of hotel results based on their search, listed in highest-rated user reviews to lowest
+* User can see each hotel's property amenities such as dining, policies, entertainment, and much more!
+* User can see real-time hotel reviews posted by fellow travelers
+* User can see average user ratings (out of 10) for each hotel
+* User can see add a hotel to their favorites tab, which will be saved in the database
+* User can see delete a hotel off their favorites tab
+
 
 ##  Possible future feature additions :
 
-* User can search for cocktails by typing the name in the search bar
-* User can filter cocktails by liquor type (e.g., Vodka, Rum, etc.)
-* User can add their own custom-made cocktail to the API
-* User can see a cocktail's global rating out of 10 on its recipe page
+* User can search for hotels by brand name directly
+* User can filter the reviews list by rating out of 10
+* User can add their own reviews to a hotel's review page, which will be saved in database
+
 
 ## Application Preview
 ![Image of Home Page](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo1.png) ![Image of Liquor List](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo2.png) ![Image of Random](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo3.png) 
