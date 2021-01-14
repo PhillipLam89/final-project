@@ -7,6 +7,7 @@
   height: 3.5rem;
   animation: spin 1.75s linear infinite;
 }
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -38,14 +39,16 @@ div > h3 {
   font-weight: bolder;
   font-family: sans-serif;
   background-color: lightcyan;
-   border: none;
+  border: none;
   outline: none;
   overflow-y: auto;
 }
+
 .trash-icon:hover {
   cursor: pointer;
   transform: scale(1.4);
 }
+
 .fav-button {
   background-image: url("./images/red-heart.png");
   background-size: cover;
@@ -58,12 +61,15 @@ div > h3 {
   color: white;
   min-width: 50px;
 }
+
 .fav-button:active {
-  transform: scale(.80);
+  transform: scale(0.8);
 }
+
 .fav-img {
   width: inherit;
 }
+
 .fav-button:focus {
   border: none;
   outline: none;
@@ -81,7 +87,7 @@ div > h3 {
 }
 
 .search-container {
-  background-image: url("https://cdn.cnn.com/cnnnext/dam/assets/190903131748-greek-luxury-seaside-hotels---grecotel-mykonos-blu---infinity-pool-1.jpg");
+  background-image: url("./images/searchImg.jpg");
   display: flex;
   justify-content: center;
   align-items: center;
