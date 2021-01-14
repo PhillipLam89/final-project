@@ -9,8 +9,9 @@ const bodyParser = require('body-parser')
 const ClientError = require('./client-error');
 const argon2 = require('argon2')
 const jwt = require('jsonwebtoken'); // eslint-disable-line
+const staticMiddleware = require('./static-middleware');
 
-
+app.use(staticMiddleware);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -77,23 +78,7 @@ app.post('/api/auth/login', (req, res, next) => {
     .catch(err => next(err));
 })
 
-app.get('/api/reviews/:hotelId', (req, res, next) => {
-  const { hotelId } = req.params
-  fetch(`https://hotels-com-free.p.rapidapi.com/mobile_service/property-content/v1/hotels.com/property/${hotelId}/reviews?loc=en_US&page=1`, {
-    "method": "GET",
-    "headers": {
-      "x-rapidapi-key": `${process.env.API_KEY}`,
-      "x-rapidapi-host": "hotels-com-free.p.rapidapi.com"
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      res.json(data.reviewData.guestReviewGroups.guestReviews[0].reviews)
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-});
+
 
 app.get('/api/search/:userInput/:ratingFilter', (req, res, next) => {
   const { userInput, ratingFilter } = req.params
@@ -153,7 +138,7 @@ app.get('/api/:userId/favorites', (req, res, next) => {
     });
 
 });
-app.use(errorMiddleware);
+
 
 app.delete('/api/:userId/:hotelId', (req, res, next) => {
   const { hotelId } = req.params
@@ -193,6 +178,41 @@ app.post('/api/favorites/:userId/', (req, res, next) => {
       next(err);
     });
 });
+
+
+
+
+
+
+
+
+
+app.get('/api/reviews/:hotelId', (req, res, next) => {
+  const { hotelId } = req.params
+  fetch(`https://hotels-com-free.p.rapidapi.com/mobile_service/property-content/v1/hotels.com/property/${hotelId}/reviews?loc=en_US&page=1`, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-key": `${process.env.API_KEY}`,
+      "x-rapidapi-host": "hotels-com-free.p.rapidapi.com"
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      res.json(data.reviewData.guestReviewGroups.guestReviews[0].reviews)
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});
+
+
+
+
+
+
+
+
+app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);

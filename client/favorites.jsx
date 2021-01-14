@@ -53,6 +53,7 @@ export default class Favorites extends React.Component {
       });
   }
 
+
   render() {
     if (this.state.isLoading) return <Loader />;
     if (this.state.favoritesData) {

@@ -17,7 +17,7 @@ export default class HotelDetails extends React.Component {
 
   handleFavorites(e) {
     e.preventDefault();
-    fetch(`/api/favorites/12/`, {
+    fetch(`/api/favorites/1/`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +108,7 @@ export default class HotelDetails extends React.Component {
         <div className="">
           <div className="big-container text-center vh-20 d-flex flex-column align-items-center">
             <p>{hotelName}</p>
-            <button onClick={this.handleFavorites} className="fav-button"><p className="pt-2 pr-2 fav-img">{this.state.favorited ? '✓' : 'fav'}</p></button>
+            <button onClick={this.handleFavorites} className="fav-button border-0"><p className="pt-2 pr-2 fav-img">{this.state.favorited ? '✓' : 'fav'}</p></button>
             <p className={this.state.favorited ? 'text-muted' : 'd-none'}>added to favorites</p>
             <a  href={`#reviews?hotelId=${this.state.hotelData.pdpHeader.hotelId}&hotelName=${this.state.hotelData.propertyDescription.name}`}>See User Reviews</a>
             <p>{`Average User Rating:${badge} ${rating}/10`}</p>

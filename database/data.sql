@@ -1,6 +1,6 @@
 
 insert into "UserInfo" ("userId", "fullName","userName", "password")
-values ('1', 'Phillip Lam','plam89', '123');
+values ('1', 'Phillip Lam','plam89', '12345');
 
 
 
