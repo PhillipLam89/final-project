@@ -4,7 +4,7 @@ A full stack JavaScript solo projecy
 A dynamic HTML, CSS, and JavaScript project that allows user to browse the world's hotel's, ratings, reviews, and much more!
 
 ## Application Demo
-Click the following link to try it out live https://philliplam89.github.io/final-project/
+Click the following link to try it out live https://search-hotel-reviews.herokuapp.com/
 
 ## Application Features
 
@@ -28,7 +28,5 @@ Click the following link to try it out live https://philliplam89.github.io/final
 
 
 ## Application Preview
-![Image of Home Page](https://github.com/PhillipLam89/final-project/blob/master/server/public/images/home.png) ![Image of Liquor List](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo2.png) ![Image of Random](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo3.png) 
-![Image of Background](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo4.png)
-
+![Image of Home Page](https://github.com/PhillipLam89/final-project/blob/master/server/public/images/demo.gif) 
 
