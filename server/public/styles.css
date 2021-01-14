@@ -1,61 +1,24 @@
 
-.hidden {
-  display: none;
+.loader {
+  border: 12px solid #f3f3f3;
+  border-top: 12px solid #3498db;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  animation: spin 1.75s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.main-pic {
-  display: block;
-  width: 100%;
-  height: 625px;
-  object-fit: fill;
-}
-
-nav {
-  border-radius: 1rem;
-}
-
-h6 {
-  font-weight: bolder;
-}
-
-nav > img {
-  transform: scale(1);
-}
-
-.hotel-display-div img {
-  width: 10rem;
-}
-
-.form-div {
-  opacity: 0.75;
-  border-radius: 1rem;
-  padding: 1rem;
-  border: 2px solid lightcyan;
-}
-
-nav > img:hover {
+nav > img:active,
+nav > img:hover,
+.hotel-name:hover {
   cursor: pointer;
-  transform: scale(1.5);
-}
-
-nav > img:active {
-  cursor: pointer;
-  transform: scale(1);
-}
-
-.input-container {
-  transform: scale(0.8);
-  border: 3px solid lightcyan;
-  border-style: ridge;
-  opacity: 0.75;
-}
-
-.error-border {
-  border: 3px solid rgb(243, 150, 150);
 }
 
 header {
-  border-radius: 5px;
   height: 100px;
   position: absolute;
   top: 50%;
@@ -64,115 +27,9 @@ header {
   color: black;
   font-family: sans-serif, 'Times New Roman', Times, serif;
 }
-.fav {
-  border-bottom: 5px solid goldenrod
-}
+
 div > h3 {
   background-color: lightcyan;
-  margin-bottom: 0;
-  border-bottom: 5px solid goldenrod;
-}
-
-.hotel-img {
-  size: 2px;
-}
-
-.hotel-list {
-  width: 100%;
-  height: 500px;
-  background-color: lightcyan;
-  overflow: auto;
-  align-items: center;
-}
-
-.display-list-div {
-  height: 400px;
-}
-
-.hotel-name {
-  max-width: 400px;
-  font-size: 0.75rem;
-  font-weight: bolder;
-  overflow: auto;
-}
-
-.hotel-name:hover {
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: goldenrod;
-}
-
-.hotel-name:active {
-  font-size: 1rem;
-}
-
-.arrow-div {
-  background-color: lightcyan;
-}
-
-.back-arrow {
-  transform: scale(1);
-}
-
-.back-arrow:hover {
-  cursor: pointer;
-  transform: scale(1.25);
-}
-
-.back-arrow:active {
-  transform: scale(1);
-}
-
-.search-btn:hover {
-  background-color: royalblue;
-  transform: scale(1.15);
-}
-
-.search-btn:active {
-  transform: scale(1);
-}
-
-.hotel-display-div {
-  width: 400px;
-  word-wrap: break-word;
-}
-
-.hotel-display-div:not(:last-child) {
-  border-bottom: 3px solid red;
-  border-bottom-style: inset;
-}
-
-.hotel-display-div img:hover {
-  animation: enlarge 1s linear;
-  transform: scale(1.25);
-  cursor: pointer;
-}
-
-.user-error {
-  font-size: 1rem;
-  color: red;
-}
-
-.loader-container {
-  background-image: linear-gradient(#f8a170, #ffcd61);
-  display: flex;
-  height: 900px;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader {
-  border: 16px solid #f3f3f3;
-  border-top: 16px solid #3498db;
-  border-radius: 50%;
-  width: 7.5rem;
-  height: 7.5rem;
-  animation: spin 1.75s linear infinite;
-}
-
-.tilt {
-  animation: tilt 15s;
-  animation-iteration-count: infinite;
 }
 
 .big-container,
@@ -185,23 +42,10 @@ div > h3 {
   outline: none;
   overflow-y: auto;
 }
-
-.selected-hotel {
-  width: 200px;
+.trash-icon:hover {
+  cursor: pointer;
+  transform: scale(1.4);
 }
-
-.gradient {
-  background-image: linear-gradient(#f8a170, #ffcd61);
-}
-.heart-div {
-  transform: scale(0);
-}
-.bottom-nav-abs {
-  height: 100px;
-  background-image: linear-gradient(#f8a170, #ffcd61);
-  z-index: 1;
-}
-
 .fav-button {
   background-image: url("./images/red-heart.png");
   background-size: cover;
@@ -213,7 +57,6 @@ div > h3 {
   font-size: 1.5rem;
   color: white;
   min-width: 50px;
-
 }
 .fav-button:active {
   transform: scale(.80);
@@ -226,53 +69,6 @@ div > h3 {
   outline: none;
 }
 
-.trash-icon {
-  transform: scale(1);
-
-}
-
-.trash-icon:hover {
-  cursor: pointer;
-  transform: scale(1.4);
-}
-
-.fade1 {
-  opacity: 0;
-  animation: fade1 2s linear;
-}
 .fav-hotel-div {
   overflow: auto;
-}
-
-.registration-container {
-  background-color: lightcyan;
-}
-
-@keyframes fade1 {
-  from { opacity: 1 }
-  to { opacity: 0}
-}
-
-@keyframes tilt {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-3deg); }
-  20% { transform: translate(-3px, 0) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-3deg); }
-  60% { transform: translate(-3px, 2px) rotate(0deg); }
-  70% { transform: translate(3px, 3px) rotate(-3deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-3deg); }
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes enlarge {
-  from { transform: scale(1); }
-  to { transform: scale(1.25); }
 }

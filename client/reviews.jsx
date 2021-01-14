@@ -46,10 +46,10 @@ export default class Reviews extends React.Component {
         } return ;
       })
       return (
-        <main className="results-container">
-          <div className="m-3 text-center">
+        <main className="results-containerfav">
+          <div className="m-3 text-center ">
             <h2 style={{ color: 'green' }} className="blue title">{this.props.hotelName + ' Reviews'}</h2>
-            <div>{reviews}</div>
+            <div className="">{reviews}</div>
           </div>
           <NavBar />
         </main>

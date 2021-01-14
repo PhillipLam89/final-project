@@ -55,10 +55,10 @@ class Search extends React.Component {
     return (
       <div className="search-container">
         <div>
-          <img className="main-pic" src="https://cdn.cnn.com/cnnnext/dam/assets/190903131748-greek-luxury-seaside-hotels---grecotel-mykonos-blu---infinity-pool-1.jpg"></img>
+          <img className="main-pic vw-100 vh-100" src="https://cdn.cnn.com/cnnnext/dam/assets/190903131748-greek-luxury-seaside-hotels---grecotel-mykonos-blu---infinity-pool-1.jpg"></img>
           <header>
             <div>
-              <form onSubmit={this.handleSearchClick} className={`${this.state.userInputError === true ? 'form-inline bg-light form-div tilt' : 'form-inline bg-light form-div '}`}>
+              <form onSubmit={this.handleSearchClick} className="form-inline bg-light p-2 rounded">
                 <input value={userInput} onChange={this.handleUserInput} className="form-control mr-sm-2" type="search" placeholder="city (worldwide)" aria-label="Search"></input>
                 <div className="form-row align-items-center preference-div pl-0.5">
                   <div className="col-auto my-1">
@@ -75,8 +75,8 @@ class Search extends React.Component {
                   </div>
                 </div>
                 <button className="search-btn btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                <h6 className="user-error pl-0.5">{userInputError && !ratingFilter ? 'CHOOSE A RATING & VALID CITY' : ''}</h6>
-                <h6>{userInputError && ratingFilter ? <p className="user-error">INVALID CITY</p> : ''}</h6>
+                <h6 className="user-error pl-0.5 p-2">{userInputError && !ratingFilter ? 'CHOOSE A RATING & VALID CITY' : ''}</h6>
+                <h6>{userInputError && ratingFilter ? <p className="user-error p-2">INVALID CITY</p> : ''}</h6>
               </form>
             </div>
           </header>

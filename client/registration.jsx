@@ -19,9 +19,7 @@ export default class Registration extends React.Component {
   handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
-    // [name] evaluates to to string
     this.setState({ [name]: value });
-
   }
 
   handleSubmit(e) {
@@ -37,7 +35,7 @@ export default class Registration extends React.Component {
       if (data.status === 201) {
         this.setState({ isLoading: false, accountMade: true });
         setTimeout(function () {
-          location.hash = 'login'; // renders home page after successfully creation
+          location.hash = 'login';
         }, 2000);
       }
     })
@@ -50,7 +48,7 @@ export default class Registration extends React.Component {
     if (this.state.isLoading) return <Loader />;
     return (
 
-      <main className="registration-container  text-center vh-100">
+      <main className="registration-container bg-light text-center vh-100">
         <h2 className={this.state.accountMade ? 'd-none' : ''}>Create an Account</h2>
         <h2 style={{ color: 'green' }} className={this.state.accountMade ? 'fade1' : 'd-none'}>Account Created Successfully!</h2>
         <div className={this.state.accountMade ? 'd-none' : 'd-flex flex-column align-items-center pt-3'}>
