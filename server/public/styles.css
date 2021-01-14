@@ -72,3 +72,19 @@ div > h3 {
 .fav-hotel-div {
   overflow: auto;
 }
+
+.search-form {
+  max-width: 480px;
+  display: block;
+  width: 90%;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.search-container {
+  background-image: url("https://cdn.cnn.com/cnnnext/dam/assets/190903131748-greek-luxury-seaside-hotels---grecotel-mykonos-blu---infinity-pool-1.jpg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
