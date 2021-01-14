@@ -28,7 +28,7 @@ Click the following link to try it out live https://philliplam89.github.io/final
 
 
 ## Application Preview
-![Image of Home Page](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo1.png) ![Image of Liquor List](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo2.png) ![Image of Random](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo3.png) 
+![Image of Home Page](https://github.com/PhillipLam89/final-project/blob/master/server/public/images/home.png) ![Image of Liquor List](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo2.png) ![Image of Random](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo3.png) 
 ![Image of Background](https://github.com/PhillipLam89/ajax-project/blob/master/images/demo4.png)
 
 
