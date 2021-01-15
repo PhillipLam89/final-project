@@ -94,3 +94,10 @@ div > h3 {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.hotel-img {
+  width: 100%;
+}
+
+.results-container {
+  max-width: 1200px;
+}
