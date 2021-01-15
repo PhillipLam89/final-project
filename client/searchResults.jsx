@@ -32,7 +32,7 @@ export default class SearchResults extends React.Component {
           <div className="card  border border-dark ">
             <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
             <div className="card-body">
-            <a href={`#hotel-details?hotelId=${hotelList[idx].id}?thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
+            <a href={`#hotel-details?hotelId=${hotelList[idx].id}&thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
               <p className="card-text d-flex justify-content-between">
               <span>{hotel.neighbourhood}</span>
               <span className="font-weight-bold">{hotel.guestReviews.rating}</span>

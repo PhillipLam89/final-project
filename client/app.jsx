@@ -32,7 +32,7 @@ export default class App extends React.Component {
     } if (route.path === 'search') {
       return <Search />;
     } if (route.path === 'hotel-details') {
-      return <HotelDetails hotelId={route.params.get('hotelId')} />;
+      return <HotelDetails hotelId={route.params.get('hotelId')} hotelPhoto={route.params.get('thumbnailUrl')} />;
     } if (route.path === 'search-results') {
       return <SearchResults cityName={route.params.get('cityName')} ratingFilter={route.params.get('ratingFilter')} />;
     } if (route.path === 'favorites') {

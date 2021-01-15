@@ -15,7 +15,8 @@
 
 nav > img:active,
 nav > img:hover,
-.hotel-name:hover {
+.hotel-name:hover,
+.heart {
   cursor: pointer;
 }
 
@@ -35,10 +36,11 @@ div > h3 {
 
 .big-container,
 .home,
-.result-container {
+.result-container,
+.heart {
   font-weight: bolder;
   font-family: sans-serif;
-  background-color: lightcyan;
+  background-color: whitesmoke;
   border: none;
   outline: none;
   overflow-y: auto;
@@ -49,18 +51,6 @@ div > h3 {
   transform: scale(1.4);
 }
 
-.fav-button {
-  background-image: url("./images/red-heart.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: lightcyan;
-  width: 4rem;
-  border: none;
-  outline: none;
-  font-size: 1.5rem;
-  color: white;
-  min-width: 50px;
-}
 
 .fav-button:active {
   transform: scale(0.8);
@@ -104,4 +94,12 @@ div > h3 {
 
 .hotel-info-container {
   max-width: 300px;
+}
+.hotel-details-page {
+  padding: 3rem;
+}
+
+.policies {
+  word-break: break-all;
+  word-wrap: break-word;
 }
