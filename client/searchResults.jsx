@@ -26,21 +26,29 @@ export default class SearchResults extends React.Component {
   render() {
     if (this.state.isLoading) return <Loader />;
     const hotelList = this.state.hotelList;
-    const displayedList = hotelList.map((hotel, idx) => {
+    const hotelName = hotelList.map((hotel, idx) => {
       return (
-        <div key={hotel.supplierHotelId} className="card w-50 mb-3 hotel-display-div border border-primary text-center d-flex flex-column justify-content-center align-items-center">
-          <a href={`#hotel-details?hotelId=${hotelList[idx].id}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
-          <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img p-2 w-75 rounded"></img>
+        <div className="row-cols-md-1 p-3 col-12 card-deck card-img-top d-flex justify-content-center hotel-info-container">
+          <div className="card  border border-dark ">
+            <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
+            <div className="card-body">
+            <a href={`#hotel-details?hotelId=${hotelList[idx].id}?thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
+              <p className="card-text d-flex justify-content-between">
+              <span>{hotel.neighbourhood}</span>
+              <span className="font-weight-bold">{hotel.guestReviews.rating}</span>
+            </p>
+          </div>
         </div>
-      );
-    });
+    </div>
+    );
+  });
     return (
-      <div className="result-container d-flex justify-content-left ">
-        <div className="arrow-div pt-2 d-flex w-100">
-          <main className="w-100">
-            <div className="header text-left pl-5"><h3>{`${this.props.cityName.toUpperCase()} ${this.props.ratingFilter}-STAR HOTELS:`}</h3></div>
-            <div className="p-5">{displayedList}</div>
-          </main>
+      <div>
+        <main className="w-100">
+          <div className="header text-center"><h3>{`${this.props.cityName.toUpperCase()} ${this.props.ratingFilter}-STAR HOTELS:`}</h3></div>
+        </main>
+        <div className="row row-cols-2 row-cols-md-2 h-50 m-0 mb-5 d-flex justify-content-center results-container ">
+          {hotelName}
         </div>
         <NavBar />
       </div>
