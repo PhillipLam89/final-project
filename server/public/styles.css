@@ -1,6 +1,6 @@
 
 .loader {
-  border: 12px solid #f3f3f3;
+  border: 12px solid #807a7a;
   border-top: 12px solid #3498db;
   border-radius: 50%;
   width: 3.5rem;
@@ -100,4 +100,8 @@ div > h3 {
 
 .results-container {
   max-width: 1200px;
+}
+
+.hotel-info-container {
+  max-width: 300px;
 }
