@@ -31,7 +31,7 @@ header {
 }
 
 div > h3 {
-  background-color: lightcyan;
+  background-color: rgb(237, 244, 250);
 }
 
 .big-container,
@@ -89,13 +89,16 @@ div > h3 {
 }
 
 .results-container {
+  margin: auto;
   max-width: 1200px;
 }
 
 .hotel-info-container {
   max-width: 300px;
 }
-.hotel-details-page {
+.hotel-details-page,
+.hotel-results-list {
+  background-color: rgb(237, 244, 250);
   padding: 3rem;
 }
 

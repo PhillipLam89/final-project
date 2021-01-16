@@ -29,13 +29,16 @@ export default class SearchResults extends React.Component {
     const hotelName = hotelList.map((hotel, idx) => {
       return (
         <div className="row-cols-md-1 p-3 col-12 card-deck card-img-top d-flex justify-content-center hotel-info-container">
-          <div className="card  border border-dark ">
+          <div className="card shadow-sm">
             <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
             <div className="card-body">
             <a href={`#hotel-details?hotelId=${hotelList[idx].id}&thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
               <p className="card-text d-flex justify-content-between">
-              <span>{hotel.neighbourhood}</span>
-              <span className="font-weight-bold">{hotel.guestReviews.rating}</span>
+              <small>{hotel.neighbourhood}</small>
+              {hotel.guestReviews &&
+                  <span className="font-weight-bold">{hotel.guestReviews.rating}</span>
+              }
+
             </p>
           </div>
         </div>
@@ -43,14 +46,14 @@ export default class SearchResults extends React.Component {
     );
   });
     return (
-      <div>
-        <main className="w-100">
-          <div className="header text-center"><h3>{`${this.props.cityName.toUpperCase()} ${this.props.ratingFilter}-STAR HOTELS:`}</h3></div>
-        </main>
-        <div className="row row-cols-2 row-cols-md-2 h-50 m-0 mb-5 d-flex justify-content-center results-container ">
-          {hotelName}
+      <div className="hotel-results-list">
+        <div className="results-container">
+            <div className="header text-center"><h3 className="mb-0">{`${this.props.cityName.toUpperCase()} ${this.props.ratingFilter}-STAR HOTELS:`}</h3></div>
+          <div className="row row-cols-2 row-cols-md-2 h-50 mb-5 d-flex justify-content-center results-container p-3 ">
+            {hotelName}
+          </div>
+          <NavBar />
         </div>
-        <NavBar />
       </div>
     );
   }
