@@ -10,7 +10,8 @@ export default class HotelDetails extends React.Component {
     this.state = {
       hotelData: '',
       isLoading: true,
-      favorited: false
+      favorited: false,
+      neighborhood: ''
     };
     this.handleFavorites = this.handleFavorites.bind(this);
   }
@@ -45,7 +46,8 @@ export default class HotelDetails extends React.Component {
         return response.json();
       })
       .then(data => {
-        this.setState({ hotelData: data.data.body, isLoading: false });
+        this.setState({ hotelData: data.data.body, isLoading: false, neighborhood: data.neighborhood });
+        console.log(data)
       })
       .catch(err => {
         console.error(err);
@@ -73,24 +75,23 @@ export default class HotelDetails extends React.Component {
 
     const hotelRoomTypes = this.state.hotelData.propertyDescription.roomTypeNames.map((roomName, idx) => {
       return (
-        <p key={idx} className="">{`${roomName}`}</p>
+        <p key={idx} className="policies">{`${roomName}`}</p>
       );
     });
 
     const hotelDiningInfo = this.state.hotelData.amenities[0].listItems[1].listItems;
     const hotelDiningServices = hotelDiningInfo.map((diningService, idx) => {
       return (
-        <p key={idx} className="">{`${diningService}`}</p>
+        <p key={idx}>{`${diningService}`}</p>
       );
     });
 
     const isPriceAvailable = this.state.hotelData.propertyDescription.featuredPrice
-    const address = this.state.hotelData.propertyDescription.address.addressLine1 + ', ' + this.state.hotelData.propertyDescription.address.cityName + ', ' + this.state.hotelData.propertyDescription.address.countryName;
 
     const hotelAmenities = this.state.hotelData.amenities[0].listItems;
     const amenityListHotel = hotelAmenities.map((amenity, idx) => {
       return (
-        <p key={idx} className="">{`${amenity.listItems}`}</p>
+        <p key={idx}>{`${amenity.listItems}`}</p>
       );
     });
 
@@ -98,69 +99,93 @@ export default class HotelDetails extends React.Component {
     const amenityList = roomAmenities.map((amenity, idx) => {
 
       return (
-        <p key={idx} className="">{`${amenity.listItems} `}</p>
+        <p key={idx}>{`${amenity.listItems} `}</p>
       );
     });
 
     return (
-      <div className="vh-75 text-center">
-        HOTEL DETAILS PAGE
-        <div className="">
-          <div className="big-container text-center vh-20 d-flex flex-column align-items-center">
-            <p>{hotelName}</p>
-            <button onClick={this.handleFavorites} className="fav-button border-0"><p className="pt-2 pr-2 fav-img">{this.state.favorited ? '✓' : 'fav'}</p></button>
-            <p className={this.state.favorited ? 'text-muted' : 'd-none'}>added to favorites</p>
-            <a  href={`#reviews?hotelId=${this.state.hotelData.pdpHeader.hotelId}&hotelName=${this.state.hotelData.propertyDescription.name}`}>See User Reviews</a>
-            <p>{`Average User Rating:${badge} ${rating}/10`}</p>
-            <p>Average Price: {!isPriceAvailable ? 'unknown' : this.state.hotelData.propertyDescription.featuredPrice.currentPrice.formatted}</p>
-            <p style={{ color: 'red' }}>{address}</p>
+
+      <div className="vh-75 hotel-details-page">
+
+        <div className="border rounded mb-5">
+          <div className="big-container p-3 vh-20 d-flex flex-column align-items-center">
+            <div className="d-flex justify-content-between w-100">
+              <h3 className="w-100 d-flex justify-content-start">{hotelName}</h3>
+              <i onClick={this.handleFavorites} className={this.state.favorited ? 'bi bi-suit-heart-fill fav-button heart text-danger' : 'bi bi-heart fav-button heart'}></i>
+            </div>
+            <p className={this.state.favorited ? 'text-muted w-100 d-flex justify-content-end' : 'd-none'}>added to favorites</p>
+            <p className="w-100 d-flex justify-content-start">{this.state.hotelData.propertyDescription.address.fullAddress}</p>
+            <img width="100%" src={this.state.neighborhood.neighborhoodImage}></img>
+            <div className="d-flex justify-content-between w-100">
+              <p>{`Average User Rating: ${badge} ${rating}/10`}</p>
+              <a href={`#reviews?hotelId=${this.state.hotelData.pdpHeader.hotelId}&hotelName=${this.state.hotelData.propertyDescription.name}`}>See Reviews<i className="bi bi-chat-fill pl-3"></i></a>
+            </div>
+
+            <p className="w-100 d-flex justify-content-start">Average Price: {!isPriceAvailable ? 'unknown' : this.state.hotelData.propertyDescription.featuredPrice.currentPrice.formatted}</p>
           </div>
           <div className="accordion" id="accordionExample">
             <div className="card">
               <div className="card-header" id="headingOne">
-                <h2 className="mb-0">
-                  <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Hotel Fact Sheet
+                <h2 className="mb-0 ">
+                  <button className="btn btn-link pl-0 text-dark " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <h4>Fact Sheet</h4>
                   </button>
                 </h2>
               </div>
               <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div className="card-body">
-                  {aboutList}
-                  {hotelSize}
-                  <span style={{ color: 'red' }}>Room Types Available: </span>
-                  <span>{hotelRoomTypes}</span>
-                </div>
+
+                <main>
+                  <div className="card-body  d-flex flex-column justify-content-between">
+                    <div className="d-flex justify-content-between pb-4">
+                      <p className="font-weight-bold">Check in & Check out</p>
+                      <div className="w-50 ">{aboutList}</div>
+                    </div>
+                    <div className="d-flex justify-content-between pb-4">
+                      <p className="font-weight-bold">Hotel Size</p>
+                      <div className="w-50 ">{hotelSize}</div>
+                    </div>
+                    <div className="d-flex justify-content-between pb-4">
+                      <p className="font-weight-bold">Room Types</p>
+                      <div className="w-50 ">{hotelRoomTypes}</div>
+                    </div>
+                  </div>
+                </main>
               </div>
             </div>
             <div className="card">
               <div className="card-header" id="headingTwo">
-                <h2 className="mb-0">
-                  <button className="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Dining & Entertainment
+                <h2 className="mb-0 ">
+                  <button className="btn btn-link collapsed pl-0 text-dark " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <h4>Dining & Entertainment</h4>
                   </button>
                 </h2>
               </div>
-              <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div className="card-body">
+              <div id="collapseTwo" className="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div className="card-body ">
                   {hotelDiningServices}
                 </div>
               </div>
             </div>
             <div className="card">
               <div className="card-header" id="headingThree">
-                <h2 className="mb-0">
-                  <button className="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Amenities
-                 </button>
+                <h2 className="mb-0 ">
+                  <button className="btn btn-link collapsed text-dark" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <h4>Amenities</h4>
+                  </button>
                 </h2>
               </div>
               <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                <div className="card-body">
-                  <span style={{ color: 'red' }}>In the Hotel: </span>
-                  {amenityListHotel}
-                  <span style={{ color: 'red' }}>In the Room: </span>
-                  {amenityList}
+                <div>
+                  <div className="card-body  d-flex flex-column justify-content-between">
+                    <div className="d-flex justify-content-between pb-4">
+                      <p className="font-weight-bold">In Hotel:</p>
+                      <div className="w-50 ">{amenityListHotel}</div>
+                    </div>
+                    <div className="d-flex justify-content-between pb-4">
+                      <p className="font-weight-bold">In Room:</p>
+                      <div className="w-50 ">{amenityList}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
