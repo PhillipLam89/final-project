@@ -94,15 +94,10 @@ div > h3 {
 }
 
 .hotel-info-container {
-  max-width: 300px;
+  width: 300px;
 }
 .hotel-details-page,
 .hotel-results-list {
   background-color: rgb(237, 244, 250);
   padding: 3rem;
-}
-
-.policies {
-  word-break: break-all;
-  word-wrap: break-word;
 }
