@@ -37,22 +37,22 @@ export default class Reviews extends React.Component {
           const year = dateObj.getFullYear();
           const newDate = month + "/" + day + "/" + year;
           return (
-            <div key={idx + 1}>
-              <h3 key={idx}>{`${review.recommendedBy} rated: ${review.qualitativeBadgeText}`}</h3>
+            <div className="text-center card shadow-sm row-cols-md-1 p-3 col-12  mb-5  results-container p-3" key={idx + 1}>
+              <h3 className="p-2" key={idx}>{`${review.recommendedBy} rated: ${review.qualitativeBadgeText}`}</h3>
               <p>{newDate}</p>
               <p key={idx - 1}>{review.summary}</p>
             </div>
           )
-        } return ;
+        }
       })
       return (
-        <main className="results-containerfav">
-          <div className="m-3 text-center ">
-            <h2 style={{ color: 'green' }} className="blue title">{this.props.hotelName + ' Reviews'}</h2>
-            <div className="">{reviews}</div>
+        <div>
+          <div className="card shadow-lg row-cols-md-1 p-3 col-12  mb-5  results-container p-3">
+            <h2 style={{ color: 'green' }} className="p-3 text-center ">{this.props.hotelName + ' Reviews'}</h2>
+            {reviews}
+            <NavBar />
           </div>
-          <NavBar />
-        </main>
+        </div>
       )
     } else {
       return <p></p>
