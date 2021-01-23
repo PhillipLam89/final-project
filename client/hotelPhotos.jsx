@@ -10,7 +10,7 @@ export default class HotelDetails extends React.Component {
     this.state = {
       isLoading: '',
       favorited: false,
-      data: ''
+      photosData: ''
     };
 
   }
@@ -23,9 +23,9 @@ export default class HotelDetails extends React.Component {
         return response.json();
       })
       .then(data => {
-        console.log('photo data', data)
-        this.setState({data: data})
-        console.log('state', this.state.data)
+        data.hotelImages.length > 50 ? data.hotelImages.length = 50 : data.hotelImages.length
+        this.setState({ photosData: data})
+
       })
       .catch(err => {
         console.error(err);
@@ -34,12 +34,19 @@ export default class HotelDetails extends React.Component {
 
   render() {
     if (this.state.isLoading) return <Loader />;
-    console.log(this.state)
-    if (this.state.data) {
+    else if (this.state.photosData) {
+      const photos = this.state.photosData.hotelImages.map((photo, idx) => {
+        const newPhotos = photo.baseUrl.replaceAll('_{size}', '')
+        return (
+          <img className="m-3 card shadow-lg" key={photo.imageId} width="170px" src={newPhotos}></img>
+        );
+      });
       return (
         <div>
           <p className="text-center">{this.props.hotelName}'s Photos</p>
-          <img src={this.state.data.hotelImages[0].baseUrl}></img>
+          <div className="p-3 d-flex justify-content-center flex-wrap">
+           {photos}
+          </div>
           <NavBar />
         </div>
       );
