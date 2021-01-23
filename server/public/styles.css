@@ -37,7 +37,8 @@ div > h3 {
 .big-container,
 .home,
 .result-container,
-.heart {
+.heart,
+.photo-div {
   font-weight: bolder;
   font-family: sans-serif;
   background-color: whitesmoke;
@@ -100,4 +101,23 @@ div > h3 {
 .hotel-results-list {
   background-color: rgb(237, 244, 250);
   padding: 3rem;
+}
+.property-img{
+ max-width: 170px;
+ max-height: 170px;
+ transform: scale(1);
+}
+.property-img:hover {
+ cursor: pointer;
+ transform: scale(1.25);
+ border: 1px solid goldenrod;
+}
+
+
+.hotel-info-container {
+ transform: scale(1);
+}
+.hotel-info-container:hover {
+  cursor: pointer;
+ transform: scale(1.08);
 }

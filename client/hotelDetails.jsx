@@ -47,7 +47,7 @@ export default class HotelDetails extends React.Component {
       })
       .then(data => {
         this.setState({ hotelData: data.data.body, isLoading: false, neighborhood: data.neighborhood });
-        console.log(data)
+
       })
       .catch(err => {
         console.error(err);
@@ -100,7 +100,7 @@ export default class HotelDetails extends React.Component {
         <p key={idx}>{`${amenity.listItems.join(', ')} `}</p>
       );
     });
-    console.log('amens', amenityList)
+
     return (
 
       <div className="vh-75 hotel-details-page">

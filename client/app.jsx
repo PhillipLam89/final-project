@@ -45,9 +45,10 @@ export default class App extends React.Component {
     } if (route.path === 'reviews') {
       return <Reviews hotelId={route.params.get('hotelId')} hotelName={route.params.get('hotelName')}/>
     } if (route.path === 'photos') {
-      return <HotelPhotos hotelId={route.params.get('hotelId')} hotelName={route.params.get('hotelName')}/>
-    }
+      return <HotelPhotos hotelId={route.params.get('hotelId')} hotelName={route.params.get('hotelName')} />
   }
+
+}
 
   render() {
     return (

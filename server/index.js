@@ -128,7 +128,7 @@ app.get('/api/hotels/:hotelId/photos', (req, res, next) => {
   fetch(`https://hotels4.p.rapidapi.com/properties/get-hotel-photos?id=${hotelId}`, {
     "method": "GET",
     "headers": {
-      "x-rapidapi-key": "aee2d76ddemshdce25e084382256p16705fjsncaa046304cdd",
+      "x-rapidapi-key": `${process.env.API_KEY}`,
       "x-rapidapi-host": "hotels4.p.rapidapi.com"
     }
   })
