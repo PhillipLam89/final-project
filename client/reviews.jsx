@@ -55,7 +55,7 @@ export default class Reviews extends React.Component {
         </div>
       )
     } else {
-      return <p></p>
+      return null
     }
   }
 }

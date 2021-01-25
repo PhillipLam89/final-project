@@ -47,7 +47,7 @@ export default class HotelDetails extends React.Component {
       })
       .then(data => {
         this.setState({ hotelData: data.data.body, isLoading: false, neighborhood: data.neighborhood });
-        console.log(data)
+
       })
       .catch(err => {
         console.error(err);
@@ -87,19 +87,17 @@ export default class HotelDetails extends React.Component {
     });
 
     const isPriceAvailable = this.state.hotelData.propertyDescription.featuredPrice
-
     const hotelAmenities = this.state.hotelData.amenities[0].listItems;
     const amenityListHotel = hotelAmenities.map((amenity, idx) => {
       return (
-        <p key={idx}>{`${amenity.listItems}`}</p>
+        <p key={idx}>{`${amenity.listItems.join(', ')}`}</p>
       );
     });
 
     const roomAmenities = this.state.hotelData.amenities[1].listItems;
     const amenityList = roomAmenities.map((amenity, idx) => {
-
       return (
-        <p key={idx}>{`${amenity.listItems} `}</p>
+        <p key={idx}>{`${amenity.listItems.join(', ')} `}</p>
       );
     });
 
@@ -109,8 +107,8 @@ export default class HotelDetails extends React.Component {
 
         <div className="border rounded mb-5">
           <div className="big-container p-3 vh-20 d-flex flex-column align-items-center">
-            <div className="d-flex justify-content-between w-100">
-              <h3 className="w-100 d-flex justify-content-start">{hotelName}</h3>
+            <div className="d-flex justify-content-between w-100 pr-2">
+              <h3 className="w-100 d-flex justify-content-start bg-light">{hotelName}</h3>
               <i onClick={this.handleFavorites} className={this.state.favorited ? 'bi bi-suit-heart-fill fav-button heart text-danger' : 'bi bi-heart fav-button heart'}></i>
             </div>
             <p className={this.state.favorited ? 'text-muted w-100 d-flex justify-content-end' : 'd-none'}>added to favorites</p>
@@ -120,8 +118,10 @@ export default class HotelDetails extends React.Component {
               <p>{`Average User Rating: ${badge} ${rating}/10`}</p>
               <a href={`#reviews?hotelId=${this.state.hotelData.pdpHeader.hotelId}&hotelName=${this.state.hotelData.propertyDescription.name}`}>See Reviews<i className="bi bi-chat-fill pl-3"></i></a>
             </div>
-
-            <p className="w-100 d-flex justify-content-start">Average Price: {!isPriceAvailable ? 'unknown' : this.state.hotelData.propertyDescription.featuredPrice.currentPrice.formatted}</p>
+            <div className="w-100 d-flex justify-content-start">
+              <p className="w-100">Average Price: {!isPriceAvailable ? 'unknown' : this.state.hotelData.propertyDescription.featuredPrice.currentPrice.formatted}</p>
+              <a className="d-flex" href={`#photos?hotelId=${this.state.hotelData.pdpHeader.hotelId}&hotelName=${this.state.hotelData.propertyDescription.name}`}>Photos<i className="bi bi-camera pl-3"></i></a>
+            </div>
           </div>
           <div className="accordion" id="accordionExample">
             <div className="card">
@@ -132,7 +132,7 @@ export default class HotelDetails extends React.Component {
                   </button>
                 </h2>
               </div>
-              <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 
                 <main>
                   <div className="card-body  d-flex flex-column justify-content-between">

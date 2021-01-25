@@ -7,7 +7,9 @@
   height: 3.5rem;
   animation: spin 1.75s linear infinite;
 }
-
+.navbar {
+  height: 10vh;
+}
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -37,7 +39,8 @@ div > h3 {
 .big-container,
 .home,
 .result-container,
-.heart {
+.heart,
+.photo-div {
   font-weight: bolder;
   font-family: sans-serif;
   background-color: whitesmoke;
@@ -85,7 +88,7 @@ div > h3 {
   background-size: cover;
 }
 .hotel-img {
-  width: 100%;
+  max-width: 100%;
 }
 
 .results-container {
@@ -94,15 +97,53 @@ div > h3 {
 }
 
 .hotel-info-container {
-  max-width: 300px;
+  max-width: 250px;
 }
 .hotel-details-page,
 .hotel-results-list {
   background-color: rgb(237, 244, 250);
   padding: 3rem;
 }
-
-.policies {
-  word-break: break-all;
-  word-wrap: break-word;
+.property-img{
+ max-width: 170px;
+ max-height: 170px;
+ transform: scale(1);
 }
+.property-img:hover {
+ cursor: pointer;
+ transform: scale(1.25);
+ border: 1px solid goldenrod;
+}
+
+
+.hotel-info-container {
+ transform: scale(1);
+}
+.hotel-info-container:hover {
+  cursor: pointer;
+ transform: scale(1.08);
+}
+.photo-page-div {
+  height: 65vh;
+  overflow-y: auto;
+  background-color: lightcyan;
+}
+.card,
+.card-header {
+  border: 1px lightcyan gray;
+}
+.photos-accordion {
+  height: 85vh;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: start;
+}
+h4:hover
+  {
+  color:  royalblue;
+  transform: scale(1.1);
+  }
+/* .dd {
+  height: 50vh;
+} */

@@ -123,6 +123,23 @@ app.get('/api/hotels/:hotelId', (req, res, next) => {
     });
 });
 
+app.get('/api/hotels/:hotelId/photos', (req, res, next) => {
+  const hotelId = req.params.hotelId;
+  fetch(`https://hotels4.p.rapidapi.com/properties/get-hotel-photos?id=${hotelId}`, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-key": `${process.env.API_KEY}`,
+      "x-rapidapi-host": "hotels4.p.rapidapi.com"
+    }
+  })
+    .then(response => response.json())
+    .then(data => res.json(data))
+    .catch(err => {
+      next(err);
+    });
+});
+
+
 app.get('/api/:userId/favorites', (req, res, next) => {
   const { userId } = req.params
 

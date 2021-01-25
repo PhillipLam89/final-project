@@ -64,7 +64,7 @@ export default class Favorites extends React.Component {
       });
       return (
         <div className="result-container vh-100  pt-3 d-block d-flex flex-column text-center">
-          <h2 className="mb-2 fav">Favorites <img src="./images/red-heart.png" className="fav-button"></img></h2>
+          <h2 className="mb-2 fav">Favorites <img width="45rem" src="./images/red-heart.png" className="fav-button"></img></h2>
           <div className="fav-hotel-div">{favoriteHotels}</div>
           <NavBar />
         </div>
