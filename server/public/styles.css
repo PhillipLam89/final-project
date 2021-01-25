@@ -7,7 +7,9 @@
   height: 3.5rem;
   animation: spin 1.75s linear infinite;
 }
-
+.navbar {
+  height: 10vh;
+}
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -86,7 +88,7 @@ div > h3 {
   background-size: cover;
 }
 .hotel-img {
-  width: 100%;
+  max-width: 100%;
 }
 
 .results-container {
@@ -95,7 +97,7 @@ div > h3 {
 }
 
 .hotel-info-container {
-  width: 300px;
+  max-width: 250px;
 }
 .hotel-details-page,
 .hotel-results-list {
@@ -121,3 +123,27 @@ div > h3 {
   cursor: pointer;
  transform: scale(1.08);
 }
+.photo-page-div {
+  height: 65vh;
+  overflow-y: auto;
+  background-color: lightcyan;
+}
+.card,
+.card-header {
+  border: 1px lightcyan gray;
+}
+.photos-accordion {
+  height: 85vh;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: start;
+}
+h4:hover
+  {
+  color:  royalblue;
+  transform: scale(1.1);
+  }
+/* .dd {
+  height: 50vh;
+} */

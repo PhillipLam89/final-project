@@ -48,7 +48,7 @@ export default class SearchResults extends React.Component {
     return (
       <div className="hotel-results-list">
         <div className="header text-center"><h3 className="mb-0">{`${this.props.cityName.toUpperCase()} ${this.props.ratingFilter}-STAR HOTELS:`}</h3></div>
-        <div className="results-container d-flex justify-content-center">
+        <div className="results-container d-flex justify-content-center rounded">
 
             <div className="row row-cols-2 row-cols-md-2  mb-5 d-flex justify-content-center results-container p-3 ">
             {hotelName}
