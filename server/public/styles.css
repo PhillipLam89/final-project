@@ -9,6 +9,7 @@
 }
 .navbar {
   height: 10vh;
+
 }
 @keyframes spin {
   from { transform: rotate(0deg); }
@@ -121,7 +122,7 @@ div > h3 {
 }
 .hotel-info-container:hover {
   cursor: pointer;
- transform: scale(1.08);
+ transform: scale(1.05);
 }
 .photo-page-div {
   height: 65vh;
@@ -144,6 +145,7 @@ h4:hover
   color:  royalblue;
   transform: scale(1.1);
   }
-/* .dd {
-  height: 50vh;
-} */
+
+.indicator {
+  border-top: 2px solid orange;
+}

@@ -49,6 +49,7 @@ export default class HotelPhotos extends React.Component {
          const newUrl = photo.images[i].baseUrl.replaceAll('_{size}', '')
           roomPhotosCollection.push(newUrl)
         }
+
       });
       const roomPhotosAll = roomPhotosCollection.map((photo, idx) => {
         return (

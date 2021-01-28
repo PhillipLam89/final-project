@@ -9,7 +9,7 @@ import Registration from './registration';
 import LogIn from './logIn';
 import Reviews from './reviews'
 import HotelPhotos from './hotelPhotos'
-
+import NavBar from './navBar'
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -29,19 +29,39 @@ export default class App extends React.Component {
   renderPage() {
     const { route } = this.state;
     if (route.path === '' || route.path === 'logged') {
-      return <Home currentUser={route.params.get('currentUser')} />;
+      return (
+        <div>
+          <Home currentUser={route.params.get('currentUser')} />
+          <NavBar iconClicked="home"/>
+        </div>
+      )
     } if (route.path === 'search') {
-      return <Search />;
+      return (
+        <div>
+          <Search />
+          <NavBar iconClicked="search"/>
+        </div>
+       )
     } if (route.path === 'hotel-details') {
-      return <HotelDetails hotelId={route.params.get('hotelId')} hotelPhoto={route.params.get('thumbnailUrl')} />;
+      return  <HotelDetails hotelId={route.params.get('hotelId')} hotelPhoto={route.params.get('thumbnailUrl')} />;
     } if (route.path === 'search-results') {
       return <SearchResults cityName={route.params.get('cityName')} ratingFilter={route.params.get('ratingFilter')} />;
     } if (route.path === 'favorites') {
-      return <Favorites />;
+      return (
+        <div>
+          <Favorites />
+          <NavBar iconClicked="heart"/>
+        </div>
+      )
     } if (route.path === 'register') {
       return <Registration />;
     } if (route.path === 'login') {
-      return <LogIn />;
+      return (
+        <div>
+          <Favorites />
+          <NavBar iconClicked="person" />
+        </div>
+      )
     } if (route.path === 'reviews') {
       return <Reviews hotelId={route.params.get('hotelId')} hotelName={route.params.get('hotelName')}/>
     } if (route.path === 'photos') {
