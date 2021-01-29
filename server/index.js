@@ -182,13 +182,6 @@ app.post('/api/favorites/:userId/', (req, res, next) => {
 });
 
 
-
-
-
-
-
-
-
 app.get('/api/reviews/:hotelId', (req, res, next) => {
   const { hotelId } = req.params
   fetch(`https://hotels-com-free.p.rapidapi.com/mobile_service/property-content/v1/hotels.com/property/${hotelId}/reviews?loc=en_US&page=1`, {

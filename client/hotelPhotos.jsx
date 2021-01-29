@@ -9,8 +9,14 @@ export default class HotelPhotos extends React.Component {
     super(props);
     this.state = {
       isLoading: '',
-      photosData: ''
+      photosData: '',
+      chosenImage: ''
     };
+    this.handlePhotoClick = this.handlePhotoClick.bind(this)
+  }
+
+  handlePhotoClick(e) {
+    this.setState({ chosenImage: e.target.src })
 
   }
 
@@ -21,9 +27,7 @@ export default class HotelPhotos extends React.Component {
         return response.json();
       })
       .then(data => {
-        data.hotelImages.length > 100 ? data.hotelImages.length = 100 : data.hotelImages.length
         this.setState({ photosData: data, isLoading: false})
-        console.log(this.state.photosData)
       })
       .catch(err => {
         console.error(err);
@@ -38,7 +42,7 @@ export default class HotelPhotos extends React.Component {
       const photos = this.state.photosData.hotelImages.map((photo, idx) => {
         const newPhotos = photo.baseUrl.replaceAll('_{size}', '')
         return (
-          <img className="m-3 rounded shadow-lg rounded property-img" key={photo.imageId} width="170px" src={newPhotos}></img>
+          <img onClick={this.handlePhotoClick} type="button" data-toggle="modal" data-target="#exampleModal" className="m-3 rounded shadow-lg rounded property-img " key={photo.imageId} width="170px" src={newPhotos}></img>
         );
       });
 
@@ -49,7 +53,7 @@ export default class HotelPhotos extends React.Component {
          const newUrl = photo.images[i].baseUrl.replaceAll('_{size}', '')
           roomPhotosCollection.push(newUrl)
         }
-
+        return roomPhotosCollection
       });
       const roomPhotosAll = roomPhotosCollection.map((photo, idx) => {
         return (
@@ -60,7 +64,26 @@ export default class HotelPhotos extends React.Component {
 
       return (
         <div>
-          <p className="text-center">{this.props.hotelName}'s Photos</p>
+
+          <div className="modal fade d" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog d-flex justify-content-center " role="document">
+              <div className="modal-content modal-div ">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">{this.props.hotelName}</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body modal-div">
+                  <img width="100%" height="80%" src={this.state.chosenImage}></img>
+                  <div className="w-100 d-flex justify-content-end"><button type="button" className="m-0  mt-3 btn btn-secondary" data-dismiss="modal">Close</button></div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <p className="text-center">{this.props.hotelName}&apos; Photos</p>
           <div className="photos-accordion-div">
             <div className="accordion photos-accordion" id="accordionExample">
               <div className="card">

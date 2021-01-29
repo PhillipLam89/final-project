@@ -97,9 +97,7 @@ div > h3 {
   max-width: 1200px;
 }
 
-.hotel-info-container {
-  max-width: 250px;
-}
+
 .hotel-details-page,
 .hotel-results-list {
   background-color: rgb(237, 244, 250);
@@ -119,6 +117,7 @@ div > h3 {
 
 .hotel-info-container {
  transform: scale(1);
+  max-width: 250px;
 }
 .hotel-info-container:hover {
   cursor: pointer;
@@ -148,4 +147,10 @@ h4:hover
 
 .indicator {
   border-top: 2px solid orange;
+}
+
+
+.modal-div {
+  width: 90vw;
+  height: 80vh;
 }

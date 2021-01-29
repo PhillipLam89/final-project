@@ -63,10 +63,6 @@ export default class HotelDetails extends React.Component {
       .catch(err => {
         console.error(err);
       });
-
-
-
-
   }
 
   render() {
@@ -140,8 +136,8 @@ export default class HotelDetails extends React.Component {
               </div>
               <div className="w-100">
                 <p>Current Weather: {`${apparentTemperature.toFixed(0)}°F ${icon}`}</p>
-                <p>Current Humidity: {humidity * 100 + ' %'}</p>
-                <p>Chance of Rain: {precipProbability * 100 + ' %'}</p>
+                <p>Current Humidity: {(humidity * 100).toFixed(0) + ' %'}</p>
+                <p>Chance of Rain: {(precipProbability * 100).toFixed(0) + ' %'}</p>
               </div>
             </div>
             <div className="accordion" id="accordionExample">
