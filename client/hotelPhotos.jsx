@@ -12,11 +12,11 @@ export default class HotelPhotos extends React.Component {
       photosData: '',
       chosenImage: ''
     };
-    this.handlePhotoClick = this.handlePhotoClick.bind(this)
+    this.handlePhotoClick = this.handlePhotoClick.bind(this);
   }
 
   handlePhotoClick(e) {
-    this.setState({ chosenImage: e.target.src })
+    this.setState({ chosenImage: e.target.src });
 
   }
 
@@ -27,7 +27,7 @@ export default class HotelPhotos extends React.Component {
         return response.json();
       })
       .then(data => {
-        this.setState({ photosData: data, isLoading: false})
+        this.setState({ photosData: data, isLoading: false });
       })
       .catch(err => {
         console.error(err);
@@ -38,29 +38,28 @@ export default class HotelPhotos extends React.Component {
     if (this.state.isLoading) return <Loader />;
     else if (this.state.photosData) {
 
-              //property photos
+      // property photos
       const photos = this.state.photosData.hotelImages.map((photo, idx) => {
-        const newPhotos = photo.baseUrl.replaceAll('_{size}', '')
+        const newPhotos = photo.baseUrl.replaceAll('_{size}', '');
         return (
           <img onClick={this.handlePhotoClick} type="button" data-toggle="modal" data-target="#exampleModal" className="m-3 rounded shadow-lg rounded property-img " key={photo.imageId} width="170px" src={newPhotos}></img>
         );
       });
 
-        //room photos
-      let roomPhotosCollection = []
+      // room photos
+      const roomPhotosCollection = [];
       this.state.photosData.roomImages.map((photo, idx) => {
-        for (let i = 0; i < photo.images.length; i++ ) {
-         const newUrl = photo.images[i].baseUrl.replaceAll('_{size}', '')
-          roomPhotosCollection.push(newUrl)
+        for (let i = 0; i < photo.images.length; i++) {
+          const newUrl = photo.images[i].baseUrl.replaceAll('_{size}', '');
+          roomPhotosCollection.push(newUrl);
         }
-        return roomPhotosCollection
+        return roomPhotosCollection;
       });
       const roomPhotosAll = roomPhotosCollection.map((photo, idx) => {
         return (
-          <img className="m-3 rounded shadow-lg rounded property-img" key={idx} width="170px" src={photo}></img>
+          <img onClick={this.handlePhotoClick} type="button" data-toggle="modal" data-target="#exampleModal" className="m-3 rounded shadow-lg rounded property-img" key={idx} width="170px" src={photo}></img>
         );
       });
-
 
       return (
         <div>
@@ -128,6 +127,6 @@ export default class HotelPhotos extends React.Component {
         </div>
       );
     }
-    return null
+    return null;
   }
 }
