@@ -42,7 +42,7 @@ export default class HotelPhotos extends React.Component {
       const photos = this.state.photosData.hotelImages.map((photo, idx) => {
         const newPhotos = photo.baseUrl.replaceAll('_{size}', '');
         return (
-          <img onClick={this.handlePhotoClick} type="button" data-toggle="modal" data-target="#exampleModal" className="m-3 rounded shadow-lg rounded property-img " key={photo.imageId} width="170px" src={newPhotos}></img>
+          <img onClick={this.handlePhotoClick} data-toggle="modal" data-target="#exampleModal" className="m-3 rounded shadow-lg rounded property-img " key={photo.imageId} width="170px" src={newPhotos}></img>
         );
       });
 
@@ -57,13 +57,12 @@ export default class HotelPhotos extends React.Component {
       });
       const roomPhotosAll = roomPhotosCollection.map((photo, idx) => {
         return (
-          <img onClick={this.handlePhotoClick} type="button" data-toggle="modal" data-target="#exampleModal" className="m-3 rounded shadow-lg rounded property-img" key={idx} width="170px" src={photo}></img>
+          <img onClick={this.handlePhotoClick} data-toggle="modal" data-target="#exampleModal" className="m-3 rounded shadow-lg rounded property-img" key={idx} width="170px" src={photo}></img>
         );
       });
 
       return (
         <div>
-
           <div className="modal fade d" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog d-flex justify-content-center " role="document">
               <div className="modal-content modal-div ">
@@ -77,11 +76,9 @@ export default class HotelPhotos extends React.Component {
                   <img width="100%" height="80%" src={this.state.chosenImage}></img>
                   <div className="w-100 d-flex justify-content-end"><button type="button" className="m-0  mt-3 btn btn-secondary" data-dismiss="modal">Close</button></div>
                 </div>
-
               </div>
             </div>
           </div>
-
           <p className="text-center">{this.props.hotelName}&apos; Photos</p>
           <div className="photos-accordion-div">
             <div className="accordion photos-accordion" id="accordionExample">
