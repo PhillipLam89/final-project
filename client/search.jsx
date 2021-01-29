@@ -79,7 +79,7 @@ class Search extends React.Component {
           }
           <div className="d-flex justify-content-end mt-4"><button type="submit" className="btn btn-dark shadow">Search</button></div>
         </form>
-        <NavBar />
+
       </div>
     );
   }

@@ -59,13 +59,13 @@ export default class Favorites extends React.Component {
     if (this.state.favoritesData) {
       const favoriteHotels = this.state.favoritesData.map((info, idx) => {
         return (
-          <div key={idx} className="">{info.hotelName}<img data-hotel-id={info.hotelId} onClick={this.handleRemove} className={`pl-3 mb-1 trash-icon`} width="35rem" src="./images/trash.png"></img></div>
+          <a href={`#hotel-details?hotelId=${info.hotelId}`} key={idx} className="text-decoration-none">{info.hotelName}<img data-hotel-id={info.hotelId} onClick={this.handleRemove} className={`pl-3 mb-1 trash-icon`} width="35rem" src="./images/trash.png"></img></a>
         );
       });
       return (
         <div className="result-container vh-100  pt-3 d-block d-flex flex-column text-center">
           <h2 className="mb-2 fav">Favorites <img width="45rem" src="./images/red-heart.png" className="fav-button"></img></h2>
-          <div className="fav-hotel-div">{favoriteHotels}</div>
+          <div className="fav-hotel-div d-flex flex-column">{favoriteHotels}</div>
           <NavBar />
         </div>
       );
