@@ -107,21 +107,6 @@ app.get('/api/search/:userInput/:ratingFilter', (req, res, next) => {
     });
 });
 
-app.get('/api/hotels/:hotelId', (req, res, next) => {
-  const hotelId = req.params.hotelId;
-  fetch(`https://hotels4.p.rapidapi.com/properties/get-details?id=${hotelId}&locale=en_US&currency=USD&checkOut=2020-01-15&adults1=1&checkIn=2020-01-08`, {
-    method: 'GET',
-    headers: {
-      'x-rapidapi-key': `${process.env.API_KEY}`,
-      'x-rapidapi-host': 'hotels4.p.rapidapi.com'
-    }
-  })
-    .then(response => response.json())
-    .then(data => res.json(data))
-    .catch(err => {
-      next(err);
-    });
-});
 
 app.get('/api/hotels/:hotelId/photos', (req, res, next) => {
   const hotelId = req.params.hotelId;
@@ -223,9 +208,37 @@ app.get('/api/reviews/:hotelId', (req, res, next) => {
 });
 
 
+app.get('/api/hotels/:hotelId', (req, res, next) => {
+  const hotelId = req.params.hotelId;
+  fetch(`https://hotels4.p.rapidapi.com/properties/get-details?id=${hotelId}&locale=en_US&currency=USD&checkOut=2020-01-15&adults1=1&checkIn=2020-01-08`, {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-key': `${process.env.API_KEY}`,
+      'x-rapidapi-host': 'hotels4.p.rapidapi.com'
+    }
+  })
+    .then(response => response.json())
+    .then(data => res.json(data))
+    .catch(err => {
+      next(err);
+    });
+});
 
-
-
+app.get('/api/weather/:latitude/:longitude', (req, res, next) => {
+  const {latitude, longitude} = req.params
+  fetch(`https://dark-sky.p.rapidapi.com/${latitude},${longitude}?lang=en&units=auto`, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-key": `${process.env.API_KEY}`,
+      "x-rapidapi-host": "dark-sky.p.rapidapi.com"
+    }
+  })
+    .then(response => response.json())
+    .then(data => res.json(data))
+    .catch(err => {
+      next(err);
+    });
+});
 
 
 
