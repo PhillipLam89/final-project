@@ -10,10 +10,12 @@ const ClientError = require('./client-error');
 const argon2 = require('argon2')
 const jwt = require('jsonwebtoken'); // eslint-disable-line
 const staticMiddleware = require('./static-middleware');
-
+const cors = require('cors');
 app.use(staticMiddleware);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors())
+app.options('*', cors())
 
 app.post('/api/sign-up', (req, res, next) => {
   const { username, password, fullName } = req.body;
