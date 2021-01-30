@@ -7,6 +7,7 @@ export default class SearchResults extends React.Component {
     this.state = {
       isLoading: true
     };
+    this.handleTitle = this.handleTitle.bind(this)
   }
 
   componentDidMount() {
@@ -23,22 +24,32 @@ export default class SearchResults extends React.Component {
       });
   }
 
+  handleTitle() {
+    if (this.props.geolocationUsed == 'true' && this.props.ratingFilter === '1%2C2%2C3%2C4%2C5') {
+      return `Your Nearby Hotels in (${this.props.cityName.toUpperCase()})`
+    } else if (this.props.ratingFilter === '1%2C2%2C3%2C4%2C5') {
+      return `All Hotels in ${this.props.cityName.toUpperCase()}`
+    } else {
+      return `${this.props.cityName.toUpperCase()} ${this.props.ratingFilter}-Star Hotels`
+    }
+
+  }
+
   render() {
     if (this.state.isLoading) return <Loader />;
     const hotelList = this.state.hotelList;
     const hotelName = hotelList.map((hotel, idx) => {
       return (
-        <div className="row-cols-md-1 p-3 col-12 card-deck card-img-top d-flex justify-content-center hotel-info-container">
-          <div className="card shadow-sm">
+        <div key={idx+1} className="row-cols-md-1 p-3 col-12 card-deck card-img-top d-flex justify-content-center hotel-info-container">
+          <div key={idx+2} className="card shadow-sm">
             <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
-            <div className="card-body">
-            <a href={`#hotel-details?hotelId=${hotelList[idx].id}&thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
-              <p className="card-text d-flex justify-content-between">
-              <small>{hotel.neighbourhood}</small>
-              {hotel.guestReviews &&
-                  <span className="font-weight-bold">{hotel.guestReviews.rating}</span>
-              }
-
+            <div key={idx + 3} className="card-body">
+              <a key={idx + 4} href={`#hotel-details?hotelId=${hotelList[idx].id}&thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
+              <p key={idx + 5} className="card-text d-flex justify-content-between">
+                <small key={idx + 6}>{hotel.neighbourhood}</small>
+                    {hotel.guestReviews &&
+                      <span key={idx + 7} className="font-weight-bold">{hotel.guestReviews.rating}</span>
+                    }
             </p>
           </div>
         </div>
@@ -47,10 +58,11 @@ export default class SearchResults extends React.Component {
   });
     return (
       <div className="hotel-results-list">
-        <div className="header text-center"><h3 className="mb-0">{this.props.ratingFilter === '1%2C2%2C3%2C4%2C5' ? `Your Nearby Hotels (${this.props.cityName})` : `${this.props.cityName} ${this.props.ratingFilter}-Star Hotels`}</h3></div>
+        <div className="header text-center"><h3 className="mb-0">
+          {this.handleTitle()}
+        </h3></div>
         <div className="results-container d-flex justify-content-center rounded">
-
-            <div className="row row-cols-2 row-cols-md-2  mb-5 d-flex justify-content-center results-container p-3 ">
+          <div className="row row-cols-2 row-cols-md-2  mb-5 d-flex justify-content-center results-container p-3 ">
             {hotelName}
           </div>
           <NavBar />
