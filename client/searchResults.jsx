@@ -47,7 +47,7 @@ export default class SearchResults extends React.Component {
   });
     return (
       <div className="hotel-results-list">
-        <div className="header text-center"><h3 className="mb-0">{`${this.props.cityName.toUpperCase()} ${this.props.ratingFilter}-STAR HOTELS:`}</h3></div>
+        <div className="header text-center"><h3 className="mb-0">{this.props.ratingFilter === '1%2C2%2C3%2C4%2C5' ? `Your Nearby Hotels (${this.props.cityName})` : `${this.props.cityName} ${this.props.ratingFilter}-Star Hotels`}</h3></div>
         <div className="results-container d-flex justify-content-center rounded">
 
             <div className="row row-cols-2 row-cols-md-2  mb-5 d-flex justify-content-center results-container p-3 ">

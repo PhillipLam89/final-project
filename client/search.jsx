@@ -69,7 +69,7 @@ class Search extends React.Component {
           const city = address[1]
           const params = new URLSearchParams();
           params.append('cityName', city);
-          params.append('ratingFilter', 3);
+          params.append('ratingFilter', '1%2C2%2C3%2C4%2C5');
           location.hash = 'search-results?' + params;
 
           console.log('city', city)
@@ -77,9 +77,6 @@ class Search extends React.Component {
         .catch(err => {
           console.error(err);
         });
-
-
-
       },
       (err) => console.log(err)
     )
@@ -117,7 +114,10 @@ class Search extends React.Component {
           }
           <div className="d-flex justify-content-around mt-4"><button type="submit" className="btn btn-dark shadow">Search</button></div>
         </form>
-        <div className="mt-3 "><button className="rounded border border-warning " onClick={this.handleGeolocation}>Find nearest hotels</button></div>
+        <div className="mt-3 ">
+          <button className="rounded border border-warning " onClick={this.handleGeolocation}>Find nearest hotels</button>
+
+        </div>
       </div>
     );
   }
