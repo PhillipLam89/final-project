@@ -26,11 +26,11 @@ export default class SearchResults extends React.Component {
 
   handleTitle() {
     if (this.props.geolocationUsed == 'true' && this.props.ratingFilter === '1%2C2%2C3%2C4%2C5') {
-      return `Your Nearby Hotels in (${this.props.cityName.toUpperCase()})`
+      return `Your Nearby Hotels in ${this.props.cityName}`
     } else if (this.props.ratingFilter === '1%2C2%2C3%2C4%2C5') {
-      return `All Hotels in ${this.props.cityName.toUpperCase()}`
+      return `All Hotels in ${this.props.cityName}`
     } else {
-      return `${this.props.cityName.toUpperCase()} ${this.props.ratingFilter}-Star Hotels`
+      return `${this.props.cityName} ${this.props.ratingFilter}-Star Hotels`
     }
 
   }

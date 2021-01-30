@@ -33,7 +33,7 @@ class Search extends React.Component {
     if (!this.state.ratingFilter) {
       return this.setState({ userInputError: true });
     }
-    const arr = this.state.userInput;
+    let arr = this.state.userInput;
     const notAllowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '!', '#', '$', '%', '^', '&', '-', '_',
       '*', '(', ')', '+', '=', '<', '>', ',', '.', '?', ':', ';', '@', '{', '}', '[', ']', '~', '/'];
 
@@ -42,9 +42,15 @@ class Search extends React.Component {
         return this.setState({ userInputError: true });
       }
     }
+    let properCityName = arr.split(' ')
+
+   const finalName =  properCityName.map((word) => {
+      return word[0].toUpperCase() + word.substring(1).toLowerCase();
+    }).join(" ");
+
 
     const params = new URLSearchParams();
-    params.append('cityName', this.state.userInput);
+    params.append('cityName', finalName);
     params.append('ratingFilter', this.state.ratingFilter);
     location.hash = 'search-results?' + params;
 
@@ -69,6 +75,7 @@ class Search extends React.Component {
             const city = filterCity.splice(8).join(',').replaceAll(',' , '')
 
             const params = new URLSearchParams();
+
             params.append('cityName', city);
             params.append('ratingFilter', '1%2C2%2C3%2C4%2C5');
             params.append('geolocationUsed', true);
