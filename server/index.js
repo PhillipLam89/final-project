@@ -236,6 +236,16 @@ app.get('/api/weather/:latitude/:longitude', (req, res, next) => {
 });
 
 
+app.get(`/api/coordinates/:latitude/:longitude`, (req, res, next) => {
+  const { latitude, longitude } = req.params
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&sensor=true&key=${process.env.Google_Geolocation_API_Key}`
+)
+    .then(response => response.json())
+    .then(data => res.json(data))
+    .catch(err => {
+      next(err);
+    });
+});
 
 app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
