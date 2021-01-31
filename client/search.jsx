@@ -1,7 +1,6 @@
 
 import React from 'react';
 import Loader from './loader';
-import NavBar from './navBar';
 
 class Search extends React.Component {
   constructor(props) {
@@ -42,8 +41,8 @@ class Search extends React.Component {
         return this.setState({ userInputError: true });
       }
     }
-    let properCityName = arr.split(' ')
 
+   let properCityName = this.state.userInput.split(' ')
    const finalName =  properCityName.map((word) => {
       return word[0].toUpperCase() + word.substring(1).toLowerCase();
     }).join(" ");
@@ -62,8 +61,7 @@ class Search extends React.Component {
       (position) => {
 
         const {latitude, longitude} = position.coords
-
-        fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&sensor=true&key=AIzaSyA7DmLK1L-rsNHd8VRmn6wrChvhX9ERau8`)
+        fetch(`/api/coordinates/${latitude}/${longitude}`)
           .then(response => {
             return response.json()
           })

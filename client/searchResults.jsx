@@ -25,7 +25,7 @@ export default class SearchResults extends React.Component {
   }
 
   handleTitle() {
-    if (this.props.geolocationUsed == 'true' && this.props.ratingFilter === '1%2C2%2C3%2C4%2C5') {
+    if (this.props.geolocationUsed === 'true' && this.props.ratingFilter === '1%2C2%2C3%2C4%2C5') {
       return `Your Nearby Hotels in ${this.props.cityName}`
     } else if (this.props.ratingFilter === '1%2C2%2C3%2C4%2C5') {
       return `All Hotels in ${this.props.cityName}`
@@ -50,7 +50,7 @@ export default class SearchResults extends React.Component {
                     {hotel.guestReviews &&
                       <span key={idx + 7} className="font-weight-bold">{hotel.guestReviews.rating}</span>
                     }
-            </p>
+              </p>
           </div>
         </div>
     </div>
