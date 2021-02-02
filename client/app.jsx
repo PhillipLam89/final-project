@@ -10,6 +10,7 @@ import LogIn from './logIn';
 import Reviews from './reviews'
 import HotelPhotos from './hotelPhotos'
 import NavBar from './navBar'
+import WriteReview from './WriteReview'
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -58,7 +59,7 @@ export default class App extends React.Component {
     } if (route.path === 'login') {
       return (
         <div>
-          <Favorites />
+          <LogIn/>
           <NavBar iconClicked="person" />
         </div>
       )
@@ -66,7 +67,9 @@ export default class App extends React.Component {
       return <Reviews hotelId={route.params.get('hotelId')} hotelName={route.params.get('hotelName')}/>
     } if (route.path === 'photos') {
       return <HotelPhotos hotelId={route.params.get('hotelId')} hotelName={route.params.get('hotelName')} />
-  }
+    } if (route.path === 'write-review') {
+      return <WriteReview hotelName={route.params.get('hotelName')} />
+    }
 
 }
 

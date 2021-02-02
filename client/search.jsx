@@ -67,8 +67,7 @@ class Search extends React.Component {
           })
           .then(data => {
 
-            const APICityData = data.plus_code.compound_code.split(',')
-            APICityData.length = 1
+            const APICityData = data.plus_code.compound_code.split(',').splice(0,1)
             const filterCity = APICityData.join('').split('')
             const city = filterCity.splice(8).join(',').replaceAll(',' , '')
 
@@ -119,11 +118,12 @@ class Search extends React.Component {
               {this.state.ratingFilter ? 'Invalid City' : 'Choose a rating and valid city'}
             </h6>
           }
-          <div className="d-flex justify-content-around mt-4"><button type="submit" className="btn btn-dark shadow">Search</button></div>
+          <div className="d-flex justify-content-around mt-4">
+            <button type="button" className="rounded border border-warning btn btn-dark shadow " onClick={this.handleGeolocation}>My Nearby Hotels</button>
+            <button type="submit" className="btn btn-dark shadow border border-warning">Search</button>
+          </div>
         </form>
-        <div className="mt-3 ">
-          <button className="rounded border border-warning " onClick={this.handleGeolocation}>My Nearby Hotels</button>
-        </div>
+
       </div>
     );
   }
