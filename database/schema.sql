@@ -23,6 +23,8 @@ CREATE TABLE "reviews" (
 	"service" TEXT NOT NULL,
 	"foodAndEntertainment" TEXT NOT NULL,
 	"content" TEXT NOT NULL,
+	"dateWritten" TEXT NOT NULL,
+	"timeWritten" TEXT NOT NULL,
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("reviewId")
 ) WITH (
   OIDS=FALSE
