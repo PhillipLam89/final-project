@@ -1,41 +1,50 @@
 import React from 'react';
 import NavBar from './navBar';
+import Loader from './loader'
 
-export default class WriteReview extends React.Component {
+export default class SeeReviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mounted: ''
+      allHotelsReviewed: '',
+      isLoading : true
     };
 
   }
 
-  handleSubmit(e) {
+  // handleSubmit(e) {
 
-  }
-  handleUserTextReview(e) {
+  // }
+  // handleUserTextReview(e) {
 
-  }
+  // }
 
   componentDidMount() {
-    this.setState({ mounted: true });
+
     fetch(`/api/1/myreviews/${this.props.hotelName}`)
       .then(response => {
         return response.json();
       })
       .then(data => {
-          console.log('see review data', data)
+
+          this.setState({allHotelsReviewed : data, isLoading: false})
       })
       .catch(err => {
         console.error(err);
       });
   }
   render() {
+     console.log('state', this.state)
+      if (this.state.isLoading) return <Loader />
+       const reviews = this.state.allHotelsReviewed.map((reviewedHotel, index) => {
+         return (
+           <p key={index} className="text-center">{reviewedHotel.hotelName}</p>
+         );
+       });
+
 
     return (
-      <div className="text-center">
-          {this.state.mounted ? 'trueee' : 'state is false'}
-      </div>
-    );
+      <h3>{reviews}</h3>
+    )
   }
 }
