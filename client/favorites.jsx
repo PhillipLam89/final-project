@@ -39,9 +39,17 @@ export default class Favorites extends React.Component {
   }
 
   handleReview(e) {
-    const params = new URLSearchParams();
-    params.append('hotelName', e.target.parentNode.firstChild.textContent);
-    location.hash = 'write-review?' + params;
+
+    this.state.favoritesData.map(function(val, index){
+      if (val.hotelName === e.target.parentNode.firstChild.textContent) {
+      const params = new URLSearchParams();
+      params.append('hotelName', e.target.parentNode.firstChild.textContent);
+      params.append('hotelId', val.hotelId);
+      location.hash = 'write-review?' + params;
+      }
+    })
+
+
   }
 
   componentDidMount() {
@@ -51,7 +59,7 @@ export default class Favorites extends React.Component {
         return response.json();
       })
       .then(data => {
-
+        console.log('fav datga', data)
         this.setState({ favoritesData: data, isLoading: false })
       })
       .catch(err => {

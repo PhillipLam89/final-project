@@ -11,6 +11,7 @@ import Reviews from './reviews'
 import HotelPhotos from './hotelPhotos'
 import NavBar from './navBar'
 import WriteReview from './WriteReview'
+import SeeReviews from './SeeReviews'
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -70,7 +71,14 @@ export default class App extends React.Component {
     } if (route.path === 'write-review') {
       return <WriteReview hotelName={route.params.get('hotelName')} />
     }
-
+    if (route.path === 'see-reviews') {
+      return (
+        <div>
+          <SeeReviews hotelName={route.params.get('hotelName')}/>
+          <NavBar iconClicked="reviews" />
+        </div>
+      )
+    }
 }
 
   render() {

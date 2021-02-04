@@ -247,6 +247,72 @@ app.get(`/api/coordinates/:latitude/:longitude`, (req, res, next) => {
     });
 });
 
+
+
+app.post('/api/favorites/:userId/', (req, res, next) => {
+  const { userId } = req.params
+  const { hotelId, hotelName } = req.body
+  const sql = `
+        insert into "favorites" ("hotelId","userId","hotelName")
+        values ($1, $2, $3)
+        returning *
+      `;
+  const params = [hotelId, userId, hotelName];
+  return db.query(sql, params)
+    .then(result => {
+      const [fav] = result.rows;
+      res.json(fav);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+                //POSTs and adds user review to DB
+app.post('/api/write/review/:userId/:hotelName', (req, res, next) => {
+  const {userId, hotelName} = req.params
+  const { cleanliness, service, foodAndEntertainment, content } = req.body;
+
+
+  const sql = `
+        insert into "reviews" ("hotelName","userId","cleanliness", "service", "foodAndEntertainment", "content")
+        values ($1, $2, $3, $4, $5, $6)
+        returning *
+      `;
+  const params = [hotelName, userId, cleanliness, service, foodAndEntertainment, content];
+  return db.query(sql, params)
+    .then(result => {
+      const [myReview] = result.rows;
+      res.json(myReview);
+    })
+    .catch(err => {
+      next(err);
+    });
+
+
+});
+            // GETs current saved reviews from DB, when see-review page loads
+app.get('/api/:userId/myreviews/:hotelName', (req, res, next) => {
+  const { userId, hotelName } = req.params
+
+  const sql = `
+        select "hotelName", "cleanliness", "service", "foodAndEntertainment", "content" from "reviews"
+      `;
+  return db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      next(err);
+    });
+
+});
+
+
+
+
+
+
 app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
