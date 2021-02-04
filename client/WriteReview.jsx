@@ -16,6 +16,29 @@ export default class WriteReview extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const currentDay = new Date(),
+      dd = String(currentDay.getDate()).padStart(2, '0'),
+      mm = String(currentDay.getMonth() + 1).padStart(2, '0'),
+      yyyy = currentDay.getFullYear();
+
+    const today = mm + '/' + dd + '/' + yyyy;
+
+
+
+    function dateToTime(date) {
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      const amOrPm = hours >= 12 ? 'P.M.' : 'A.M.';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      let finalCurrentTime = hours + ':' + minutes + ' ' + amOrPm;
+      return finalCurrentTime;
+    }
+    const getTimeFromDate = dateToTime(new Date)
+
+
+
     fetch(`/api/write/review/1/${this.props.hotelName}`, {
       method: 'POST',
       headers: {
@@ -26,7 +49,9 @@ export default class WriteReview extends React.Component {
         "cleanliness": this.state.cleanlinessRating,
         "service": this.state.serviceRating,
         "foodAndEntertainment": this.state.foodAndEntertainmentRating,
-        "content": this.state.userInput
+        "content": this.state.userInput,
+        "dateWritten": today,
+        "timeWritten": getTimeFromDate
       })
     })
       .then(response => response.json())

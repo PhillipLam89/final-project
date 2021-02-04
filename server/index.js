@@ -271,15 +271,15 @@ app.post('/api/favorites/:userId/', (req, res, next) => {
                 //POSTs and adds user review to DB
 app.post('/api/write/review/:userId/:hotelName', (req, res, next) => {
   const {userId, hotelName} = req.params
-  const { cleanliness, service, foodAndEntertainment, content } = req.body;
+  const { cleanliness, service, foodAndEntertainment, content, dateWritten, timeWritten } = req.body;
 
 
   const sql = `
-        insert into "reviews" ("hotelName","userId","cleanliness", "service", "foodAndEntertainment", "content")
-        values ($1, $2, $3, $4, $5, $6)
+        insert into "reviews" ("hotelName","userId","cleanliness", "service", "foodAndEntertainment", "content", "dateWritten", "timeWritten")
+        values ($1, $2, $3, $4, $5, $6, $7, $8)
         returning *
       `;
-  const params = [hotelName, userId, cleanliness, service, foodAndEntertainment, content];
+  const params = [hotelName, userId, cleanliness, service, foodAndEntertainment, content, dateWritten, timeWritten];
   return db.query(sql, params)
     .then(result => {
       const [myReview] = result.rows;
@@ -296,7 +296,7 @@ app.get('/api/:userId/myreviews/:hotelName', (req, res, next) => {
   const { userId, hotelName } = req.params
 
   const sql = `
-        select "hotelName", "cleanliness", "service", "foodAndEntertainment", "content" from "reviews"
+        select "hotelName", "cleanliness", "service", "foodAndEntertainment", "content", "dateWritten", "timeWritten" from "reviews"
       `;
   return db.query(sql)
     .then(result => {
