@@ -19,7 +19,10 @@ CREATE TABLE "reviews" (
 	"reviewId" serial NOT NULL,
 	"hotelName" TEXT NOT NULL,
 	"userId" integer NOT NULL,
-	"reviewContent" TEXT NOT NULL,
+	"cleanliness" TEXT NOT NULL,
+	"service" TEXT NOT NULL,
+	"foodAndEntertainment" TEXT NOT NULL,
+	"content" TEXT NOT NULL,
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("reviewId")
 ) WITH (
   OIDS=FALSE

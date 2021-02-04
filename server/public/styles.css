@@ -12,6 +12,14 @@
   height: 10vh;
 }
 
+button {
+  transform: scale(1);
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -24,7 +32,8 @@
 nav > img:active,
 nav > img:hover,
 .hotel-name:hover,
-.heart {
+.heart,
+i {
   cursor: pointer;
 }
 
@@ -55,9 +64,10 @@ div > h3 {
   overflow-y: auto;
 }
 
-.trash-icon:hover {
+.trash-icon:hover,
+i:hover {
   cursor: pointer;
-  transform: scale(1.4);
+  transform: scale(1.3);
 }
 
 .fav-button:active {
@@ -68,7 +78,8 @@ div > h3 {
   width: inherit;
 }
 
-.fav-button:focus {
+.fav-button:focus,
+button:focus {
   border: none;
   outline: none;
 }
@@ -161,4 +172,14 @@ h4:hover {
 .modal-div {
   width: 90vw;
   height: 80vh;
+}
+
+.fade-out {
+  opacity: 0;
+  animation: fade-out 2s linear;
+}
+
+@keyframes fade-out {
+  from { opacity: 1 }
+  to { opacity: 0}
 }
