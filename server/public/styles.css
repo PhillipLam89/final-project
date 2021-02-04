@@ -186,10 +186,10 @@ h4:hover {
 }
 
 
-*, *:before, *:after {
+book:before, book:after {
   box-sizing: inherit;
 }
-*:before, *:after {
+.hotel-info-container *:before, .hotel-info-container *:after {
   content: "";
   position: absolute;
 }
@@ -200,7 +200,6 @@ h4:hover {
   top:50%;
   left: 50%;
   background: #F33139;
-
   border-radius: 20px 16px 12px 32px;
 
 
