@@ -134,7 +134,8 @@ button:focus {
 
 .hotel-info-container {
   transform: scale(1);
-  max-width: 250px;
+  max-width: 260px;
+  max-height: 80vh;
 }
 
 .hotel-info-container:hover {
@@ -182,4 +183,44 @@ h4:hover {
 @keyframes fade-out {
   from { opacity: 1 }
   to { opacity: 0}
+}
+
+
+book:before, book:after {
+  box-sizing: inherit;
+}
+.hotel-info-container *:before, .hotel-info-container *:after {
+  content: "";
+  position: absolute;
+}
+.book{
+  width:200px;
+  height:250px;
+  transform: translate(-50%, -50%);
+  top:50%;
+  left: 50%;
+  background: #F33139;
+  border-radius: 20px 16px 12px 32px;
+
+
+}
+.book:after{
+
+  height: 52px;
+  width: 185px;
+  bottom: 6px;
+  right: 0px;
+  border-right: 0;
+  background: white;
+  border-radius: 32px 4px 4px 32px;
+  background-image: linear-gradient(to bottom, transparent 6px, #E4E0CE 8px, transparent 8px, transparent 12px, #E4E0CE 12px, transparent 14px, transparent 18px,#E4E0CE 18px, transparent 20px, transparent 24px, #E4E0CE 24px, transparent 26px, transparent 30px, #E4E0CE 30px, transparent 32px, transparent 36px, #E4E0CE 36px, transparent 38px, transparent 42px, #E4E0CE 42px, transparent 44px, transparent 48px, #E4E0CE 48px, transparent 50px);
+  box-shadow: inset 4px 6px 0px 0px #E4E0CE;
+}
+.book:before{
+  height: 20px;
+  width: 160px;
+  right: 10px;
+  left: 10px;
+  top: 175px;
+
 }

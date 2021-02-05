@@ -25,6 +25,7 @@ CREATE TABLE "reviews" (
 	"content" TEXT NOT NULL,
 	"dateWritten" TEXT NOT NULL,
 	"timeWritten" TEXT NOT NULL,
+	"hotelId" TEXT NOT NULL,
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("reviewId")
 ) WITH (
   OIDS=FALSE
