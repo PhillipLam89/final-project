@@ -75,7 +75,7 @@ export default class Favorites extends React.Component {
         return (
           <div className="d-flex justify-content-center">
             <a href={`#hotel-details?hotelId=${info.hotelId}`} key={idx} className="text-decoration-none">{info.hotelName}</a>
-            <img data-toggle="tooltip" data-placement="top" title="Remove" data-hotel-id={info.hotelId} onClick={this.handleRemove} className={`pl-1 mb-1 trash-icon`} width="25px" src="./images/trash.png"></img>
+            <i data-toggle="tooltip" data-placement="top" title="Remove" data-hotel-id={info.hotelId} onClick={this.handleRemove} className={`pl-1 mb-1 bi bi-trash-fill text-danger`} width="25px"></i>
             <i data-toggle="tooltip" data-placement="top" title="Write Review" onClick={this.handleReview} className="bi bi-pencil-square ml-2"></i>
           </div>
 

@@ -189,20 +189,16 @@ h4:hover {
 book:before, book:after {
   box-sizing: inherit;
 }
-/* .hotel-info-container *:before, .hotel-info-container *:after {
+.hotel-info-container *:before, .hotel-info-container *:after {
   content: "";
   position: absolute;
-} */
+}
 
 
 .modal-div {
   min-height: 85vh;
   overflow-y: auto;
 }
-
-
-
-
 
 .book{
   width:200px;
