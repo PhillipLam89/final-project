@@ -230,6 +230,9 @@ book:before, book:after {
   width: 160px;
   right: 40px;
   top: 72px;
+}
 
-
+.review-div {
+    overflow-y: auto;
+  background-color: lightcyan;
 }

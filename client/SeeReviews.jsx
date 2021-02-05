@@ -56,7 +56,7 @@ export default class SeeReviews extends React.Component {
 
 
     return (
-      <div className=" card shadow-lg m-4">
+      <div className=" card shadow-lg m-4 review-div ">
         <h2 className="text-center pt-2">Your Hotel Reviews</h2>
         <div className="results-container d-flex justify-content-center rounded">
           <div className="row row-cols-2 row-cols-md-2  mb-5 d-flex justify-content-center results-container p-3">
