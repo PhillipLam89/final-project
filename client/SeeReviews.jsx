@@ -28,7 +28,7 @@ export default class SeeReviews extends React.Component {
   }
 
   handleSeeFullReview(e) {
-    this.state.allHotelsReviewed.map((val, index) => {
+    this.state.allHotelsReviewed.map(val => {
       if (Number(val.hotelId) === Number(e.target.dataset.id)) {
         this.setState({ chosenReviewId: Number(val.hotelId), chosenHotelName: val.hotelName, chosenContent: val.content, cleanliness: val.cleanliness, foodAndEntertainment: val.foodAndEntertainment, service: val.service })
       }
@@ -45,8 +45,8 @@ export default class SeeReviews extends React.Component {
                  <div data-id={reviewedHotel.hotelId}  key={index + 3} className="card-body review">
                    <a data-id={reviewedHotel.hotelId}  key={index + 4}><div data-id={reviewedHotel.hotelId} onClick={this.handleSeeFullReview} className="hotel-name text-white h6 review">{reviewedHotel.hotelName}</div></a>
                    <p data-id={reviewedHotel.hotelId}  key={index + 5} className="card-text d-flex justify-content-between pt-2 review">
-                   <small data-id={reviewedHotel.hotelId} className="text-primary" key={index  + 6}>Written on {reviewedHotel.dateWritten}</small>
-                   <small data-id={reviewedHotel.hotelId} key={index + 7}> {reviewedHotel.timeWritten}</small>
+                   <small data-id={reviewedHotel.hotelId} className="text-primary font-weight-bold" key={index  + 6}>Written on {reviewedHotel.dateWritten}</small>
+                   <small data-id={reviewedHotel.hotelId} key={index + 7} className="font-weight-bold"> {reviewedHotel.timeWritten}</small>
                    </p>
                  </div>
               </div>

@@ -193,6 +193,17 @@ book:before, book:after {
   content: "";
   position: absolute;
 }
+
+
+.modal-div {
+  min-height: 85vh;
+  overflow-y: auto;
+}
+
+
+
+
+
 .book{
   width:200px;
   height:250px;
@@ -201,31 +212,24 @@ book:before, book:after {
   left: 50%;
   background: #F33139;
   border-radius: 20px 16px 12px 32px;
-
-
+  background-image: linear-gradient(to right,#D11F2F 48px, #ba0716 50px, transparent 50px);
+   box-shadow:  2px 6px 40px 0px #FEA600
 }
 .book:after{
-
   height: 52px;
-  width: 185px;
+  width: 194px;
   bottom: 6px;
-  right: 0px;
-  border-right: 0;
+  right:0px;
   background: white;
   border-radius: 32px 4px 4px 32px;
-  background-image: linear-gradient(to bottom, transparent 6px, #E4E0CE 8px, transparent 8px, transparent 12px, #E4E0CE 12px, transparent 14px, transparent 18px,#E4E0CE 18px, transparent 20px, transparent 24px, #E4E0CE 24px, transparent 26px, transparent 30px, #E4E0CE 30px, transparent 32px, transparent 36px, #E4E0CE 36px, transparent 38px, transparent 42px, #E4E0CE 42px, transparent 44px, transparent 48px, #E4E0CE 48px, transparent 50px);
   box-shadow: inset 4px 6px 0px 0px #E4E0CE;
+  background-image: linear-gradient(to bottom, transparent 6px, #E4E0CE 8px, transparent 8px, transparent 12px, #E4E0CE 12px, transparent 14px, transparent 18px,#E4E0CE 18px, transparent 20px, transparent 24px, #E4E0CE 24px, transparent 26px, transparent 30px, #E4E0CE 30px, transparent 32px, transparent 36px, #E4E0CE 36px, transparent 38px, transparent 42px, #E4E0CE 42px, transparent 44px, transparent 48px, #E4E0CE 48px, transparent 50px);
 }
 .book:before{
   height: 20px;
   width: 160px;
-  right: 10px;
-  left: 10px;
-  top: 175px;
+  right: 40px;
+  top: 72px;
 
-}
 
-.modal-div {
-  height: inherit;
-  overflow-y: auto;
 }
