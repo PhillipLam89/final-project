@@ -40,11 +40,11 @@ export default class SeeReviews extends React.Component {
 
        const reviews = this.state.allHotelsReviewed.map((reviewedHotel, index) => {
          return (
-           <div data-id={reviewedHotel.hotelId} data-name={reviewedHotel.hotelName} key={index + 1} onClick={this.handleSeeFullReview} data-toggle="modal" data-target="#exampleModal" className=" p-3  d-flex justify-content-center hotel-info-container review">
-              <div data-id={reviewedHotel.hotelId} data-name={reviewedHotel.hotelName} key={index + 2} className="card shadow-lg book review">
-                 <div data-id={reviewedHotel.hotelId} data-name={reviewedHotel.hotelName} key={index + 3} className="card-body review">
-                   <a data-id={reviewedHotel.hotelId} data-name={reviewedHotel.hotelName} key={index + 4}><div data-id={reviewedHotel.hotelId} onClick={this.handleSeeFullReview} className="hotel-name text-white h6 review">{reviewedHotel.hotelName}</div></a>
-                   <p data-id={reviewedHotel.hotelId} data-name={reviewedHotel.hotelName} key={index + 5} className="card-text d-flex justify-content-between pt-2 review">
+           <div data-id={reviewedHotel.hotelId}  key={index + 1} onClick={this.handleSeeFullReview} data-toggle="modal" data-target="#exampleModal" className=" p-3  d-flex justify-content-center hotel-info-container review">
+              <div data-id={reviewedHotel.hotelId} key={index + 2} className="card shadow-lg book review">
+                 <div data-id={reviewedHotel.hotelId}  key={index + 3} className="card-body review">
+                   <a data-id={reviewedHotel.hotelId}  key={index + 4}><div data-id={reviewedHotel.hotelId} onClick={this.handleSeeFullReview} className="hotel-name text-white h6 review">{reviewedHotel.hotelName}</div></a>
+                   <p data-id={reviewedHotel.hotelId}  key={index + 5} className="card-text d-flex justify-content-between pt-2 review">
                    <small data-id={reviewedHotel.hotelId} className="text-primary" key={index  + 6}>Written on {reviewedHotel.dateWritten}</small>
                    <small data-id={reviewedHotel.hotelId} key={index + 7}> {reviewedHotel.timeWritten}</small>
                    </p>
@@ -79,7 +79,7 @@ export default class SeeReviews extends React.Component {
               <p className="p-3">Your Food & Entertainment Rating: {this.state.foodAndEntertainment}/5</p>
               <p className="pt-3 pl-3 mb-0 pb-0 font-weight-bold">Your Overall Review:</p>
               <p className="p-3">{this.state.chosenContent}</p>
-              <div className="modal-body modal-div d-flex flex-column justify-content-end">
+              <div className="modal-body d-flex flex-column justify-content-end">
                 <div className="w-100 d-flex justify-content-end"><button type="button" className="m-0  mt-3 btn btn-secondary" data-dismiss="modal">Close</button></div>
               </div>
             </div>

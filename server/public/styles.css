@@ -172,7 +172,7 @@ h4:hover {
 
 .modal-div {
   width: 90vw;
-  height: 80vh;
+  max-height: 70vh;
 }
 
 .fade-out {
@@ -223,4 +223,9 @@ book:before, book:after {
   left: 10px;
   top: 175px;
 
+}
+
+.modal-div {
+  height: inherit;
+  overflow-y: auto;
 }
