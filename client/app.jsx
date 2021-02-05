@@ -69,12 +69,12 @@ export default class App extends React.Component {
     } if (route.path === 'photos') {
       return <HotelPhotos hotelId={route.params.get('hotelId')} hotelName={route.params.get('hotelName')} />
     } if (route.path === 'write-review') {
-      return <WriteReview hotelName={route.params.get('hotelName')} />
+      return <WriteReview hotelName={route.params.get('hotelName')} hotelId={route.params.get('hotelId')} />
     }
     if (route.path === 'see-reviews') {
       return (
         <div>
-          <SeeReviews hotelName={route.params.get('hotelName')}/>
+          <SeeReviews hotelName={route.params.get('hotelName')} hotelId={route.params.get('hotelId')}/>
           <NavBar iconClicked="reviews" />
         </div>
       )
