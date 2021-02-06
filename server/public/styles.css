@@ -231,7 +231,10 @@ book:before, book:after {
   overflow-y: auto;
   background-color: lightcyan;
 }
-
+.delete {
+  color: rgb(241, 160, 10)
+}
 .delete:hover {
   transform: scale(1.20);
+  color: rgb(255, 2, 2);
 }

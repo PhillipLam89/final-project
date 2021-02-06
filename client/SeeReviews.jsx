@@ -77,7 +77,7 @@ export default class SeeReviews extends React.Component {
                    <p data-id={reviewedHotel.hotelId} key={index + 5} className="card-text d-flex justify-content-between pt-2 review"></p>
                    <small data-id={reviewedHotel.hotelId} key={index + 6} className="text-white font-weight-bold" >Written on {reviewedHotel.dateWritten}</small>
                    <small data-id={reviewedHotel.hotelId} key={index + 7} className="font-weight-bold "> {reviewedHotel.timeWritten}</small>
-                 <p data-id={reviewedHotel.hotelId} key={index + 8} onClick={this.handleRemove} className="delete text-danger font-weight-bold pt-2 pl-5">Delete Review </p>
+                  <p data-id={reviewedHotel.hotelId} key={index + 8} onClick={this.handleRemove} className="delete font-weight-bold pt-2 text-center">DELETE</p>
                  </div>
               </div>
 
@@ -109,8 +109,8 @@ export default class SeeReviews extends React.Component {
               <p className="p-3">Your Service Rating: {this.state.service}/5</p>
               <p className="p-3">Your Food & Entertainment Rating: {this.state.foodAndEntertainment}/5</p>
               <p className="pt-3 pl-3 mb-0 pb-0 font-weight-bold">Your Overall Review:</p>
-              <p  className="p-3">{this.state.chosenContent}</p>
-              <div className="w-100 d-flex justify-content-end p-3"><button type="button" className="m-0  mt-3 btn btn-secondary" data-dismiss="modal">Close</button></div>
+              <div className="p-3">{this.state.chosenContent}<div className="w-100 d-flex justify-content-end p-3"><button type="button" className="m-0  mt-3 btn btn-secondary" data-dismiss="modal">Close</button></div></div>
+
 
             </div>
           </div>
