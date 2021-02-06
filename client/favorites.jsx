@@ -24,7 +24,7 @@ export default class Favorites extends React.Component {
       if (favorite.hotelId === Number(e.target.dataset.hotelId)) removalId = favorite.hotelId
       return favorite.hotelId !== Number(e.target.dataset.hotelId)
     });
-    fetch(`/api/1/${removalId}`, {
+    fetch(`/api/1/reviews/remove/${removalId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

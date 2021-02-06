@@ -1,0 +1,16 @@
+insert into "reviews" ("cleanliness", "userId", "service", "foodAndEntertainment", "content", "dateWritten", "timeWritten", "hotelName", "hotelId")
+values ('5', '1', '5','5', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Ritz Laguna', '235012'),
+       ('2', '1', '5','5', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Montage laguna', '2411102'),
+       ('5', '1', '5','4', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Four Seasons Biltmore', '2220122'),
+       ('5', '1', '5','5', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Andaz Maui', '235232143402'),
+       ('4', '1', '5','3', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Aman Wyoming', '2315502'),
+       ('5', '1', '5','5', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Amangiri', '2351224102'),
+       ('2', '1', '3','4', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Park Hyatt Aviara', '232523402'),
+       ('5', '1', '4','5', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Park Hyatt Vienna', '234122102'),
+       ('3', '1', '3','1', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Four Seasons King George V', '23412123443502'),
+       ('5', '1', '5','5', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Ritz Carlton Kyoto', '23111502'),
+       ('5', '1', '4','2', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Langham Huntington', '23511112402'),
+       ('4', '1', '2','4', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Ritz Los Angeles', '23511502'),
+       ('5', '1', '5','5', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Rosewood Miramar', '21111123502'),
+       ('5', '1', '5','5', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Ritz Langkawi', '23501112'),
+       ('4', '1', '5','5', 'GOOOD HOTEL OMG', '02/05/2020', '3:05P.M.', 'Aman Seychelles', '2351141502')
