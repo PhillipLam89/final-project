@@ -164,6 +164,24 @@ app.delete('/api/:userId/:hotelId', (req, res, next) => {
 });
 
 
+app.delete(`/api/:userId/reviews/remove/:hotelId`, (req, res, next) => {
+  const { userId, hotelId } = req.params
+  const sql = `
+        delete from "reviews"
+        where "hotelId" = $1
+      `;
+  const params = [hotelId]
+  return db.query(sql, params)
+    .then(result => {
+      const [deleted] = result.rows
+      res.json(deleted)
+      res.status(204)
+    })
+    .catch(err => {
+      next(err);
+    });
+
+});
 app.post('/api/favorites/:userId/', (req, res, next) => {
   const { userId } = req.params
   const { hotelId, hotelName } = req.body

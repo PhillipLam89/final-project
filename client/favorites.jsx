@@ -24,7 +24,7 @@ export default class Favorites extends React.Component {
       if (favorite.hotelId === Number(e.target.dataset.hotelId)) removalId = favorite.hotelId
       return favorite.hotelId !== Number(e.target.dataset.hotelId)
     });
-    fetch(`/api/1/${removalId}`, {
+    fetch(`/api/1/reviews/remove/${removalId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
@@ -75,8 +75,8 @@ export default class Favorites extends React.Component {
         return (
           <div className="d-flex justify-content-center">
             <a href={`#hotel-details?hotelId=${info.hotelId}`} key={idx} className="text-decoration-none">{info.hotelName}</a>
-            <img data-toggle="tooltip" data-placement="top" title="Remove" data-hotel-id={info.hotelId} onClick={this.handleRemove} className={`pl-3 mb-1 trash-icon`} width="35rem" src="./images/trash.png"></img>
-            <i data-toggle="tooltip" data-placement="top" title="Write Review" onClick={this.handleReview} className="bi bi-pencil-square ml-3"></i>
+            <i data-toggle="tooltip" data-placement="top" title="Remove" data-hotel-id={info.hotelId} onClick={this.handleRemove} className={`pl-1 mb-1 bi bi-trash-fill text-danger`} width="25px"></i>
+            <i data-toggle="tooltip" data-placement="top" title="Write Review" onClick={this.handleReview} className="bi bi-pencil-square ml-2"></i>
           </div>
 
         );
@@ -84,7 +84,7 @@ export default class Favorites extends React.Component {
       return (
         <div className="result-container vh-100  pt-3 d-block d-flex flex-column text-center">
           <h2 className="mb-2 fav">Favorites <img width="45rem" src="./images/red-heart.png" className="fav-button"></img></h2>
-          <div className="fav-hotel-div d-flex flex-column">{favoriteHotels}</div>
+          <div className="fav-hotel-div d-flex flex-column p-2">{favoriteHotels}</div>
         </div>
       );
     }
