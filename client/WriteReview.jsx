@@ -51,6 +51,7 @@ export default class WriteReview extends React.Component {
         "timeWritten": getTimeFromDate,
         "hotelName": this.props.hotelName,
         "hotelId": this.props.hotelId
+
       })
     })
       .then(response => response.json())

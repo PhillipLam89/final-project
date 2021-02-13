@@ -38,13 +38,14 @@ export default class SearchResults extends React.Component {
   render() {
     if (this.state.isLoading) return <Loader />;
     const hotelList = this.state.hotelList;
+    console.log(hotelList)
     const hotelName = hotelList.map((hotel, idx) => {
       return (
         <div key={idx+1} className="row-cols-md-1 p-3 col-12 card-deck card-img-top d-flex justify-content-center hotel-info-container">
           <div key={idx+2} className="card shadow-sm">
-            <img key={hotel.thumbnailUrl} src={hotel.thumbnailUrl} className="hotel-img pb-2"></img>
+            <img key={hotel.thumbnailUrl} src={hotel.optimizedThumbUrls.srpDesktop} className="hotel-img pb-2"></img>
             <div key={idx + 3} className="card-body">
-              <a key={idx + 4} href={`#hotel-details?hotelId=${hotelList[idx].id}&thumbnailUrl=${hotel.thumbnailUrl}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
+              <a key={idx + 4} href={`#hotel-details?hotelId=${hotelList[idx].id}&thumbnailUrl=${hotel.optimizedThumbUrls.srpDesktop}`}><div key={hotelList[idx].id} className="hotel-name">{hotel.name}</div></a>
               <p key={idx + 5} className="card-text d-flex justify-content-between">
                 <small key={idx + 6}>{hotel.neighbourhood}</small>
                     {hotel.guestReviews &&

@@ -168,7 +168,7 @@ app.delete(`/api/:userId/reviews/remove/:hotelId`, (req, res, next) => {
   const { userId, hotelId } = req.params
   const sql = `
         delete from "reviews"
-        where "hotelId" = $1
+        where "reviewId" = $1
       `;
   const params = [hotelId]
   return db.query(sql, params)
@@ -314,7 +314,7 @@ app.get('/api/:userId/myreviews/:hotelName', (req, res, next) => {
   const { userId, hotelName } = req.params
 
   const sql = `
-        select "hotelName", "cleanliness", "service", "foodAndEntertainment", "content", "dateWritten", "timeWritten", "hotelId" from "reviews"
+        select "hotelName", "cleanliness", "service", "foodAndEntertainment", "content", "dateWritten", "timeWritten", "hotelId", "reviewId" from "reviews"
       `;
   return db.query(sql)
     .then(result => {

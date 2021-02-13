@@ -34,7 +34,7 @@ export default class SeeReviews extends React.Component {
   handleSeeFullReview(e) {
     if (!e.target.className.includes('delete') ) {
       this.state.allHotelsReviewed.map(val => {
-        if (Number(val.hotelId) === Number(e.target.dataset.id)) {
+        if (Number(val.reviewId) === Number(e.target.dataset.id)) {
           this.setState({ chosenReviewId: Number(val.hotelId), chosenHotelName: val.hotelName, chosenContent: val.content, cleanliness: val.cleanliness, foodAndEntertainment: val.foodAndEntertainment, service: val.service })
         }
       })
@@ -48,8 +48,8 @@ export default class SeeReviews extends React.Component {
     e.preventDefault()
     let removalId = ''
     const remainingReviews = this.state.allHotelsReviewed.filter(hotelObj => {
-      if (Number(hotelObj.hotelId) === Number(e.target.dataset.id)) removalId = Number(hotelObj.hotelId)
-      return Number(hotelObj.hotelId) !== Number(e.target.dataset.id)
+      if (Number(hotelObj.reviewId) === Number(e.target.dataset.id)) removalId = Number(hotelObj.reviewId)
+      return Number(hotelObj.reviewId) !== Number(e.target.dataset.id)
     });
     fetch(`/api/1/reviews/remove/${removalId}`, {
       method: 'DELETE',
@@ -66,21 +66,21 @@ export default class SeeReviews extends React.Component {
   }
 
   render() {
+    console.log(this.state.allHotelsReviewed)
       if (this.state.isLoading) return <Loader />
 
        const reviews = this.state.allHotelsReviewed.map((reviewedHotel, index) => {
          return (
-           <div data-id={reviewedHotel.hotelId}  key={index + 1} onClick={this.handleSeeFullReview} data-toggle="modal" data-target="#exampleModal" className=" p-3  d-flex justify-content-center hotel-info-container review">
-              <div data-id={reviewedHotel.hotelId} key={index + 2} className="card shadow-lg book review">
-                 <div data-id={reviewedHotel.hotelId}  key={index + 3} className="card-body review">
-                   <a data-id={reviewedHotel.hotelId}  key={index + 4}><div data-id={reviewedHotel.hotelId} onClick={this.handleSeeFullReview} className="hotel-name text-white h6 review">{reviewedHotel.hotelName}</div></a>
-                   <p data-id={reviewedHotel.hotelId} key={index + 5} className="card-text d-flex justify-content-between pt-2 review"></p>
-                   <small data-id={reviewedHotel.hotelId} key={index + 6} className="text-white font-weight-bold" >Written on {reviewedHotel.dateWritten}</small>
-                   <small data-id={reviewedHotel.hotelId} key={index + 7} className="font-weight-bold "> {reviewedHotel.timeWritten}</small>
-                  <p data-id={reviewedHotel.hotelId} key={index + 8} onClick={this.handleRemove} className="delete font-weight-bold pt-2 text-center">DELETE</p>
+           <div data-id={reviewedHotel.reviewId}  key={index + 1} onClick={this.handleSeeFullReview} data-toggle="modal" data-target="#exampleModal" className=" p-3  d-flex justify-content-center hotel-info-container review">
+             <div data-id={reviewedHotel.reviewId} key={index + 2} className="card shadow-lg book review">
+               <div data-id={reviewedHotel.reviewId}  key={index + 3} className="card-body review">
+                 <a data-id={reviewedHotel.reviewId} key={index + 4}><div data-id={reviewedHotel.reviewId} onClick={this.handleSeeFullReview} className="hotel-name text-white h6 review">{reviewedHotel.hotelName}</div></a>
+                 <p data-id={reviewedHotel.reviewId} key={index + 5} className="card-text d-flex justify-content-between pt-2 review"></p>
+                 <small data-id={reviewedHotel.reviewId} key={index + 6} className="text-white font-weight-bold" >Written on {reviewedHotel.dateWritten}</small>
+                 <small data-id={reviewedHotel.reviewId} key={index + 7} className="font-weight-bold "> {reviewedHotel.timeWritten}</small>
+                 <p data-id={reviewedHotel.reviewId} key={index + 8} onClick={this.handleRemove} className="delete font-weight-bold pt-2 text-center">DELETE</p>
                  </div>
               </div>
-
             </div>
          );
        });
@@ -98,7 +98,7 @@ export default class SeeReviews extends React.Component {
 
         <div className="modal fade " id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog d-flex justify-content-center " role="document">
-            <div className="modal-content modal-div c">
+            <div className="modal-content modal-div-review ">
               <div className="modal-header border-0">
                 <h5 className="modal-title" id="exampleModalLabel">{'Your ' + this.state.chosenHotelName +' Review'}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -110,8 +110,6 @@ export default class SeeReviews extends React.Component {
               <p className="p-3">Your Food & Entertainment Rating: {this.state.foodAndEntertainment}/5</p>
               <p className="pt-3 pl-3 mb-0 pb-0 font-weight-bold">Your Overall Review:</p>
               <div className="p-3">{this.state.chosenContent}<div className="w-100 d-flex justify-content-end p-3"><button type="button" className="m-0  mt-3 btn btn-secondary" data-dismiss="modal">Close</button></div></div>
-
-
             </div>
           </div>
 
