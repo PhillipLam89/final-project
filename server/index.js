@@ -310,8 +310,8 @@ app.post('/api/write/review/:userId/:hotelName', (req, res, next) => {
 
 });
             // GETs current saved reviews from DB, when see-review page loads
-app.get('/api/:userId/myreviews/:hotelName', (req, res, next) => {
-  const { userId, hotelName } = req.params
+app.get('/api/:userId/myreviews/', (req, res, next) => {
+  const { userId} = req.params
 
   const sql = `
         select "hotelName", "cleanliness", "service", "foodAndEntertainment", "content", "dateWritten", "timeWritten", "hotelId", "reviewId" from "reviews"
@@ -326,7 +326,28 @@ app.get('/api/:userId/myreviews/:hotelName', (req, res, next) => {
 
 });
 
+     //EDITS review
+app.patch('/api/:userId/myreviews/edit/:reviewId', (req, res, next) => {
+  console.log('req body', req.body)
+  const { userId, reviewId } = req.params
+  const { newCleanlinessRating, newServiceRating, newFoodAndEntertainment, updatedContent, dateUpdated, timeUpdated } = req.body;
+  const sql = `
+        update "reviews"
+        set "cleanliness" = ${newCleanlinessRating}, "service" = ${newServiceRating}, "foodAndEntertainment" = ${newFoodAndEntertainment}, "content" = ${updatedContent}
+        where "reviewId" = ${reviewId}
+        returning *
+      `;
 
+  return db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+      console.log('rows', result.rows)
+    })
+    .catch(err => {
+      next(err);
+    });
+
+});
 
 
 

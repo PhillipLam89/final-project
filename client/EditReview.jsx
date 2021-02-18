@@ -1,11 +1,13 @@
 import React from 'react';
 import NavBar from './navBar';
+import Loader from './loader'
 
 export default class WriteReview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviewSubmitted: ''
+      isLoading: true
+
 
     };
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -13,6 +15,7 @@ export default class WriteReview extends React.Component {
     this.handleServiceRating = this.handleServiceRating.bind(this)
     this.handleFoodEntertainmentRating = this.handleFoodEntertainmentRating.bind(this)
     this.handleUserTextReview = this.handleUserTextReview.bind(this)
+    this.handleValues = this.handleValues.bind(this)
   }
 
   handleSubmit(e) {
@@ -37,27 +40,28 @@ export default class WriteReview extends React.Component {
     const getTimeFromDate = dateToTime(new Date)
 
 
-    fetch(`/api/write/review/1/${this.props.hotelName}`, {
-      method: 'POST',
+    fetch(`/api/1/myreviews/edit/${this.props.reviewId}`, {
+      method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
       body: JSON.stringify({
-        "cleanliness": this.state.cleanlinessRating,
-        "service": this.state.serviceRating,
-        "foodAndEntertainment": this.state.foodAndEntertainmentRating,
-        "content": this.state.userInput,
-        "dateWritten": today,
-        "timeWritten": getTimeFromDate,
+        "newCleanlinessRating": !this.state.editedCleanliness ? this.state.currentHotelReviewData.cleanliness : this.state.cleanlinessRating,
+        "newServiceRating": !this.state.editedService ? this.state.currentHotelReviewData.service : this.state.serviceRating,
+        "newFoodAndEntertainment": !this.state.editedFoodAndEntertainment ? this.state.currentHotelReviewData.foodAndEntertainment : this.state.foodAndEntertainmentRating,
+        "updatedContent": !this.state.editedTextContent ? this.state.currentHotelReviewData.content : this.state.userTextReview,
+        "dateUpdated": today,
+        "timeUpdated": getTimeFromDate,
         "hotelName": this.props.hotelName,
-        "hotelId": this.props.hotelId
+        "hotelId": this.props.hotelId,
+        "reviewId": this.props.reviewId
 
       })
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({reviewSubmitted : true})
+        this.setState({ reviewSubmitted: true })
         location.hash = 'see-reviews'
       })
       .catch(error => {
@@ -67,51 +71,80 @@ export default class WriteReview extends React.Component {
   }
 
   handleCleanlinessRating(e) {
-      this.setState({ cleanlinessRating: e.target.value });
+
+    this.setState({ cleanlinessRating: e.target.value, editedCleanliness: true });
+
+
   }
   handleServiceRating(e) {
-    this.setState({ serviceRating: e.target.value });
+    this.setState({ serviceRating: e.target.value, editedService: true });
   }
   handleFoodEntertainmentRating(e) {
-    this.setState({ foodAndEntertainmentRating: e.target.value });
+    this.setState({ foodAndEntertainmentRating: e.target.value, editedFoodAndEntertainment: true });
   }
   handleUserTextReview(e) {
-    this.setState({ userInput: e.target.value });
-  }
-  render() {
-    console.log('write review props', this.props)
-    return (
+    this.setState({ userTextReview: e.target.value, editedTextContent: true });
 
+  }
+
+  handleValues(e) {
+
+  }
+
+  componentDidMount() {
+    fetch(`/api/1/myreviews`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        data.map(val => {
+          if (val.reviewId === Number(this.props.reviewId)) {
+            val.reviewId = val.reviewId.toString()
+            this.setState({ currentHotelReviewData: val, isLoading: false })
+          }
+        })
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+
+  render() {
+    console.log(this.state)
+    if (this.state.isLoading) return <Loader />
+
+    return (
       <div>
 
         <form onSubmit={this.handleSubmit} className={this.state.reviewSubmitted ? 'd-none' : 'p-4 card shadow-lg m-4 review-div'}>
-          <div className="text-center d-flex justify-content-center"> {<p className="text-danger pr-2">{this.props.hotelName}</p>}Review </div>
+          <div className="text-center d-flex justify-content-center"> {<p className="text-danger pr-2"><span className="text-dark">Edit your </span> {this.props.hotelName}</p>}Review </div>
           <div className="form-group">
             <label >Cleanliness Rating</label>
-            <select required  value={this.statehandleCleanlinessRating} onChange={this.handleCleanlinessRating} className="form-control" id="exampleFormControlSelect1">
-              <option value="" defaultValue>Select Rating</option>
+            <select required onChange={this.handleCleanlinessRating} className="form-control" id="exampleFormControlSelect1">
+              <option value={this.state.currentHotelReviewData.cleanliness} defaultValue>{this.state.currentHotelReviewData.cleanliness} (current rating)</option>
               <option value="5">5-Star</option>
               <option value="4">4-Star</option>
               <option value="3">3-Star</option>
               <option value="2">2-Star</option>
               <option value="1">1-Star</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label >Service Rating</label>
-              <select required value={this.state.handleServiceRating} onChange={this.handleServiceRating} className="form-control" id="exampleFormControlSelect2">
-              <option value="" defaultValue>Select Rating</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label >Service Rating</label>
+            <select required  onChange={this.handleServiceRating} className="form-control" id="exampleFormControlSelect2">
+              <option value={this.state.currentHotelReviewData.service} defaultValue>{this.state.currentHotelReviewData.service} (current rating)</option>
               <option value="5">5-Star</option>
               <option value="4">4-Star</option>
               <option value="3">3-Star</option>
               <option value="2">2-Star</option>
               <option value="1">1-Star</option>
-              </select>
-            </div>
+            </select>
+          </div>
           <div className="form-group">
             <label >Food & Entertainment Rating</label>
-            <select required  value={this.state.handleFoodEntertainmentRating} onChange={this.handleFoodEntertainmentRating} className="form-control" id="exampleFormControlSelect3">
-              <option value="" defaultValue>Select Rating</option>
+            <select required  onChange={this.handleFoodEntertainmentRating} className="form-control" id="exampleFormControlSelect3">
+              <option value={this.state.currentHotelReviewData.foodAndEntertainment} defaultValue>{this.state.currentHotelReviewData.foodAndEntertainment} (current rating)</option>
               <option value="5">5-Star</option>
               <option value="4">4-Star</option>
               <option value="3">3-Star</option>
@@ -122,9 +155,9 @@ export default class WriteReview extends React.Component {
 
           <div className="form-group">
             <label >Review</label>
-            <textarea value={this.state.handleUserTextReview} required onChange={this.handleUserTextReview} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea onChange={this.handleUserTextReview} defaultValue={this.state.currentHotelReviewData.content} required className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             <div className="d-flex justify-content-end">
-              <button type="submit" className="btn btn-primary mt-2">Submit</button>
+              <button type="submit" className="btn btn-primary mt-2">Save Changes</button>
             </div>
           </div>
         </form>

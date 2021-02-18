@@ -227,9 +227,14 @@ book:before, book:after {
   background-color: lightcyan;
 }
 .delete {
-  color: rgb(241, 160, 10)
-}
-.delete:hover {
-  transform: scale(1.20);
   color: rgb(255, 2, 2);
+}
+.edit-review {
+  color: goldenrod;
+
+}
+
+.edit-review:hover {
+  color: aqua;
+  transform: scale(1.1);
 }
