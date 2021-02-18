@@ -12,6 +12,8 @@ import HotelPhotos from './hotelPhotos'
 import NavBar from './navBar'
 import WriteReview from './WriteReview'
 import SeeReviews from './SeeReviews'
+import EditReview from './EditReview'
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -69,7 +71,7 @@ export default class App extends React.Component {
     } if (route.path === 'photos') {
       return <HotelPhotos hotelId={route.params.get('hotelId')} hotelName={route.params.get('hotelName')} />
     } if (route.path === 'write-review') {
-      return <WriteReview hotelName={route.params.get('hotelName')} hotelId={route.params.get('hotelId')} />
+      return <WriteReview hotelName={route.params.get('hotelName')} hotelId={route.params.get('hotelId')}/>
     }
     if (route.path === 'see-reviews') {
       return (
@@ -78,6 +80,9 @@ export default class App extends React.Component {
           <NavBar iconClicked="reviews" />
         </div>
       )
+    }
+    if (route.path === 'edit-review') {
+      return <EditReview hotelName={route.params.get('hotelName')} hotelId={route.params.get('hotelId')} reviewId={route.params.get('reviewId')} />
     }
 }
 
